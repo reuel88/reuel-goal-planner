@@ -1,0 +1,7 @@
+{
+  "REGISTER": "/auth/register",
+  "LOGIN": "/auth/login",
+  "FORGOT_PASSWORD": "/auth/forgot-password",
+  "DASHBOARD": "/dashboard",
+  "USER": "/user"
+}
