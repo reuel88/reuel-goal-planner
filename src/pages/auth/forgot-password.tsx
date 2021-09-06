@@ -5,6 +5,7 @@ import Link from "next/link";
 import {withPublic} from "../../hooks/route";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import {NextSeo} from "next-seo";
 
 const ForgotPassword: NextPage = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -46,6 +47,10 @@ const ForgotPassword: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Forgot Password"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Reset Password</h2>

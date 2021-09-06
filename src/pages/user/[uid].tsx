@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {withProtected} from "../../hooks/route";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import {NextSeo} from "next-seo";
 
 const Register: NextPage = () => {
     const router = useRouter();
@@ -63,6 +64,10 @@ const Register: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title={`Goal Planner - ${currentUser?.email}`}
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Update Profile</h2>

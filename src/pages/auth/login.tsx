@@ -1,9 +1,9 @@
 import type {NextPage} from 'next';
-import React, {useRef, useState} from "react";
-import {useRouter} from "next/router";
-
-import validate from "validate.js";
 import Link from "next/link";
+import {useRouter} from "next/router";
+import { NextSeo } from 'next-seo';
+import React, {useRef, useState} from "react";
+import validate from "validate.js";
 import {withPublic} from "../../hooks/route";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
@@ -51,6 +51,10 @@ const Login: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Login"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Login</h2>

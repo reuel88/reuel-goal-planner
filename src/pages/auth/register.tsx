@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {withPublic} from "../../hooks/route";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import {NextSeo} from "next-seo";
 
 const Register: NextPage = () => {
     const router = useRouter();
@@ -56,6 +57,10 @@ const Register: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Register"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Sign Up</h2>

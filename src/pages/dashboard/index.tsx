@@ -5,6 +5,7 @@ import Link from "next/link";
 import {withProtected} from "../../hooks/route";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import {NextSeo} from "next-seo";
 
 const Dashboard: NextPage = () => {
     const router = useRouter();
@@ -27,6 +28,10 @@ const Dashboard: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Dashboard"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Profile</h2>
