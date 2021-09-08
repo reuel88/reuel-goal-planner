@@ -1,19 +1,19 @@
-import React, {createContext, useContext, useEffect, useState, FunctionComponent} from "react";
+import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
 import authService from "../services/authService";
 
-export type UserContent = {
+export interface UserContent {
     uid: string,
     email: string
 }
 
-export type AuthContent = {
+export interface AuthContent {
     currentUser: UserContent,
     signUp: (email: string, password: string) => Promise<any>,
     signIn: (email: string, password: string) => Promise<any>,
     signOut: () => Promise<any>,
-    resetPassword: (email:string) => Promise<any>,
-    updateEmail: (email:string) => Promise<any>,
-    updatePassword: (password:string) => Promise<any>,
+    resetPassword: (email: string) => Promise<any>,
+    updateEmail: (email: string) => Promise<any>,
+    updatePassword: (password: string) => Promise<any>,
 }
 
 const AuthContext = createContext<AuthContent>({
@@ -21,18 +21,12 @@ const AuthContext = createContext<AuthContent>({
         uid: '',
         email: ''
     },
-    signUp: (email: string, password: string) => (new Promise(() => {
-    })),
-    signIn: (email: string, password: string) => (new Promise(() => {
-    })),
-    signOut: () => (new Promise(() => {
-    })),
-    resetPassword: (email: string) => (new Promise(() => {
-    })),
-    updateEmail: (email: string) => (new Promise(() => {
-    })),
-    updatePassword: (password: string) => (new Promise(() => {
-    })),
+    signUp: () => (new Promise((resolve, reject) => reject("Failed to register"))),
+    signIn: () => (new Promise((resolve, reject) => reject("Failed to sign in"))),
+    signOut: () => (new Promise((resolve, reject) => reject("Failed to logout"))),
+    resetPassword: () => (new Promise((resolve, reject) => reject("Failed to reset password"))),
+    updateEmail: () => (new Promise((resolve, reject) => reject("Failed to update email"))),
+    updatePassword: () => (new Promise((resolve, reject) => reject("Failed to update password"))),
 });
 
 export function useAuth() {
@@ -62,21 +56,19 @@ export const AuthProvider: FunctionComponent = ({children}) => {
         return authService.resetPassword(email);
     }
 
-    function updateEmail(email:string){
+    function updateEmail(email: string) {
         return authService.updateEmail(email)
     }
 
-    function updatePassword(password: string){
+    function updatePassword(password: string) {
         return authService.updatePassword(password);
     }
 
     useEffect(() => {
-        const unsubscribe = authService.authListener((user: any) => {
+        return authService.authListener((user: any) => {
             setCurrentUser(user);
             setLoading(false)
         });
-
-        return () => unsubscribe();
     }, []);
 
     const value: AuthContent = {

@@ -1,25 +1,26 @@
-import React, {FunctionComponent, useEffect} from "react";
-import {useRouter} from "next/router";
-import {useAuth} from "../contexts/AuthContext";
+import { useRouter } from "next/router";
+import React, { FunctionComponent, useEffect } from "react";
 import route from "../constants/route.json";
+import { useAuth } from "../contexts/AuthContext";
 
-function Redirect({to}: {to :string}){
+
+function Redirect({to}: { to: string }) {
     const router = useRouter();
 
-    useEffect( () => {
+    useEffect(() => {
         router.replace(to).then((res) => {
             console.log(res);
         });
-    }, [to])
+    }, [to, router])
 
     return null;
 }
 
 export function withPublic(Component: FunctionComponent) {
-    return function WithPublic(props:any) {
+    return function WithPublic(props: any) {
         const {currentUser} = useAuth();
 
-        if(currentUser){
+        if (currentUser) {
             return <Redirect to={route.DASHBOARD}/>
         }
 
@@ -28,10 +29,10 @@ export function withPublic(Component: FunctionComponent) {
 }
 
 export function withProtected(Component: FunctionComponent) {
-    return function WithProtected(props:any) {
+    return function WithProtected(props: any) {
         const {currentUser} = useAuth();
 
-        if(!currentUser){
+        if (!currentUser) {
             return <Redirect to={route.LOGIN}/>;
         }
 
