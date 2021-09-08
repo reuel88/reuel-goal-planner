@@ -2,7 +2,7 @@ import type {NextPage} from 'next';
 import React, {useRef, useState} from "react";
 import validate from "validate.js";
 import Link from "next/link";
-import {withPublic} from "../../hooks/route";
+import {withPublic} from "../../hooks/useRoute";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 
@@ -16,6 +16,9 @@ const ForgotPassword: NextPage = () => {
 
     async function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
+        setError('');
+        setMessage('');
+
         const email = emailRef?.current?.value ?? '';
 
         const notValid = validate({
@@ -31,8 +34,6 @@ const ForgotPassword: NextPage = () => {
         }
 
         try {
-            setError('');
-            setMessage('');
             setLoading(true);
             await resetPassword(email)
             setMessage('Check your inbox for further instructions');

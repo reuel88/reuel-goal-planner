@@ -3,7 +3,7 @@ import React, {useRef, useState} from "react";
 import validate from "validate.js";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {withProtected} from "../../hooks/route";
+import {withProtected} from "../../hooks/useRoute";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 

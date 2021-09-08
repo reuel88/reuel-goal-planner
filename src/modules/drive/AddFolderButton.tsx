@@ -1,12 +1,19 @@
 import React, {FunctionComponent, ElementRef, useRef, useState, SyntheticEvent} from "react";
+import validate from "validate.js";
 import Modal from "../../components/Modal";
-import driveService, {dbDocuments} from "../../services/driveService";
+import {useDrive} from "../../contexts/DriveContext";
+import {useAuth} from "../../contexts/AuthContext";
+import {documentNames} from "../../services/driveService";
 
 type ModalHandle = ElementRef<typeof Modal>;
+type currentFolderType = {currentFolder: {id: string | null} };
 
-const AddFolderButton: FunctionComponent = () => {
+const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) => {
     const modalRef = useRef<ModalHandle>(null);
+    const [error, setError] = useState('');
     const [name, setName] = useState('');
+    const {currentUser} = useAuth();
+    const {addDoc} = useDrive();
 
     function openModal() {
         modalRef?.current?.handleOpen();
@@ -16,18 +23,33 @@ const AddFolderButton: FunctionComponent = () => {
         modalRef?.current?.handleClose();
     }
 
-    const handleSubmit = async (e: SyntheticEvent) => {
+    async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault();
+        setError('');
 
-        try{
+        if(!currentFolder) return;
+
+        const notValid = validate({name}, {
+            name: {presence: {allowEmpty: false}}
+        })
+
+        if(notValid){
+            const firstKey = Object.keys(notValid)[0];
+            const firstError = notValid[firstKey][0];
+            return setError(firstError);
+        }
+
+        try {
             // Create a folder in the database
-            await driveService.addDoc(dbDocuments.FOLDERS,{
-                name: name
-            });
-
+            await addDoc(documentNames.FOLDERS, {
+                name: name,
+                parentId: currentFolder.id,
+                userId: currentUser.uid,
+                // path,
+            })
             setName('');
             closeModal();
-        }catch (e){
+        } catch (e) {
             console.error(e)
         }
     }
@@ -36,16 +58,13 @@ const AddFolderButton: FunctionComponent = () => {
         <>
             <button type="button" onClick={openModal}>Add Folder</button>
 
-            <section className="modal">
-
-            </section>
-
             <Modal ref={modalRef}>
                 <div className="modal-wrapper">
                     <header className="modal-header">
-                        Something
+                        Add New Folder
                         <button onClick={closeModal}>close</button>
                     </header>
+                    {error && <div className="alert alert-danger">{error}</div>}
                     <form onSubmit={handleSubmit}>
                         <div className="modal-body">
 

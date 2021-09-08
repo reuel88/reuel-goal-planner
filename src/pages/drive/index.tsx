@@ -1,25 +1,32 @@
 import type {NextPage} from "next";
-import {withProtected} from "../../hooks/route";
-import Navbar from "../../modules/drive/Navbar";
+import {withDrive} from "../../contexts/DriveContext";
+import {useFolder, folderType} from "../../hooks/useFolder";
+import {withProtected} from "../../hooks/useRoute";
 import AddFolderButton from "../../modules/drive/AddFolderButton";
-import {useDrive, withDrive} from "../../contexts/DriveContext";
+import Folder from "../../modules/drive/Folder";
+import Navbar from "../../modules/drive/Navbar";
 
 const Drive: NextPage = () => {
-    const {getDocs} = useDrive();
-
-    getDocs();
-
+    const {folder, childFolders} = useFolder('xtTvnc8yqxR5tFqCXCGg');
 
     return (
         <>
             <Navbar/>
 
-            <div>
-                <AddFolderButton/>
-            </div>
+            <hr/>
 
             <div>
-                drive
+                <AddFolderButton currentFolder={folder}/>
+            </div>
+
+            <hr/>
+
+            <div>
+                {childFolders.length > 0 && <div>
+                    {childFolders.map((childFolder: folderType) => (<div key={childFolder.id}>
+                        <Folder folder={childFolder}/>
+                    </div>))}
+                </div>}
             </div>
         </>
     );

@@ -1,8 +1,27 @@
 import React, {createContext, FunctionComponent, useContext} from "react";
-// import driveService, {dbDocument} from "../services/driveService";
+import driveService, {documentType, queryObjectType} from "../services/driveService";
 
-const DriveContext = createContext({
-    getDocs: () => console.log('fail')
+export type DriveContent = {
+    getDocById: (docName: documentType, id: string) => Promise<any>,
+    getAllDocs: (docName: documentType) => Promise<any>,
+    queryDocs: (docName: documentType, queries: Array<queryObjectType>) => Promise<any>,
+    querySnapshotDocs: (docName: documentType,
+                        queries: Array<queryObjectType>,
+                        callback: (snapshot: any) => void) => () => void,
+    addDoc: (docName: documentType, data: {}) => Promise<any>,
+}
+
+const DriveContext = createContext<DriveContent>({
+    getDocById: () => (new Promise(() => {
+    })),
+    getAllDocs: () => (new Promise(() => {
+    })),
+    queryDocs: () => (new Promise(() => {
+    })),
+    querySnapshotDocs: () => (() => {
+    }),
+    addDoc: () => (new Promise(() => {
+    }))
 });
 
 export function useDrive() {
@@ -11,12 +30,36 @@ export function useDrive() {
 
 export const DriveProvider: FunctionComponent = ({children}) => {
 
-    // function getDocs(doc: dbDocument) {
-    //     return driveService.getDocs(doc)
-    // }
+    function getDocById(docName: documentType, id: string) {
+        return driveService.getDocById(docName, id)
+    }
 
-    const value = {
-        getDocs: () => console.log('hello world')
+    function getAllDocs(docName: documentType) {
+        return driveService.getAllDocs(docName)
+    }
+
+    function queryDocs(docName: documentType, queries: Array<queryObjectType>) {
+        return driveService.queryDocs(docName, queries);
+    }
+
+    function querySnapshotDocs(
+        docName: documentType,
+        queries: Array<queryObjectType>,
+        callback: (snapshot: any) => void
+    ) {
+        return driveService.querySnapshotDocs(docName, queries, callback);
+    }
+
+    function addDoc(docName: documentType, data: {}) {
+        return driveService.addDoc(docName, data);
+    }
+
+    const value: DriveContent = {
+        getDocById,
+        getAllDocs,
+        queryDocs,
+        querySnapshotDocs,
+        addDoc,
     };
 
     return (<DriveContext.Provider value={value}>

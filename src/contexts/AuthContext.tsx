@@ -11,9 +11,9 @@ export type AuthContent = {
     signUp: (email: string, password: string) => Promise<any>,
     signIn: (email: string, password: string) => Promise<any>,
     signOut: () => Promise<any>,
-    resetPassword: (email:string) => Promise<any>,
-    updateEmail: (email:string) => Promise<any>,
-    updatePassword: (password:string) => Promise<any>,
+    resetPassword: (email: string) => Promise<any>,
+    updateEmail: (email: string) => Promise<any>,
+    updatePassword: (password: string) => Promise<any>,
 }
 
 const AuthContext = createContext<AuthContent>({
@@ -21,17 +21,17 @@ const AuthContext = createContext<AuthContent>({
         uid: '',
         email: ''
     },
-    signUp: (email: string, password: string) => (new Promise(() => {
+    signUp: () => (new Promise(() => {
     })),
-    signIn: (email: string, password: string) => (new Promise(() => {
+    signIn: () => (new Promise(() => {
     })),
     signOut: () => (new Promise(() => {
     })),
-    resetPassword: (email: string) => (new Promise(() => {
+    resetPassword: () => (new Promise(() => {
     })),
-    updateEmail: (email: string) => (new Promise(() => {
+    updateEmail: () => (new Promise(() => {
     })),
-    updatePassword: (password: string) => (new Promise(() => {
+    updatePassword: () => (new Promise(() => {
     })),
 });
 
@@ -62,11 +62,11 @@ export const AuthProvider: FunctionComponent = ({children}) => {
         return authService.resetPassword(email);
     }
 
-    function updateEmail(email:string){
+    function updateEmail(email: string) {
         return authService.updateEmail(email)
     }
 
-    function updatePassword(password: string){
+    function updatePassword(password: string) {
         return authService.updatePassword(password);
     }
 

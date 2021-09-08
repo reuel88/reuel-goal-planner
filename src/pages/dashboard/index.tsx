@@ -2,7 +2,7 @@ import type {NextPage} from 'next';
 import React, {useState} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {withProtected} from "../../hooks/route";
+import {withProtected} from "../../hooks/useRoute";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 

@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 
 import validate from "validate.js";
 import Link from "next/link";
-import {withPublic} from "../../hooks/route";
+import {withPublic} from "../../hooks/useRoute";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 
