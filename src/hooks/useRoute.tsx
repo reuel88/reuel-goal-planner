@@ -10,7 +10,7 @@ function Redirect({to}: {to :string}){
         router.replace(to).then((res) => {
             console.log(res);
         });
-    }, [to])
+    }, [to, router])
 
     return null;
 }
