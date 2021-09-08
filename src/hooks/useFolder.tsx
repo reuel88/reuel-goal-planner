@@ -4,7 +4,7 @@ import {formatDoc} from "../utils/firebaseUtils";
 import {useAuth} from "../contexts/AuthContext";
 import {useDrive} from "../contexts/DriveContext";
 
-export type folderType = { name: string, id: string | null, path: Array<any> }
+export type folderType = { id: string | null, name: string, path: Array<{ id: string, name:string } | null> }
 type folderIdType = string | null;
 type actionType = typeof ACTIONS.SELECT_FOLDER | typeof ACTIONS.UPDATE_FOLDER | typeof ACTIONS.SET_CHILD_FOLDERS;
 type payloadType = {
@@ -20,7 +20,7 @@ const ACTIONS = {
     SET_CHILD_FOLDERS: "set-child-folders",
 }
 
-const ROOT_FOLDER = {
+export const ROOT_FOLDER = {
     name: 'Root', id: null, path: []
 }
 

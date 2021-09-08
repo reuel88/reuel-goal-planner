@@ -1,13 +1,18 @@
 import type {NextPage} from "next";
+import {useRouter} from "next/router";
 import {withDrive} from "../../contexts/DriveContext";
 import {useFolder, folderType} from "../../hooks/useFolder";
 import {withProtected} from "../../hooks/useRoute";
 import AddFolderButton from "../../modules/drive/AddFolderButton";
+import Breadcrumbs from "../../modules/drive/Breadcrumbs";
 import Folder from "../../modules/drive/Folder";
 import Navbar from "../../modules/drive/Navbar";
 
+
 const Drive: NextPage = () => {
-    const {folder, childFolders} = useFolder('xtTvnc8yqxR5tFqCXCGg');
+    const {query: {folderId = null}}: { query: { folderId?: string | null } } = useRouter();
+
+    const {folder, childFolders} = useFolder(folderId);
 
     return (
         <>
@@ -16,6 +21,8 @@ const Drive: NextPage = () => {
             <hr/>
 
             <div>
+                <Breadcrumbs currentFolder={folder}/>
+
                 <AddFolderButton currentFolder={folder}/>
             </div>
 

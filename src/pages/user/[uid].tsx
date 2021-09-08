@@ -7,7 +7,7 @@ import {withProtected} from "../../hooks/useRoute";
 import {useAuth} from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 
-const Register: NextPage = () => {
+const User: NextPage = () => {
     const router = useRouter();
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -108,4 +108,4 @@ const Register: NextPage = () => {
     )
 }
 
-export default withProtected(Register);
+export default withProtected(User);

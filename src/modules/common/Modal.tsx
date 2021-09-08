@@ -15,7 +15,6 @@ const ModalWrapper = styled.div`
   z-index: 100;
 `;
 
-
 type ModalProps = {
     children: ReactNode
 }
@@ -33,8 +32,6 @@ const Modal: ForwardRefRenderFunction<ModalHandle, ModalProps> = ({children}, re
         }
 
         const onClose = () => {
-            console.log('onClose');
-
             setDisplay(false);
         }
 

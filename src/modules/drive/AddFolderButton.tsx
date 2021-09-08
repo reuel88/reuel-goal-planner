@@ -1,12 +1,13 @@
 import React, {FunctionComponent, ElementRef, useRef, useState, SyntheticEvent} from "react";
 import validate from "validate.js";
-import Modal from "../../components/Modal";
+import Modal from "../common/Modal";
 import {useDrive} from "../../contexts/DriveContext";
 import {useAuth} from "../../contexts/AuthContext";
 import {documentNames} from "../../services/driveService";
+import {folderType, ROOT_FOLDER} from "../../hooks/useFolder";
 
 type ModalHandle = ElementRef<typeof Modal>;
-type currentFolderType = {currentFolder: {id: string | null} };
+type currentFolderType = { currentFolder: folderType };
 
 const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) => {
     const modalRef = useRef<ModalHandle>(null);
@@ -27,13 +28,18 @@ const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) 
         e.preventDefault();
         setError('');
 
-        if(!currentFolder) return;
+        if (!currentFolder) return;
+
+        const path = [...currentFolder.path]
+        if(currentFolder !== ROOT_FOLDER && currentFolder.id){
+            path.push({name: currentFolder.name, id: currentFolder.id})
+        }
 
         const notValid = validate({name}, {
             name: {presence: {allowEmpty: false}}
         })
 
-        if(notValid){
+        if (notValid) {
             const firstKey = Object.keys(notValid)[0];
             const firstError = notValid[firstKey][0];
             return setError(firstError);
@@ -45,7 +51,7 @@ const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) 
                 name: name,
                 parentId: currentFolder.id,
                 userId: currentUser.uid,
-                // path,
+                path: path,
             })
             setName('');
             closeModal();
