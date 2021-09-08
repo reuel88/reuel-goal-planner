@@ -1,11 +1,11 @@
-import type {NextPage} from 'next';
-import React, {useRef, useState} from "react";
-import validate from "validate.js";
+import type { NextPage } from 'next';
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {withPublic} from "../../hooks/route";
-import {useAuth} from "../../contexts/AuthContext";
+import { useRouter } from "next/router";
+import React, { useRef, useState } from "react";
+import validate from "validate.js";
 import route from "../../constants/route.json";
+import { useAuth } from "../../contexts/AuthContext";
+import { withPublic } from "../../hooks/route";
 
 const Register: NextPage = () => {
     const router = useRouter();
@@ -65,16 +65,16 @@ const Register: NextPage = () => {
                     <div className="section-content">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" ref={emailRef}/>
+                            <input type="email" className="form-control" id="email" ref={emailRef} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="password" ref={passwordRef}/>
+                            <input type="password" className="form-control" id="password" ref={passwordRef} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="verify-password" className="form-label">Verify Password</label>
                             <input type="password" className="form-control" id="verify-password"
-                                   ref={verifyPasswordRef}/>
+                                   ref={verifyPasswordRef} />
                         </div>
                     </div>
                     <footer className="section-footer">
