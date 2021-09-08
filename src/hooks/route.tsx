@@ -21,10 +21,10 @@ export function withPublic(Component: FunctionComponent) {
         const {currentUser} = useAuth();
 
         if (currentUser) {
-            return <Redirect to={route.DASHBOARD}/>
+            return <Redirect to={route.DASHBOARD} />
         }
 
-        return <Component {...props}/>
+        return <Component {...props} />
     }
 }
 
@@ -33,9 +33,9 @@ export function withProtected(Component: FunctionComponent) {
         const {currentUser} = useAuth();
 
         if (!currentUser) {
-            return <Redirect to={route.LOGIN}/>;
+            return <Redirect to={route.LOGIN} />;
         }
 
-        return <Component {...props}/>
+        return <Component {...props} />
     }
 }

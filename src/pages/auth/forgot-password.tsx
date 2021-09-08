@@ -56,7 +56,7 @@ const ForgotPassword: NextPage = () => {
                     <div className="section-content">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" ref={emailRef}/>
+                            <input type="email" className="form-control" id="email" ref={emailRef} />
                         </div>
                     </div>
                     <footer className="section-footer">
