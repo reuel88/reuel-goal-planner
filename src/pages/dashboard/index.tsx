@@ -1,11 +1,11 @@
-import type {NextPage} from 'next';
-import React, {useState} from "react";
-import {useRouter} from "next/router";
+import type { NextPage } from 'next';
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
-import {withProtected} from "../../hooks/route";
-import {useAuth} from "../../contexts/AuthContext";
+import { withProtected } from "../../hooks/route";
+import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
 
 const Dashboard: NextPage = () => {
     const router = useRouter();

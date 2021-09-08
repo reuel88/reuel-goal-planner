@@ -1,12 +1,12 @@
-import type {NextPage} from 'next';
-import React, {useRef, useState} from "react";
+import type { NextPage } from 'next';
+import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {withProtected} from "../../hooks/route";
-import {useAuth} from "../../contexts/AuthContext";
+import { useRouter } from "next/router";
+import { withProtected } from "../../hooks/route";
+import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
 
 const Register: NextPage = () => {
     const router = useRouter();
@@ -21,45 +21,45 @@ const Register: NextPage = () => {
     async function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
 
-            const email = emailRef?.current?.value ?? '';
-            const password = passwordRef?.current?.value ?? '';
-            const verifyPassword = verifyPasswordRef?.current?.value ?? '';
+        const email = emailRef?.current?.value ?? '';
+        const password = passwordRef?.current?.value ?? '';
+        const verifyPassword = verifyPasswordRef?.current?.value ?? '';
 
-            const notValid = validate({
-                email, password, verifyPassword
-            }, {
-                email: {presence: {allowEmpty: false}},
-                verifyPassword: {
-                    equality: "password"
-                },
-            })
+        const notValid = validate({
+            email, password, verifyPassword
+        }, {
+            email: {presence: {allowEmpty: false}},
+            verifyPassword: {
+                equality: "password"
+            },
+        })
 
-            if (notValid) {
-                const firstKey = Object.keys(notValid)[0];
-                const firstError = notValid[firstKey][0];
-                return setError(firstError);
-            }
+        if (notValid) {
+            const firstKey = Object.keys(notValid)[0];
+            const firstError = notValid[firstKey][0];
+            return setError(firstError);
+        }
 
-            const promises = [];
-            if(email !== currentUser?.email){
-                promises.push(updateEmail(email));
-            }
+        const promises = [];
+        if (email !== currentUser?.email) {
+            promises.push(updateEmail(email));
+        }
 
-            if(password){
-                promises.push(updatePassword(password));
-            }
+        if (password) {
+            promises.push(updatePassword(password));
+        }
 
-            try {
-                setError('');
-                setLoading(true);
-                await Promise.all(promises);
-                return await router.push(route.DASHBOARD);
-            } catch (e) {
-                setError('Failed to Update');
-                console.error(e);
-            }
+        try {
+            setError('');
+            setLoading(true);
+            await Promise.all(promises);
+            return await router.push(route.DASHBOARD);
+        } catch (e) {
+            setError('Failed to Update');
+            console.error(e);
+        }
 
-            setLoading(false)
+        setLoading(false)
     }
 
     return (
