@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
 import authService from "../services/authService";
 
-export type UserContent = {
+export interface UserContent {
     uid: string,
     email: string
 }
 
-export type AuthContent = {
+export interface AuthContent {
     currentUser: UserContent,
     signUp: (email: string, password: string) => Promise<any>,
     signIn: (email: string, password: string) => Promise<any>,
@@ -21,18 +21,12 @@ const AuthContext = createContext<AuthContent>({
         uid: '',
         email: ''
     },
-    signUp: () => (new Promise(() => {
-    })),
-    signIn: () => (new Promise(() => {
-    })),
-    signOut: () => (new Promise(() => {
-    })),
-    resetPassword: () => (new Promise(() => {
-    })),
-    updateEmail: () => (new Promise(() => {
-    })),
-    updatePassword: () => (new Promise(() => {
-    })),
+    signUp: () => (new Promise((resolve, reject) => reject("Failed to register"))),
+    signIn: () => (new Promise((resolve, reject) => reject("Failed to sign in"))),
+    signOut: () => (new Promise((resolve, reject) => reject("Failed to logout"))),
+    resetPassword: () => (new Promise((resolve, reject) => reject("Failed to reset password"))),
+    updateEmail: () => (new Promise((resolve, reject) => reject("Failed to update email"))),
+    updatePassword: () => (new Promise((resolve, reject) => reject("Failed to update password"))),
 });
 
 export function useAuth() {
@@ -71,12 +65,10 @@ export const AuthProvider: FunctionComponent = ({children}) => {
     }
 
     useEffect(() => {
-        const unsubscribe = authService.authListener((user: any) => {
+        return authService.authListener((user: any) => {
             setCurrentUser(user);
             setLoading(false)
         });
-
-        return () => unsubscribe();
     }, []);
 
     const value: AuthContent = {

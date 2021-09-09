@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
-import React, { useRef, useState } from "react";
-import validate from "validate.js";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { withPublic } from "../../hooks/route";
-import { useAuth } from "../../contexts/AuthContext";
-import route from "../../constants/route.json";
 import { NextSeo } from "next-seo";
+import React, { useRef, useState } from "react";
+import validate from "validate.js";
+import route from "../../constants/route.json";
+import { useAuth } from "../../contexts/AuthContext";
+import { withPublic } from "../../hooks/route";
 
 const Register: NextPage = () => {
     const router = useRouter();

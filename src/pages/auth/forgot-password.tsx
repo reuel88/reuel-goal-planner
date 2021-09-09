@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
+import Link from "next/link";
+import { NextSeo } from "next-seo";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import Link from "next/link";
-import { withPublic } from "../../hooks/route";
 import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
-import { NextSeo } from "next-seo";
+import { withPublic } from "../../hooks/route";
 
 const ForgotPassword: NextPage = () => {
     const emailRef = useRef<HTMLInputElement>(null);
