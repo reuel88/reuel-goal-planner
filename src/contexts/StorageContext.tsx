@@ -7,7 +7,7 @@ export interface StorageContent {
 
 const StorageContext = createContext<StorageContent>({
     uploadSnapshotFile: () => {
-        throw "Error occurred when uploading"
+        throw "Error occurred when uploading";
     }
 });
 

@@ -12,16 +12,11 @@ export interface DatabaseContent {
 }
 
 const DatabaseContext = createContext<DatabaseContent>({
-    getDocById: () => (new Promise(() => {
-    })),
-    getAllDocs: () => (new Promise(() => {
-    })),
-    queryDocs: () => (new Promise(() => {
-    })),
-    querySnapshotDocs: () => (() => {
-    }),
-    addDoc: () => (new Promise(() => {
-    }))
+    getDocById: () => (Promise.reject("Failed to retrieve doc")),
+    getAllDocs: () => (Promise.reject("Failed to retrieve docs")),
+    queryDocs: () => (Promise.reject("Failed to query docs")),
+    querySnapshotDocs: () => {throw "Error occurred while querying docs";},
+    addDoc: () => (Promise.reject("Failed to create doc"))
 });
 
 export function useDrive() {

@@ -21,18 +21,12 @@ const AuthContext = createContext<AuthContent>({
         uid: '',
         email: ''
     },
-    signUp: () => (new Promise(() => {
-    })),
-    signIn: () => (new Promise(() => {
-    })),
-    signOut: () => (new Promise(() => {
-    })),
-    resetPassword: () => (new Promise(() => {
-    })),
-    updateEmail: () => (new Promise(() => {
-    })),
-    updatePassword: () => (new Promise(() => {
-    })),
+    signUp: () => (Promise.reject("Failed to register")),
+    signIn: () => (Promise.reject("Failed to login")),
+    signOut: () => (Promise.reject("Failed to sign out")),
+    resetPassword: () => (Promise.reject("Failed to reset password")),
+    updateEmail: () => (Promise.reject("Failed to update email")),
+    updatePassword: () => (Promise.reject("Failed to update password")),
 });
 
 export function useAuth() {
