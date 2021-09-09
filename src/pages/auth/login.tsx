@@ -6,7 +6,6 @@ import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import route from "../../constants/route.json";
 import { useAuth } from "../../contexts/AuthContext";
-import { withPublic } from "../../hooks/route";
 
 const Login: NextPage = () => {
     const router = useRouter();
@@ -96,4 +95,4 @@ const Login: NextPage = () => {
     )
 }
 
-export default withPublic(Login);
+export default Login;

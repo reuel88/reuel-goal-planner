@@ -1,11 +1,12 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+import nookies from 'nookies';
 import React, { useState } from "react";
 import route from "../../constants/route.json";
 import { useAuth } from "../../contexts/AuthContext";
-import { withProtected } from "../../hooks/route";
+import authBackendService from "../../services/authBackendService";
 
 const Dashboard: NextPage = () => {
     const router = useRouter();
@@ -59,4 +60,23 @@ const Dashboard: NextPage = () => {
     );
 }
 
-export default withProtected(Dashboard);
+export default Dashboard;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    try {
+        const cookies = nookies.get(ctx);
+
+        const token = await authBackendService.verifyIdToken(cookies.token);
+
+        console.log(token);
+
+        return {props: {}};
+    } catch (e) {
+        return {
+            redirect: {
+                destination: `${route.LOGIN}`,
+                permanent: true
+            }
+        }
+    }
+}

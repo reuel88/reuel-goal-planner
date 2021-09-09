@@ -5,7 +5,6 @@ import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
-import { withPublic } from "../../hooks/route";
 
 const ForgotPassword: NextPage = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -91,4 +90,4 @@ const ForgotPassword: NextPage = () => {
     )
 }
 
-export default withPublic(ForgotPassword);
+export default ForgotPassword;
