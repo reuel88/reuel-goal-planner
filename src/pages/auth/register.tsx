@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import route from "../../constants/route.json";
@@ -56,6 +57,10 @@ const Register: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Register"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Sign Up</h2>

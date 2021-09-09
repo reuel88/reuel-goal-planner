@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Link from "next/link";
+import { NextSeo } from "next-seo";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import { useAuth } from "../../contexts/AuthContext";
@@ -46,6 +47,10 @@ const ForgotPassword: NextPage = () => {
 
     return (
         <>
+            <NextSeo
+                title="Goal Planner - Forgot Password"
+            />
+
             <section>
                 <header className="section-header">
                     <h2>Reset Password</h2>
