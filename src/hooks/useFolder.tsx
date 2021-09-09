@@ -1,10 +1,10 @@
-import {useEffect, useReducer} from "react";
-import {documentNames} from "../services/driveService";
-import {formatDoc} from "../utils/firebaseUtils";
-import {useAuth} from "../contexts/AuthContext";
-import {useDrive} from "../contexts/DriveContext";
+import { useEffect, useReducer } from "react";
+import { documentNames } from "../services/driveService";
+import { formatDoc } from "../utils/firebaseUtils";
+import { useAuth } from "../contexts/AuthContext";
+import { useDrive } from "../contexts/DriveContext";
 
-export type folderType = { id: string | null, name: string, path: Array<{ id: string , name:string } | null> }
+export type folderType = { id: string | null, name: string, path: Array<{ id: string, name: string } | null> }
 type folderIdType = string | null;
 type actionType = typeof ACTIONS.SELECT_FOLDER | typeof ACTIONS.UPDATE_FOLDER | typeof ACTIONS.SET_CHILD_FOLDERS;
 type payloadType = {

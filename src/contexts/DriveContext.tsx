@@ -1,5 +1,5 @@
-import React, {createContext, FunctionComponent, useContext} from "react";
-import driveService, {documentType, queryObjectType} from "../services/driveService";
+import React, { createContext, FunctionComponent, useContext } from "react";
+import driveService, { documentType, queryObjectType } from "../services/driveService";
 
 export type DriveContent = {
     getDocById: (docName: documentType, id: string) => Promise<any>,
@@ -70,7 +70,7 @@ export const DriveProvider: FunctionComponent = ({children}) => {
 export function withDrive(Component: FunctionComponent) {
     return function WithDrive(props: any) {
         return (<DriveProvider>
-            <Component {...props}/>
+            <Component {...props} />
         </DriveProvider>)
     }
 }

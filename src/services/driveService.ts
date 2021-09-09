@@ -1,7 +1,7 @@
-import {collection, doc, addDoc, getDoc, getDocs, onSnapshot, orderBy, query,  where} from "firebase/firestore";
-import type {WhereFilterOp, QueryConstraint} from "firebase/firestore";
-import {db} from "../configs/firebase";
-import {serverTimestamp} from "../utils/firebaseUtils";
+import { collection, doc, addDoc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import type { WhereFilterOp, QueryConstraint } from "firebase/firestore";
+import { db } from "../configs/firebase";
+import { serverTimestamp } from "../utils/firebaseUtils";
 
 export const documentNames = {
     FOLDERS: "folders",
@@ -40,14 +40,15 @@ const driveService = {
             return new Promise((resolve, reject) => reject(e));
         }
     },
-    querySnapshotDocs: (docName: documentType, queries: Array<queryObjectType>, callback : (snapshot: any) => void) => {
+    querySnapshotDocs: (docName: documentType, queries: Array<queryObjectType>, callback: (snapshot: any) => void) => {
         try {
             const queriesArray: QueryConstraint[] = generateQueries(queries);
 
             return onSnapshot(query(collection(db, docName), ...queriesArray), callback);
         } catch (e) {
             callback(e)
-            return () => {};
+            return () => {
+            };
         }
     },
     addDoc: (docName: documentType, data: {}) => {

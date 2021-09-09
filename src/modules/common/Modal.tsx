@@ -1,5 +1,5 @@
-import React, {forwardRef, useState, ReactNode, useImperativeHandle, ForwardRefRenderFunction} from "react";
-import {createPortal} from "react-dom";
+import React, { forwardRef, useState, ReactNode, useImperativeHandle, ForwardRefRenderFunction } from "react";
+import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 const ModalWrapper = styled.div`

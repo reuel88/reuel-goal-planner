@@ -1,10 +1,10 @@
-import React, {FunctionComponent, ElementRef, useRef, useState, SyntheticEvent} from "react";
+import React, { FunctionComponent, ElementRef, useRef, useState, SyntheticEvent } from "react";
 import validate from "validate.js";
 import Modal from "../common/Modal";
-import {useDrive} from "../../contexts/DriveContext";
-import {useAuth} from "../../contexts/AuthContext";
-import {documentNames} from "../../services/driveService";
-import {folderType, ROOT_FOLDER} from "../../hooks/useFolder";
+import { useDrive } from "../../contexts/DriveContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { documentNames } from "../../services/driveService";
+import { folderType, ROOT_FOLDER } from "../../hooks/useFolder";
 
 type ModalHandle = ElementRef<typeof Modal>;
 type currentFolderType = { currentFolder: folderType };
@@ -31,7 +31,7 @@ const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) 
         if (!currentFolder) return;
 
         const path = [...currentFolder.path]
-        if(currentFolder !== ROOT_FOLDER && currentFolder.id){
+        if (currentFolder !== ROOT_FOLDER && currentFolder.id) {
             path.push({name: currentFolder.name, id: currentFolder.id})
         }
 
@@ -77,7 +77,7 @@ const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) 
                             <div className="form-group">
                                 <label htmlFor="name" className="form-label">Folder Name</label>
                                 <input type="text" className="form-control" id="name" value={name}
-                                       onChange={(e) => setName(e.target.value)}/>
+                                       onChange={(e) => setName(e.target.value)} />
                             </div>
 
                         </div>

@@ -7,7 +7,7 @@ import {
     updateEmail,
     updatePassword
 } from "firebase/auth";
-import {auth} from "../configs/firebase";
+import { auth } from "../configs/firebase";
 
 const authService = {
     signUp: (email: string, password: string) => {
@@ -23,14 +23,14 @@ const authService = {
         return sendPasswordResetEmail(auth, email);
     },
     updateEmail: (email: string) => {
-        if(!auth.currentUser){
+        if (!auth.currentUser) {
             return new Promise((resolve, reject) => reject('auth.currentUser not set'))
         }
 
         return updateEmail(auth.currentUser, email);
     },
     updatePassword: (password: string) => {
-        if(!auth.currentUser){
+        if (!auth.currentUser) {
             return new Promise((resolve, reject) => reject('auth.currentUser not set'))
         }
 

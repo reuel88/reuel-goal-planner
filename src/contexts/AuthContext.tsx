@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState, FunctionComponent} from "react";
+import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
 import authService from "../services/authService";
 
 export type UserContent = {

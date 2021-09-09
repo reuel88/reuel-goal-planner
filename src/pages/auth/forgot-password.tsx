@@ -1,9 +1,9 @@
-import type {NextPage} from 'next';
-import React, {useRef, useState} from "react";
+import type { NextPage } from 'next';
+import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import Link from "next/link";
-import {withPublic} from "../../hooks/useRoute";
-import {useAuth} from "../../contexts/AuthContext";
+import { withPublic } from "../../hooks/useRoute";
+import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 
 const ForgotPassword: NextPage = () => {
@@ -57,7 +57,7 @@ const ForgotPassword: NextPage = () => {
                     <div className="section-content">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" ref={emailRef}/>
+                            <input type="email" className="form-control" id="email" ref={emailRef} />
                         </div>
                     </div>
                     <footer className="section-footer">

@@ -1,7 +1,7 @@
-import React, {FunctionComponent} from "react";
+import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import route from "../../constants/route.json";
-import {useAuth} from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Navbar: FunctionComponent = () => {
     const {currentUser} = useAuth();

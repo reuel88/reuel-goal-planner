@@ -1,11 +1,11 @@
-import type {NextPage} from 'next';
-import React, {useRef, useState} from "react";
-import {useRouter} from "next/router";
+import type { NextPage } from 'next';
+import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 import validate from "validate.js";
 import Link from "next/link";
-import {withPublic} from "../../hooks/useRoute";
-import {useAuth} from "../../contexts/AuthContext";
+import { withPublic } from "../../hooks/useRoute";
+import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
 
 const Login: NextPage = () => {
@@ -60,11 +60,11 @@ const Login: NextPage = () => {
                     <div className="section-content">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" ref={emailRef}/>
+                            <input type="email" className="form-control" id="email" ref={emailRef} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="password" ref={passwordRef}/>
+                            <input type="password" className="form-control" id="password" ref={passwordRef} />
                         </div>
                     </div>
                     <footer className="section-footer">
