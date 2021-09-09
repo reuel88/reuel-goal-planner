@@ -1,15 +1,16 @@
 import React, { FunctionComponent, ElementRef, useRef, useState, SyntheticEvent } from "react";
 import validate from "validate.js";
 import Modal from "../common/Modal";
-import { useDrive } from "../../contexts/DriveContext";
+import { useDrive } from "../../contexts/DatabaseContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { documentNames } from "../../services/driveService";
+import { documentNames } from "../../services/databaseService";
 import { folderType, ROOT_FOLDER } from "../../hooks/useFolder";
 
 type ModalHandle = ElementRef<typeof Modal>;
-type currentFolderType = { currentFolder: folderType };
 
-const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) => {
+const AddFolderButton: FunctionComponent<{
+    currentFolder: folderType
+}> = ({currentFolder}) => {
     const modalRef = useRef<ModalHandle>(null);
     const [error, setError] = useState('');
     const [name, setName] = useState('');
@@ -55,8 +56,9 @@ const AddFolderButton: FunctionComponent<currentFolderType> = ({currentFolder}) 
             })
             setName('');
             closeModal();
-        } catch (e) {
-            console.error(e)
+        } catch (e: any) {
+            console.error(e);
+            setError(e.message);
         }
     }
 

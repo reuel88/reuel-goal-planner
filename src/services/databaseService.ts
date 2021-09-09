@@ -1,5 +1,5 @@
-import { collection, doc, addDoc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import type { WhereFilterOp, QueryConstraint } from "firebase/firestore";
+import { collection, doc, addDoc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { db } from "../configs/firebase";
 import { serverTimestamp } from "../utils/firebaseUtils";
 
@@ -9,8 +9,14 @@ export const documentNames = {
 }
 
 export type documentType = typeof documentNames.FOLDERS | typeof documentNames.FILES;
-export type queryObjectType = { operator: operatorType, fieldPath: string, opStr?: WhereFilterOp, value?: unknown };
 type operatorType = "where" | "orderBy";
+
+export interface queryObjectType {
+    operator: operatorType,
+    fieldPath: string,
+    opStr?: WhereFilterOp,
+    value?: unknown
+}
 
 const generateQueries = (queries: Array<queryObjectType>) => {
     return queries.map(({operator, fieldPath, opStr, value}) => {
@@ -24,7 +30,7 @@ const generateQueries = (queries: Array<queryObjectType>) => {
     });
 }
 
-const driveService = {
+const databaseService = {
     getDocById: (docName: documentType, id: string) => {
         return getDoc(doc(db, docName, id));
     },
@@ -56,4 +62,4 @@ const driveService = {
     }
 }
 
-export default driveService;
+export default databaseService;

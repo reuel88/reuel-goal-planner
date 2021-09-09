@@ -1,7 +1,7 @@
 import React, { createContext, FunctionComponent, useContext } from "react";
-import driveService, { documentType, queryObjectType } from "../services/driveService";
+import databaseService, { documentType, queryObjectType } from "../services/databaseService";
 
-export type DriveContent = {
+export interface DatabaseContent {
     getDocById: (docName: documentType, id: string) => Promise<any>,
     getAllDocs: (docName: documentType) => Promise<any>,
     queryDocs: (docName: documentType, queries: Array<queryObjectType>) => Promise<any>,
@@ -11,7 +11,7 @@ export type DriveContent = {
     addDoc: (docName: documentType, data: {}) => Promise<any>,
 }
 
-const DriveContext = createContext<DriveContent>({
+const DatabaseContext = createContext<DatabaseContent>({
     getDocById: () => (new Promise(() => {
     })),
     getAllDocs: () => (new Promise(() => {
@@ -25,21 +25,20 @@ const DriveContext = createContext<DriveContent>({
 });
 
 export function useDrive() {
-    return useContext(DriveContext);
+    return useContext(DatabaseContext);
 }
 
 export const DriveProvider: FunctionComponent = ({children}) => {
-
     function getDocById(docName: documentType, id: string) {
-        return driveService.getDocById(docName, id)
+        return databaseService.getDocById(docName, id)
     }
 
     function getAllDocs(docName: documentType) {
-        return driveService.getAllDocs(docName)
+        return databaseService.getAllDocs(docName)
     }
 
     function queryDocs(docName: documentType, queries: Array<queryObjectType>) {
-        return driveService.queryDocs(docName, queries);
+        return databaseService.queryDocs(docName, queries);
     }
 
     function querySnapshotDocs(
@@ -47,14 +46,14 @@ export const DriveProvider: FunctionComponent = ({children}) => {
         queries: Array<queryObjectType>,
         callback: (snapshot: any) => void
     ) {
-        return driveService.querySnapshotDocs(docName, queries, callback);
+        return databaseService.querySnapshotDocs(docName, queries, callback);
     }
 
     function addDoc(docName: documentType, data: {}) {
-        return driveService.addDoc(docName, data);
+        return databaseService.addDoc(docName, data);
     }
 
-    const value: DriveContent = {
+    const value: DatabaseContent = {
         getDocById,
         getAllDocs,
         queryDocs,
@@ -62,9 +61,9 @@ export const DriveProvider: FunctionComponent = ({children}) => {
         addDoc,
     };
 
-    return (<DriveContext.Provider value={value}>
+    return (<DatabaseContext.Provider value={value}>
         {children}
-    </DriveContext.Provider>)
+    </DatabaseContext.Provider>)
 }
 
 export function withDrive(Component: FunctionComponent) {

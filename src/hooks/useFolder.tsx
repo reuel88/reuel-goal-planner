@@ -1,13 +1,18 @@
 import { useEffect, useReducer } from "react";
-import { documentNames } from "../services/driveService";
+import { documentNames } from "../services/databaseService";
 import { formatDoc } from "../utils/firebaseUtils";
 import { useAuth } from "../contexts/AuthContext";
-import { useDrive } from "../contexts/DriveContext";
+import { useDrive } from "../contexts/DatabaseContext";
 
-export type folderType = { id: string | null, name: string, path: Array<{ id: string, name: string } | null> }
-type folderIdType = string | null;
 type actionType = typeof ACTIONS.SELECT_FOLDER | typeof ACTIONS.UPDATE_FOLDER | typeof ACTIONS.SET_CHILD_FOLDERS;
-type payloadType = {
+
+export interface folderType {
+    id: string | null,
+    name: string,
+    path: Array<null | { id: string, name: string }>
+}
+
+interface payloadType {
     folderId?: string | null,
     folder?: {} | null,
     childFolders?: Array<folderType>,
@@ -43,7 +48,7 @@ function reducer(state: any, {type, payload}: { type: actionType, payload: paylo
 }
 
 export function useFolder(
-    folderId: folderIdType = null,
+    folderId: string | null = null,
     folder: folderType | null = null
 ) {
     const {currentUser} = useAuth();
@@ -99,7 +104,7 @@ export function useFolder(
     }, [folderId, getDocById]);
 
     useEffect(() => {
-        const cleanup = querySnapshotDocs(
+        return querySnapshotDocs(
             documentNames.FOLDERS,
             [
                 {operator: "where", fieldPath: "parentId", opStr: "==", value: folderId},
@@ -114,8 +119,6 @@ export function useFolder(
                     }
                 })
             })
-
-        return () => cleanup();
     }, [folderId, currentUser, querySnapshotDocs])
 
     return state;

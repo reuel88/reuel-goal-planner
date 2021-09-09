@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
 import authService from "../services/authService";
 
-export type UserContent = {
+export interface UserContent {
     uid: string,
     email: string
 }
 
-export type AuthContent = {
+export interface AuthContent {
     currentUser: UserContent,
     signUp: (email: string, password: string) => Promise<any>,
     signIn: (email: string, password: string) => Promise<any>,

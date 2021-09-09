@@ -7,9 +7,7 @@ function Redirect({to}: { to: string }) {
     const router = useRouter();
 
     useEffect(() => {
-        router.replace(to).then((res) => {
-            console.log(res);
-        });
+        router.replace(to).then((bool) =>  console.trace(bool));
     }, [to, router])
 
     return null;

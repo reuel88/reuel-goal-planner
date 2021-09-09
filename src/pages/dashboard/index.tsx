@@ -2,9 +2,10 @@ import type { NextPage } from 'next';
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { withProtected } from "../../hooks/useRoute";
+import { withProtected } from "../../hooks/useAuthRouter";
 import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import BasicLayout from "../../modules/layouts/BasicLayout";
 
 const Dashboard: NextPage = () => {
     const router = useRouter();
@@ -26,10 +27,10 @@ const Dashboard: NextPage = () => {
     }
 
     return (
-        <>
+        <BasicLayout>
             <section>
                 <header className="section-header">
-                    <h2>Profile</h2>
+                    <h1>Profile</h1>
                 </header>
                 {error && <div className="alert alert-danger">{error}</div>}
                 <div className="section-content">
@@ -50,7 +51,9 @@ const Dashboard: NextPage = () => {
             <div>
                 <button type="button" onClick={handleLogout}>Log out</button>
             </div>
-        </>
+        </BasicLayout>
+
+
     );
 }
 

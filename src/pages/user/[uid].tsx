@@ -3,9 +3,10 @@ import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { withProtected } from "../../hooks/useRoute";
+import { withProtected } from "../../hooks/useAuthRouter";
 import { useAuth } from "../../contexts/AuthContext";
 import route from "../../constants/route.json";
+import BasicLayout from "../../modules/layouts/BasicLayout";
 
 const User: NextPage = () => {
     const router = useRouter();
@@ -62,7 +63,7 @@ const User: NextPage = () => {
     }
 
     return (
-        <>
+        <BasicLayout>
             <section>
                 <header className="section-header">
                     <h2>Update Profile</h2>
@@ -104,7 +105,7 @@ const User: NextPage = () => {
                     </a>
                 </Link>
             </div>
-        </>
+        </BasicLayout>
     )
 }
 

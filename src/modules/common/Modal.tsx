@@ -15,11 +15,11 @@ const ModalWrapper = styled.div`
   z-index: 100;
 `;
 
-type ModalProps = {
+interface ModalProps {
     children: ReactNode
 }
 
-type ModalHandle = {
+interface ModalHandle {
     handleOpen: () => void,
     handleClose: () => void,
 }
