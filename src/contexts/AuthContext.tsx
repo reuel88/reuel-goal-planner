@@ -7,7 +7,7 @@ export interface UserContent {
 }
 
 export interface AuthContent {
-  currentUser: UserContent,
+  currentUser: UserContent | null,
   signUp: (email: string, password: string) => Promise<any>,
   signIn: (email: string, password: string) => Promise<any>,
   signOut: () => Promise<any>,
@@ -16,28 +16,14 @@ export interface AuthContent {
   updatePassword: (password: string) => Promise<any>,
 }
 
-const AuthContext = createContext<AuthContent>({
-  currentUser: {
-    uid: "",
-    email: ""
-  },
-  signUp: () => (new Promise((resolve, reject) => reject("Failed to register"))),
-  signIn: () => (new Promise((resolve, reject) => reject("Failed to sign in"))),
-  signOut: () => (new Promise((resolve, reject) => reject("Failed to logout"))),
-  resetPassword: () => (new Promise((resolve, reject) => reject("Failed to reset password"))),
-  updateEmail: () => (new Promise((resolve, reject) => reject("Failed to update email"))),
-  updatePassword: () => (new Promise((resolve, reject) => reject("Failed to update password")))
-});
+const AuthContext = createContext<AuthContent | null>(null);
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({
-    uid: "",
-    email: ""
-  });
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   function signUp(email: string, password: string) {

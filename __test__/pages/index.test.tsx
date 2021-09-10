@@ -1,15 +1,14 @@
-/**
- * @jest-environment jsdom
- */
 import { render, screen } from "@testing-library/react";
 import Home from "@pages/index";
 
 describe("Home", () => {
 
-  it("It should render Welcome", async () => {
-    render(<Home/>)
+  test("Renders a heading", async () => {
+    render(<Home />);
 
-    const heading = screen.getByText(/Welcome to/i);
+    const heading = screen.getByRole("heading", {
+      name: /welcome to next\.js!/i
+    });
 
     expect(heading).toBeInTheDocument();
   });

@@ -39,7 +39,6 @@ const authService = {
   authListener: (callback: (user: any) => void) => {
     return onAuthStateChanged(auth, callback);
   }
-
 };
 
 export default authService;

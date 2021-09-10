@@ -13,7 +13,9 @@ const ForgotPassword: NextPage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { resetPassword } = useAuth();
+  const { resetPassword } = useAuth() ?? { resetPassword: null };
+
+  if (!resetPassword) return null;
 
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -32,6 +34,8 @@ const ForgotPassword: NextPage = () => {
     }
 
     try {
+      if (!resetPassword) return "resetPassword not defined";
+
       setError("");
       setMessage("");
       setLoading(true);
@@ -69,7 +73,6 @@ const ForgotPassword: NextPage = () => {
           </footer>
         </form>
       </section>
-
 
       <div>
         <Link href={route.LOGIN}>
