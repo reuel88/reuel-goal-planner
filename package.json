@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "firebase": "^9.0.1",
@@ -17,9 +18,21 @@
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
-    "@types/react": "17.0.19",
+    "@testing-library/dom": "^8.3.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.9.1",
+    "@types/react": "^17.0.19",
+    "babel-jest": "^27.1.1",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "typescript": "4.4.2"
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.1.1",
+    "jest-environment-jsdom-fifteen": "^1.0.2",
+    "next-page-tester": "^0.28.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }

@@ -5,4 +5,5 @@ module.exports = {
     locales: ['en-AU'],
     defaultLocale: 'en-AU',
   },
+  setupFilesAfterEnv: ["./jest.setup.ts"],
 }
