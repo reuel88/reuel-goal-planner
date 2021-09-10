@@ -7,7 +7,7 @@ import {
     updateEmail,
     updatePassword
 } from "firebase/auth";
-import { auth } from "../configs/firebase";
+import { auth } from "@configs/firebase";
 
 const authService = {
     signUp: (email: string, password: string) => {

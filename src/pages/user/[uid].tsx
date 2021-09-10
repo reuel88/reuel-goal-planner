@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import { withProtected } from "../../hooks/route";
-import { useAuth } from "../../contexts/AuthContext";
-import route from "../../constants/route.json";
+import { withProtected } from "@hooks/route";
+import { useAuth } from "@contexts/AuthContext";
+import route from "@constants/route.json";
 
 const Register: NextPage = () => {
     const router = useRouter();

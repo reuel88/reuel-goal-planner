@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useEffect } from "react";
-import route from "../constants/route.json";
-import { useAuth } from "../contexts/AuthContext";
+import route from "@constants/route.json";
+import { useAuth } from "@contexts/AuthContext";
 
 
 function Redirect({to}: { to: string }) {
