@@ -2,7 +2,13 @@ import { createContext, FunctionComponent, useContext } from "react";
 import storageService from "../services/storageService";
 
 export interface StorageContent {
-    uploadSnapshotFile: (dir: string, file: Blob | Uint8Array | ArrayBuffer) => () => any
+    uploadSnapshotFile: (
+        dir: string,
+        file: Blob | Uint8Array | ArrayBuffer,
+        callback: (snapshot: any) => unknown,
+        error?: (err: any) => unknown,
+        complete?: (downloadURL: any) => unknown
+    ) => () => any
 }
 
 const StorageContext = createContext<StorageContent>({
@@ -17,11 +23,17 @@ export function useStorage() {
 
 export const StorageProvider: FunctionComponent = ({children}) => {
 
-    function uploadSnapshotFile(dir: string, file: Blob | Uint8Array | ArrayBuffer) {
-        return storageService.uploadSnapshotFile(dir, file)
+    function uploadSnapshotFile(
+        dir: string,
+        file: Blob | Uint8Array | ArrayBuffer,
+        callback: (snapshot: any) => unknown,
+        error?: (err: any) => unknown,
+        complete?: (downloadURL: string) => unknown
+    ) {
+        return storageService.uploadSnapshotFile(dir, file, callback, error, complete)
     }
 
-    const value = {
+    const value: StorageContent = {
         uploadSnapshotFile
     };
 

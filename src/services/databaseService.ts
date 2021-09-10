@@ -1,5 +1,16 @@
-import type { WhereFilterOp, QueryConstraint } from "firebase/firestore";
-import { collection, doc, addDoc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import type { DocumentReference, QueryConstraint, WhereFilterOp } from "firebase/firestore";
+import {
+    collection,
+    doc,
+    addDoc,
+    getDoc,
+    getDocs,
+    onSnapshot,
+    orderBy,
+    query,
+    updateDoc,
+    where
+} from "firebase/firestore";
 import { db } from "../configs/firebase";
 import { serverTimestamp } from "../utils/firebaseUtils";
 
@@ -31,6 +42,9 @@ const generateQueries = (queries: Array<queryObjectType>) => {
 }
 
 const databaseService = {
+    addDoc: (docName: documentType, data: {}) => {
+        return addDoc(collection(db, docName), {...data, createdAt: serverTimestamp()})
+    },
     getDocById: (docName: documentType, id: string) => {
         return getDoc(doc(db, docName, id));
     },
@@ -57,8 +71,8 @@ const databaseService = {
             };
         }
     },
-    addDoc: (docName: documentType, data: {}) => {
-        return addDoc(collection(db, docName), {...data, createdAt: serverTimestamp()})
+    updateDoc: (reference: DocumentReference, data: {}) => {
+        return updateDoc(reference, {...data, modifiedAt: serverTimestamp()});
     }
 }
 

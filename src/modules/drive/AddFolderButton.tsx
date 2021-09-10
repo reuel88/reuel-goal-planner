@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ElementRef, useRef, useState, SyntheticEvent } from "react";
 import validate from "validate.js";
 import Modal from "../common/Modal";
-import { useDrive } from "../../contexts/DatabaseContext";
+import { useDatabase } from "../../contexts/DatabaseContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { documentNames } from "../../services/databaseService";
 import { folderType, ROOT_FOLDER } from "../../hooks/useFolder";
@@ -15,7 +15,7 @@ const AddFolderButton: FunctionComponent<{
     const [error, setError] = useState('');
     const [name, setName] = useState('');
     const {currentUser} = useAuth();
-    const {addDoc} = useDrive();
+    const {addDoc} = useDatabase();
 
     function openModal() {
         modalRef?.current?.handleOpen();

@@ -7,7 +7,7 @@ const BasicLayout: FunctionComponent = ({children}) => {
         <>
             <Navbar />
 
-            <hr/>
+            <hr />
 
             {children}
         </>

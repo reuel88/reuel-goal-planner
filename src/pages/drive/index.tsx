@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { withDrive } from "../../contexts/DatabaseContext";
-import { useFolder, folderType } from "../../hooks/useFolder";
+import { withDatabase } from "../../contexts/DatabaseContext";
+import { useFolder, folderType, fileType } from "../../hooks/useFolder";
 import { withProtected } from "../../hooks/useAuthRouter";
 import AddFolderButton from "../../modules/drive/AddFolderButton";
 import FolderBreadcrumbs from "../../modules/drive/FolderBreadcrumbs";
@@ -10,6 +10,7 @@ import Folder from "../../modules/drive/Folder";
 import BasicLayout from "../../modules/layouts/BasicLayout";
 import AddFileButton from "../../modules/drive/AddFileButton";
 import { withStorage } from "../../contexts/StorageContext";
+import File from "../../modules/drive/File";
 
 const MainTop = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const MainTop = styled.div`
 
 const Drive: NextPage = () => {
     const {query: {folderId = null}}: { query: { folderId?: string | null } } = useRouter();
-    const {folder, childFolders} = useFolder(folderId);
+    const {folder, childFolders, childFiles} = useFolder(folderId);
 
     return (
         <>
@@ -50,6 +51,17 @@ const Drive: NextPage = () => {
                                 </div>))}
                             </div>}
                         </section>
+
+                        <section>
+                            <h2>Files</h2>
+                            {childFiles.length > 0 && <div>
+                                {childFiles.map((childFile: fileType) => (<div key={childFile.id}>
+                                    <File file={childFile}>
+                                        {childFile.name}
+                                    </File>
+                                </div>))}
+                            </div>}
+                        </section>
                     </div>
 
                 </main>
@@ -58,4 +70,4 @@ const Drive: NextPage = () => {
     );
 }
 
-export default withProtected(withDrive(withStorage(Drive)));
+export default withProtected(withDatabase(withStorage(Drive)));

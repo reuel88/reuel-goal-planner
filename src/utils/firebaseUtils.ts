@@ -1,4 +1,4 @@
-import {serverTimestamp} from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 
 const formatDoc = (doc: any): { id: string } => {
     return {
@@ -7,4 +7,4 @@ const formatDoc = (doc: any): { id: string } => {
     }
 }
 
-export {serverTimestamp, formatDoc};
+export { serverTimestamp, formatDoc };

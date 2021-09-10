@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import { documentNames } from "../services/databaseService";
 import { formatDoc } from "../utils/firebaseUtils";
 import { useAuth } from "../contexts/AuthContext";
-import { useDrive } from "../contexts/DatabaseContext";
+import { useDatabase } from "../contexts/DatabaseContext";
 
 type actionType = typeof ACTIONS.SELECT_FOLDER | typeof ACTIONS.UPDATE_FOLDER | typeof ACTIONS.SET_CHILD_FOLDERS;
 
@@ -12,17 +12,24 @@ export interface folderType {
     path: Array<null | { id: string, name: string }>
 }
 
+export interface fileType {
+    id: string | null,
+    name: string,
+    url: string
+}
+
 interface payloadType {
     folderId?: string | null,
     folder?: {} | null,
     childFolders?: Array<folderType>,
-    childFiles?: Array<any>,
+    childFiles?: Array<fileType>,
 }
 
 const ACTIONS = {
     SELECT_FOLDER: "select-folder",
     UPDATE_FOLDER: "update-folder",
     SET_CHILD_FOLDERS: "set-child-folders",
+    SET_CHILD_FILES: "set-child-files",
 }
 
 export const ROOT_FOLDER = {
@@ -42,6 +49,8 @@ function reducer(state: any, {type, payload}: { type: actionType, payload: paylo
             return {...state, folder: payload.folder}
         case ACTIONS.SET_CHILD_FOLDERS:
             return {...state, childFolders: payload.childFolders}
+        case ACTIONS.SET_CHILD_FILES:
+            return {...state, childFiles: payload.childFiles}
         default:
             return state
     }
@@ -52,7 +61,7 @@ export function useFolder(
     folder: folderType | null = null
 ) {
     const {currentUser} = useAuth();
-    const {getDocById, querySnapshotDocs} = useDrive();
+    const {getDocById, querySnapshotDocs} = useDatabase();
 
     const [state, dispatch] = useReducer(reducer, {
         folderId,
@@ -111,7 +120,7 @@ export function useFolder(
                 {operator: "where", fieldPath: "userId", opStr: "==", value: currentUser.uid},
                 {operator: "orderBy", fieldPath: "createdAt"},
             ],
-            (snapshot) => {
+            snapshot => {
                 dispatch({
                     type: ACTIONS.SET_CHILD_FOLDERS,
                     payload: {
@@ -119,6 +128,26 @@ export function useFolder(
                     }
                 })
             })
+    }, [folderId, currentUser, querySnapshotDocs]);
+
+    useEffect(() => {
+        return querySnapshotDocs(
+            documentNames.FILES,
+            [
+                {operator: "where", fieldPath: "folderId", opStr: "==", value: folderId},
+                {operator: "where", fieldPath: "userId", opStr: "==", value: currentUser.uid},
+                {operator: "orderBy", fieldPath: "createdAt"},
+            ],
+            snapshot => {
+                dispatch({
+                    type: ACTIONS.SET_CHILD_FILES,
+                    payload: {
+                        childFiles: snapshot.docs.map(formatDoc)
+                    }
+                })
+            }
+        )
+
     }, [folderId, currentUser, querySnapshotDocs])
 
     return state;

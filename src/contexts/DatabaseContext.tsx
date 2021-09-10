@@ -1,29 +1,39 @@
 import React, { createContext, FunctionComponent, useContext } from "react";
+import { DocumentReference } from "firebase/firestore";
 import databaseService, { documentType, queryObjectType } from "../services/databaseService";
 
 export interface DatabaseContent {
+    addDoc: (docName: documentType, data: {}) => Promise<any>,
     getDocById: (docName: documentType, id: string) => Promise<any>,
     getAllDocs: (docName: documentType) => Promise<any>,
     queryDocs: (docName: documentType, queries: Array<queryObjectType>) => Promise<any>,
     querySnapshotDocs: (docName: documentType,
                         queries: Array<queryObjectType>,
                         callback: (snapshot: any) => void) => () => void,
-    addDoc: (docName: documentType, data: {}) => Promise<any>,
+    updateDoc: (reference: DocumentReference, data: {}) => Promise<any>
 }
 
 const DatabaseContext = createContext<DatabaseContent>({
+    addDoc: () => (Promise.reject("Failed to create doc")),
     getDocById: () => (Promise.reject("Failed to retrieve doc")),
     getAllDocs: () => (Promise.reject("Failed to retrieve docs")),
     queryDocs: () => (Promise.reject("Failed to query docs")),
-    querySnapshotDocs: () => {throw "Error occurred while querying docs";},
-    addDoc: () => (Promise.reject("Failed to create doc"))
+    querySnapshotDocs: () => {
+        throw "Error occurred while querying docs";
+    },
+    updateDoc: () => (Promise.reject("Failed to update doc")),
 });
 
-export function useDrive() {
+export function useDatabase() {
     return useContext(DatabaseContext);
 }
 
 export const DriveProvider: FunctionComponent = ({children}) => {
+
+    function addDoc(docName: documentType, data: {}) {
+        return databaseService.addDoc(docName, data);
+    }
+
     function getDocById(docName: documentType, id: string) {
         return databaseService.getDocById(docName, id)
     }
@@ -44,16 +54,17 @@ export const DriveProvider: FunctionComponent = ({children}) => {
         return databaseService.querySnapshotDocs(docName, queries, callback);
     }
 
-    function addDoc(docName: documentType, data: {}) {
-        return databaseService.addDoc(docName, data);
+    function updateDoc(reference: DocumentReference, data: {}) {
+        return databaseService.updateDoc(reference, data);
     }
 
     const value: DatabaseContent = {
+        addDoc,
         getDocById,
         getAllDocs,
         queryDocs,
         querySnapshotDocs,
-        addDoc,
+        updateDoc,
     };
 
     return (<DatabaseContext.Provider value={value}>
@@ -61,8 +72,8 @@ export const DriveProvider: FunctionComponent = ({children}) => {
     </DatabaseContext.Provider>)
 }
 
-export function withDrive(Component: FunctionComponent) {
-    return function WithDrive(props: any) {
+export function withDatabase(Component: FunctionComponent) {
+    return function WithDatabase(props: any) {
         return (<DriveProvider>
             <Component {...props} />
         </DriveProvider>)
