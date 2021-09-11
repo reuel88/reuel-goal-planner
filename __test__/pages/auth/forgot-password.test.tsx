@@ -11,7 +11,15 @@ jest.mock("@contexts/AuthContext", () => ({
 
 // jest.mock("@contexts/AuthContext", jest.fn());
 
-const getControlledPromise = () => {
+interface ControlledPromiseInterface {
+  deferred: {
+    resolve: () => void,
+    reject: () => void,
+  },
+  promise: Promise<any>
+}
+
+const getControlledPromise = (): ControlledPromiseInterface => {
   let deferred;
 
   const promise = new Promise((resolve, reject) => {
@@ -24,7 +32,8 @@ const getControlledPromise = () => {
 
       return {
         resolve: () => {
-        }, reject: () => {
+        },
+        reject: () => {
         }
       };
     })("Failed resolve deferred"), promise
@@ -78,7 +87,6 @@ describe("Forgot Password", () => {
     let resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
     fireEvent.click(resetPasswordBtn);
 
-
     resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
     expect(resetPasswordBtn).toHaveAttribute("disabled");
 
@@ -110,7 +118,6 @@ describe("Forgot Password", () => {
 
     let resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
     fireEvent.click(resetPasswordBtn);
-
 
     resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
     expect(resetPasswordBtn).toHaveAttribute("disabled");
