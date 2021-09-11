@@ -17,6 +17,7 @@ jest.mock("@services/authService", () => ({
   })
 );
 
+
 describe("AuthContext", () => {
   it("Expect to be loading", () => {
     const TestingComponent: FunctionComponent = () => {

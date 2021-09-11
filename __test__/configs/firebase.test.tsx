@@ -35,7 +35,7 @@ describe("firebase", () => {
       appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
     };
 
-    const auth = await require("@configs/firebase").auth;
+    await require("@configs/firebase").auth;
 
     expect(initializeApp).toBeCalledWith(firebaseConfig);
     expect(getAuth).toBeCalled();

@@ -9,22 +9,26 @@ import { withPublic } from "@hooks/route";
 
 const ForgotPassword: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const { resetPassword } = useAuth() ?? { resetPassword: null };
 
-  if (!resetPassword) return null;
+  if (!resetPassword) {
+    console.log("resetPassword not defined");
+    return <div data-testid="no-reset-password" />;
+  }
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  async function handleSubmit(e: React.SyntheticEvent, resetPassword: (email: string) => Promise<any>) {
     e.preventDefault();
     const email = emailRef?.current?.value ?? "";
 
     const notValid = validate({
       email
     }, {
-      email: { presence: { allowEmpty: false } }
+      email: { presence: { allowEmpty: false }, email: true }
     });
 
     if (notValid) {
@@ -34,16 +38,14 @@ const ForgotPassword: NextPage = () => {
     }
 
     try {
-      if (!resetPassword) return "resetPassword not defined";
-
       setError("");
       setMessage("");
       setLoading(true);
       await resetPassword(email);
       setMessage("Check your inbox for further instructions");
     } catch (e) {
-      setError("Failed to Reset Password");
-      console.error(e);
+      console.log(e);
+      return setError("Failed to Reset Password");
     }
 
     setLoading(false);
@@ -59,9 +61,9 @@ const ForgotPassword: NextPage = () => {
         <header className="section-header">
           <h2>Reset Password</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
-        {message && <div className="alert alert-success">{message}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        {message && <div className="alert alert-success" role="alert">{message}</div>}
+        <form onSubmit={e => handleSubmit(e, resetPassword)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
