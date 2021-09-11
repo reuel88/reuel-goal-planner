@@ -7,7 +7,7 @@ import authService from "@services/authService";
 
 const faker = require("faker");
 
-jest.mock('next/router');
+jest.mock("next/router");
 
 jest.mock("@services/authService", () => ({
     authListener: jest.fn().mockImplementation(callback => callback(null))
@@ -18,9 +18,10 @@ describe("useAuthRouter", () => {
 
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
-      replace: () => {}
+      replace: jest.fn()
     });
-  })
+
+  });
 
   it("Expect route to render public component", () => {
 
@@ -30,7 +31,7 @@ describe("useAuthRouter", () => {
       return <div data-testid="public">{lorem}</div>;
     };
 
-    const WithPublic = withPublic(PublicComponent)
+    const WithPublic = withPublic(PublicComponent);
 
     render(<AuthProvider><WithPublic /></AuthProvider>);
 
@@ -47,9 +48,9 @@ describe("useAuthRouter", () => {
       return <div data-testid="unprotected">{lorem}</div>;
     };
 
-    const WithProtected = withProtected(Unprotected)
+    const WithProtected = withProtected(Unprotected);
 
-    render(<AuthProvider><WithProtected/></AuthProvider>);
+    render(<AuthProvider><WithProtected /></AuthProvider>);
 
     const noRedirectElement = screen.getByTestId("no-redirect");
 
@@ -57,6 +58,7 @@ describe("useAuthRouter", () => {
   });
 
   it("Expect route to render not public component", () => {
+
     jest.spyOn(authService, "authListener").mockImplementation((callback: any) => callback({
       uid: "r",
       email: "t"
@@ -68,7 +70,7 @@ describe("useAuthRouter", () => {
       return <div data-testid="not-public">{lorem}</div>;
     };
 
-    const WithPublic = withPublic(NotPublicComponent)
+    const WithPublic = withPublic(NotPublicComponent);
 
     render(<AuthProvider><WithPublic /></AuthProvider>);
 
@@ -90,13 +92,12 @@ describe("useAuthRouter", () => {
       return <div data-testid="protected">{lorem}</div>;
     };
 
-    const WithProtected = withProtected(Protected)
+    const WithProtected = withProtected(Protected);
 
-    render(<AuthProvider><WithProtected/></AuthProvider>);
+    render(<AuthProvider><WithProtected /></AuthProvider>);
 
     const ProtectedElement = screen.getByTestId("protected");
 
     expect(ProtectedElement).toHaveTextContent(lorem);
   });
-
 });

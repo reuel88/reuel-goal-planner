@@ -24,14 +24,14 @@ const authService = {
   },
   updateEmail: (email: string) => {
     if (!auth.currentUser) {
-      return new Promise((resolve, reject) => reject("auth.currentUser not set"));
+      return new Promise((resolve, reject) => reject("authorization.currentUser not set"));
     }
 
     return updateEmail(auth.currentUser, email);
   },
   updatePassword: (password: string) => {
     if (!auth.currentUser) {
-      return new Promise((resolve, reject) => reject("auth.currentUser not set"));
+      return new Promise((resolve, reject) => reject("authorization.currentUser not set"));
     }
 
     return updatePassword(auth.currentUser, password);
