@@ -1,16 +1,16 @@
+import httpMocks from 'node-mocks-http';
+import { NextApiRequest, NextApiResponse } from 'next';
 import handler from "@pages/api/hello";
 
 describe("hello", () => {
   it("Test handler", () => {
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis()
-    };
+    const mockReq = httpMocks.createRequest<NextApiRequest>();
+    const mockRes = httpMocks.createResponse<NextApiResponse>();
 
-    const status = jest.spyOn(res, "status");
-    const json = jest.spyOn(res, "json");
+    const status = jest.spyOn(mockRes, "status");
+    const json = jest.spyOn(mockRes, "json");
 
-    handler({}, res);
+    handler(mockReq, mockRes);
 
     expect(status).toBeCalledWith(200);
     expect(json).toBeCalledWith({ name: "John Doe" });
