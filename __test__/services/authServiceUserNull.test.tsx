@@ -1,14 +1,11 @@
-import authorization from "firebase/auth";
-import { auth } from "@configs/firebase";
 import authService from "@services/authService";
+
+import { updateEmail, updatePassword} from "firebase/auth";
 
 const faker = require("faker");
 
-jest.mock("@configs/firebase", () => ({
-  auth: {currentUser: null}
-}));
-
 jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(() => ({currentUser: null})),
   createUserWithEmailAndPassword: jest.fn(),
   signInWithEmailAndPassword: jest.fn(),
   signOut: jest.fn(),
@@ -19,25 +16,27 @@ jest.mock("firebase/auth", () => ({
 }));
 
 describe("authServices", () => {
-  it("Expect no to call updateEmail", () => {
-    const updateEmail = jest.spyOn(authorization, "updateEmail").mockImplementation(jest.fn());
+  it("Expect not to call updateEmail", () => {
+    expect.assertions(3);
 
     const email = faker.internet.email();
 
     authService.updateEmail(email).catch((e) => {
-      expect(e).toBeTruthy()
+      expect(e).toBe("firebaseAuth.currentUser not set");
+      expect(e).toBeTruthy();
     });
 
     expect(updateEmail).not.toBeCalled();
   });
 
   it("Testing not to call updatePassword", () => {
-    const updatePassword = jest.spyOn(authorization, "updatePassword").mockImplementation(jest.fn());
+    expect.assertions(3);
 
     const password = faker.internet.password();
 
     authService.updatePassword(password).catch((e) => {
-      expect(e).toBeTruthy()
+      expect(e).toBe("firebaseAuth.currentUser not set");
+      expect(e).toBeTruthy();
     });
 
     expect(updatePassword).not.toBeCalled();

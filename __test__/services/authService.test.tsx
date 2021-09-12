@@ -65,7 +65,7 @@ describe("authServices", () => {
 
     authService.updateEmail(email);
 
-    expect(updateEmail).toBeCalled();
+    expect(updateEmail).toBeCalledWith({}, email);
   });
 
   it("Testing update password", () => {
@@ -75,7 +75,7 @@ describe("authServices", () => {
 
     authService.updatePassword(password);
 
-    expect(updatePassword).toBeCalled();
+    expect(updatePassword).toBeCalledWith({}, password);
   });
 
   it("Testing authorization listener", () => {
