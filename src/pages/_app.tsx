@@ -22,7 +22,7 @@ MyApp.getInitialProps = async function getInitialProps(context: AppContext) {
 
     return {
         ...(await NextApp.getInitialProps(context)),
-        messages: require(`../../lang/${locale}.json`)
+        messages: require(`../../public/locales/${locale}.json`)
     };
 };
 
