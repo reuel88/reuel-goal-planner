@@ -1,7 +1,8 @@
-import Dashboard from "@pages/dashboard";
-import { act, fireEvent, render } from "@testing-library/react";
-import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import { useRouter } from "next/router";
+import { act, fireEvent, render } from "@testing-library/react";
+import Dashboard from "@pages/dashboard";
+import { getControlledPromise } from "../../testUtils/ControlledPromise";
+
 
 const authPackage = require("@contexts/AuthContext"); // to prevent error
 
@@ -102,9 +103,9 @@ describe("Dashboard", () => {
 
     const { getByTestId } = render(<Dashboard />);
 
-    const noSignIn = getByTestId("no-auth");
+    const noAuth = getByTestId("no-auth");
 
-    expect(noSignIn).toBeInTheDocument();
+    expect(noAuth).toBeInTheDocument();
   });
 
 });

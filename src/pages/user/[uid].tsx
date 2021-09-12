@@ -8,7 +8,7 @@ import { withProtected } from "@hooks/route";
 import { useAuth } from "@contexts/AuthContext";
 import route from "@constants/route.json";
 
-const Register: NextPage = () => {
+const Uid: NextPage = () => {
   const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -36,7 +36,7 @@ const Register: NextPage = () => {
     const notValid = validate({
       email, password, verifyPassword
     }, {
-      email: { presence: { allowEmpty: false } },
+      email: { presence: { allowEmpty: false }, email: true },
       verifyPassword: {
         equality: "password"
       }
@@ -64,7 +64,6 @@ const Register: NextPage = () => {
       return await router.push(route.DASHBOARD);
     } catch (e) {
       setError("Failed to Update");
-      console.error(e);
     }
 
     setLoading(false);
@@ -80,7 +79,7 @@ const Register: NextPage = () => {
         <header className="section-header">
           <h2>Update Profile</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
         <form onSubmit={e => handleSubmit(e, updateEmail, updatePassword)}>
           <div className="section-content">
             <div className="form-group">
@@ -121,4 +120,4 @@ const Register: NextPage = () => {
   );
 };
 
-export default withProtected(Register);
+export default withProtected(Uid);
