@@ -17,7 +17,6 @@ const ForgotPassword: NextPage = () => {
   const { resetPassword } = useAuth() ?? { resetPassword: null };
 
   if (!resetPassword) {
-    console.log("resetPassword not defined");
     return <div data-testid="no-reset-password" />;
   }
 
@@ -44,8 +43,7 @@ const ForgotPassword: NextPage = () => {
       await resetPassword(email);
       setMessage("Check your inbox for further instructions");
     } catch (e) {
-      console.log(e);
-      return setError("Failed to Reset Password");
+      setError("Failed to Reset Password");
     }
 
     setLoading(false);

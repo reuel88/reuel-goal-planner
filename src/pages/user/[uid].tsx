@@ -16,9 +16,17 @@ const Register: NextPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { updateEmail, updatePassword, currentUser } = useAuth();
+  const { updateEmail, updatePassword, currentUser } = useAuth() ?? {
+    currentUser: null,
+    updateEmail: null,
+    updatePassword: null
+  };
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  if (!currentUser || !updateEmail || !updatePassword) {
+    return <div data-testid="no-auth" />;
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent, updateEmail: (email: string) => Promise<any>, updatePassword: (password: string) => Promise<any>) {
     e.preventDefault();
 
     const email = emailRef?.current?.value ?? "";
@@ -73,7 +81,7 @@ const Register: NextPage = () => {
           <h2>Update Profile</h2>
         </header>
         {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={e => handleSubmit(e, updateEmail, updatePassword)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>

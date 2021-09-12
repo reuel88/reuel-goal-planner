@@ -1,4 +1,5 @@
 import { render, fireEvent, act } from "@testing-library/react";
+import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import ForgotPassword from "@pages/auth/forgot-password";
 
 const authPackage = require("@contexts/AuthContext"); // to prevent error
@@ -9,42 +10,9 @@ jest.mock("@contexts/AuthContext", () => ({
   useAuth: jest.fn()
 }));
 
-// jest.mock("@contexts/AuthContext", jest.fn());
-
-interface ControlledPromiseInterface {
-  deferred: {
-    resolve: () => void,
-    reject: () => void,
-  },
-  promise: Promise<any>
-}
-
-const getControlledPromise = (): ControlledPromiseInterface => {
-  let deferred;
-
-  const promise = new Promise((resolve, reject) => {
-    deferred = { resolve, reject };
-  });
-
-  if (!deferred) return {
-    deferred: ((msg) => {
-      console.log(msg);
-
-      return {
-        resolve: () => {
-        },
-        reject: () => {
-        }
-      };
-    })("Failed resolve deferred"), promise
-  };
-
-  return { deferred, promise };
-};
-
 describe("Forgot Password", () => {
 
-  it("Expect to Forgot Password Page", () => {
+  it("Expect to be Forgot Password Page", () => {
     authPackage.useAuth.mockImplementation(() => ({
       resetPassword: jest.fn()
     }));
@@ -54,7 +22,7 @@ describe("Forgot Password", () => {
     expect(getByRole("heading", {}, { name: /Reset Password/i })).toBeInTheDocument();
   });
 
-  it("Expect to render error", () => {
+  it("Expect to render error alert", () => {
     authPackage.useAuth.mockImplementation(() => ({
       resetPassword: jest.fn()
     }));
@@ -127,8 +95,8 @@ describe("Forgot Password", () => {
     try {
       await act(() => promise);
     } catch (e) {
-      const successAlert = getByRole("alert");
-      expect(successAlert).toHaveTextContent("Failed to Reset Password");
+      const errorAlert = getByRole("alert");
+      expect(errorAlert).toHaveTextContent("Failed to Reset Password");
     }
   });
 

@@ -11,9 +11,13 @@ const Dashboard: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  const { currentUser, signOut } = useAuth();
+  const { currentUser, signOut } = useAuth() ?? { currentUser: null, signOut: null };
 
-  async function handleLogout(e: React.SyntheticEvent) {
+  if (!currentUser || !signOut) {
+    return <div data-testid="no-auth" />;
+  }
+
+  async function handleLogout(e: React.SyntheticEvent, signOut: () => void) {
     e.preventDefault();
 
     try {
@@ -22,7 +26,6 @@ const Dashboard: NextPage = () => {
       await router.push(route.LOGIN);
     } catch (e) {
       setError("Failed to logout");
-      console.error(e);
     }
   }
 
@@ -36,7 +39,7 @@ const Dashboard: NextPage = () => {
         <header className="section-header">
           <h2>Profile</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
         <div className="section-content">
           <p>
             <strong>
@@ -53,7 +56,7 @@ const Dashboard: NextPage = () => {
         </div>
       </section>
       <div>
-        <button type="button" onClick={handleLogout}>Log out</button>
+        <button type="button" onClick={e => handleLogout(e, signOut)}>Log out</button>
       </div>
     </>
   );
