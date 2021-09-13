@@ -9,7 +9,6 @@ const STATUS_CODE = {
   SUCCESS: 200
 };
 
-
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>

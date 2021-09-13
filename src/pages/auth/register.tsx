@@ -4,9 +4,8 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import route from "../../constants/route.json";
-import { useAuth } from "../../contexts/AuthContext";
-import { withPublic } from "../../hooks/route";
+import route from "@constants/route.json";
+import { useAuth } from "@contexts/AuthContext";
 
 const Register: NextPage = () => {
   const router = useRouter();
@@ -16,9 +15,13 @@ const Register: NextPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { signUp } = useAuth();
+  const { signUp } = useAuth() ?? { signUp: null };
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  if (!signUp) {
+    return <div data-testid="no-sign-up" />;
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent, signUp: (email: string, password: string) => Promise<any>) {
     e.preventDefault();
 
     const email = emailRef?.current?.value ?? "";
@@ -49,7 +52,6 @@ const Register: NextPage = () => {
       return await router.push(route.DASHBOARD);
     } catch (e) {
       setError("Failed to register");
-      console.error(e);
     }
 
     setLoading(false);
@@ -65,8 +67,8 @@ const Register: NextPage = () => {
         <header className="section-header">
           <h2>Sign Up</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        <form onSubmit={e => handleSubmit(e, signUp)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
@@ -100,4 +102,4 @@ const Register: NextPage = () => {
   );
 };
 
-export default withPublic(Register);
+export default Register;
