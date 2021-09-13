@@ -59,17 +59,17 @@ describe("Register", () => {
     const dom = render(<Register />);
 
     const emailInput: HTMLElement | null = getById(dom.container, "email");
-    if(!emailInput) return;
+    if (!emailInput) return;
     fireEvent.change(emailInput, { target: { value: email } });
     expect(emailInput).toHaveValue(email);
 
     const passwordInput: HTMLElement | null = getById(dom.container, "password");
-    if(!passwordInput) return;
+    if (!passwordInput) return;
     fireEvent.change(passwordInput, { target: { value: password } });
     expect(passwordInput).toHaveValue(password);
 
     const verifyPasswordInput: HTMLElement | null = getById(dom.container, "verify-password");
-    if(!verifyPasswordInput) return;
+    if (!verifyPasswordInput) return;
     fireEvent.change(verifyPasswordInput, { target: { value: password } });
     expect(verifyPasswordInput).toHaveValue(password);
 
@@ -102,17 +102,17 @@ describe("Register", () => {
     const dom = render(<Register />);
 
     const emailInput: HTMLElement | null = getById(dom.container, "email");
-    if(!emailInput) return;
+    if (!emailInput) return;
     fireEvent.change(emailInput, { target: { value: email } });
     expect(emailInput).toHaveValue(email);
 
     const passwordInput: HTMLElement | null = getById(dom.container, "password");
-    if(!passwordInput) return;
+    if (!passwordInput) return;
     fireEvent.change(passwordInput, { target: { value: password } });
     expect(passwordInput).toHaveValue(password);
 
     const verifyPasswordInput: HTMLElement | null = getById(dom.container, "verify-password");
-    if(!verifyPasswordInput) return;
+    if (!verifyPasswordInput) return;
     fireEvent.change(verifyPasswordInput, { target: { value: password } });
     expect(verifyPasswordInput).toHaveValue(password);
 

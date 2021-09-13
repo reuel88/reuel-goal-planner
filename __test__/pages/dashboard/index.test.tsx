@@ -3,7 +3,6 @@ import { act, fireEvent, render } from "@testing-library/react";
 import Dashboard from "@pages/dashboard";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 
-
 const authPackage = require("@contexts/AuthContext"); // to prevent error
 
 const faker = require("faker");
@@ -98,7 +97,7 @@ describe("Dashboard", () => {
     const email = faker.internet.email();
 
     authPackage.useAuth.mockImplementation(() => ({
-      currentUser: { uid: uuid, email: email },
+      currentUser: { uid: uuid, email: email }
     }));
 
     const { getByTestId } = render(<Dashboard />);

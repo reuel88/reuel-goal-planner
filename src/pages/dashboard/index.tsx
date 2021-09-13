@@ -6,6 +6,7 @@ import nookies from "nookies";
 import React, { useState } from "react";
 import route from "@constants/route.json";
 import { useAuth } from "@contexts/AuthContext";
+import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
 
 const Dashboard: NextPage = () => {
@@ -31,7 +32,7 @@ const Dashboard: NextPage = () => {
   }
 
   return (
-    <>
+    <BasicLayout>
       <NextSeo
         title="Goal Planner - Dashboard"
       />
@@ -59,7 +60,7 @@ const Dashboard: NextPage = () => {
       <div>
         <button type="button" onClick={e => handleLogout(e, signOut)}>Log out</button>
       </div>
-    </>
+    </BasicLayout>
   );
 };
 

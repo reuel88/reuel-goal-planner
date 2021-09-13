@@ -174,7 +174,6 @@ describe("uid", () => {
     }
   });
 
-
   it("Expect no auth in to render", () => {
     const uuid = faker.datatype.uuid();
     const email = faker.internet.email();

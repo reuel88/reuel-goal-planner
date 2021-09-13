@@ -1,7 +1,7 @@
 interface ControlledPromiseInterface {
   deferred: {
-    resolve: (value?:unknown) => void,
-    reject: (value?:unknown) => void,
+    resolve: (value?: unknown) => void,
+    reject: (value?: unknown) => void,
   },
   promise: Promise<any>
 }
