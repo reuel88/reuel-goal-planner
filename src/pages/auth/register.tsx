@@ -1,98 +1,129 @@
-import type { NextPage } from 'next';
-import React, { useRef, useState } from "react";
-import validate from "validate.js";
+import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { withPublic } from "../../hooks/useAuthRouter";
-import { useAuth } from "../../contexts/AuthContext";
-import route from "../../constants/route.json";
+import { NextSeo } from "next-seo";
+import React, { useRef, useState } from "react";
+import validate from "validate.js";
+import route from "@constants/route.json";
+import { useAuth } from "@contexts/AuthContext";
+import { GetServerSideProps } from "next";
+import nookies from "nookies";
+import authBackendService from "@services/authBackendService";
 
 const Register: NextPage = () => {
-    const router = useRouter();
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
-    const verifyPasswordRef = useRef<HTMLInputElement>(null);
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const verifyPasswordRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const {signUp} = useAuth();
+  const { signUp } = useAuth() ?? { signUp: null };
 
-    async function handleSubmit(e: React.SyntheticEvent) {
-        e.preventDefault();
+  if (!signUp) {
+    return <div data-testid="no-sign-up" />;
+  }
 
-        const email = emailRef?.current?.value ?? '';
-        const password = passwordRef?.current?.value ?? '';
-        const verifyPassword = verifyPasswordRef?.current?.value ?? '';
+  async function handleSubmit(e: React.SyntheticEvent, signUp: (email: string, password: string) => Promise<any>) {
+    e.preventDefault();
 
-        const notValid = validate({
-            email, password, verifyPassword
-        }, {
-            email: {presence: {allowEmpty: false}},
-            password: {presence: {allowEmpty: false}},
-            verifyPassword: {
-                presence: {allowEmpty: false},
-                equality: "password"
-            },
-        })
+    const email = emailRef?.current?.value ?? "";
+    const password = passwordRef?.current?.value ?? "";
+    const verifyPassword = verifyPasswordRef?.current?.value ?? "";
 
-        if (notValid) {
-            const firstKey = Object.keys(notValid)[0];
-            const firstError = notValid[firstKey][0];
-            return setError(firstError);
-        }
+    const notValid = validate({
+      email, password, verifyPassword
+    }, {
+      email: { presence: { allowEmpty: false } },
+      password: { presence: { allowEmpty: false } },
+      verifyPassword: {
+        presence: { allowEmpty: false },
+        equality: "password"
+      }
+    });
 
-        try {
-            setError('');
-            setLoading(true);
-            await signUp(email, password);
-            return await router.push(route.DASHBOARD);
-        } catch (e) {
-            setError('Failed to register');
-            console.error(e);
-        }
-
-        setLoading(false)
+    if (notValid) {
+      const firstKey = Object.keys(notValid)[0];
+      const firstError = notValid[firstKey][0];
+      return setError(firstError);
     }
 
-    return (
-        <>
-            <section>
-                <header className="section-header">
-                    <h2>Sign Up</h2>
-                </header>
-                {error && <div className="alert alert-danger">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="section-content">
-                        <div className="form-group">
-                            <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" ref={emailRef} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="password" ref={passwordRef} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="verify-password" className="form-label">Verify Password</label>
-                            <input type="password" className="form-control" id="verify-password"
-                                   ref={verifyPasswordRef} />
-                        </div>
-                    </div>
-                    <footer className="section-footer">
-                        <button type="submit" disabled={loading}>Sign Up</button>
-                    </footer>
-                </form>
-            </section>
+    try {
+      setError("");
+      setLoading(true);
+      await signUp(email, password);
+      return await router.push(route.DASHBOARD);
+    } catch (e) {
+      setError("Failed to register");
+    }
 
-            <div>
-                Already have a account?
-                <Link href={route.LOGIN}>
-                    <a>
-                        Log in
-                    </a>
-                </Link>
+    setLoading(false);
+  }
+
+  return (
+    <>
+      <NextSeo
+        title="Goal Planner - Register"
+      />
+
+      <section>
+        <header className="section-header">
+          <h2>Sign Up</h2>
+        </header>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        <form onSubmit={e => handleSubmit(e, signUp)}>
+          <div className="section-content">
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input type="email" className="form-control" id="email" ref={emailRef} />
             </div>
-        </>
-    )
-}
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input type="password" className="form-control" id="password" ref={passwordRef} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="verify-password" className="form-label">Verify Password</label>
+              <input type="password" className="form-control" id="verify-password"
+                     ref={verifyPasswordRef} />
+            </div>
+          </div>
+          <footer className="section-footer">
+            <button type="submit" disabled={loading}>Sign Up</button>
+          </footer>
+        </form>
+      </section>
 
-export default withPublic(Register);
+      <div>
+        Already have a account?
+        <Link href={route.LOGIN}>
+          <a>
+            Log in
+          </a>
+        </Link>
+      </div>
+    </>
+  );
+};
+
+export default Register;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+
+    const token = await authBackendService.verifyIdToken(cookies.token);
+
+    console.log(token);
+
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  } catch (e) {
+    return {
+      props: {}
+    };
+  }
+};

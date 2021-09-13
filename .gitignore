@@ -33,5 +33,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-#
+# Custom
+/.idea/
 dev-goal-planner-firebase-adminsdk.json

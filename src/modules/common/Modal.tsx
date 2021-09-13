@@ -16,40 +16,40 @@ const ModalWrapper = styled.div`
 `;
 
 interface ModalProps {
-    children: ReactNode
+  children: ReactNode
 }
 
 interface ModalHandle {
-    handleOpen: () => void,
-    handleClose: () => void,
+  handleOpen: () => void,
+  handleClose: () => void,
 }
 
-const Modal: ForwardRefRenderFunction<ModalHandle, ModalProps> = ({children}, ref) => {
-        const [display, setDisplay] = useState(false);
+const Modal: ForwardRefRenderFunction<ModalHandle, ModalProps> = ({ children }, ref) => {
+    const [display, setDisplay] = useState(false);
 
-        const onOpen = () => {
-            setDisplay(true);
-        }
+    const onOpen = () => {
+      setDisplay(true);
+    };
 
-        const onClose = () => {
-            setDisplay(false);
-        }
+    const onClose = () => {
+      setDisplay(false);
+    };
 
-        useImperativeHandle(ref, () => {
-            return {
-                handleOpen: () => onOpen(),
-                handleClose: () => onClose()
-            }
-        })
+    useImperativeHandle(ref, () => {
+      return {
+        handleOpen: () => onOpen(),
+        handleClose: () => onClose()
+      };
+    });
 
-        if (!display) return null;
+    if (!display) return null;
 
-        return createPortal(<ModalWrapper>
-            <div>
-                {children}
-            </div>
-        </ModalWrapper>, document.body);
-    }
+    return createPortal(<ModalWrapper>
+      <div>
+        {children}
+      </div>
+    </ModalWrapper>, document.body);
+  }
 ;
 
 Modal.displayName = "Modal";
