@@ -4,11 +4,14 @@ import authorization from "firebase/auth";
 const faker = require("faker");
 
 jest.mock("firebase/app", () => ({
-  initializeApp: jest.fn()
+  initializeApp: jest.fn(),
+  getApps: jest.fn(() => [])
 }));
 
 jest.mock("firebase/auth", () => ({
-  getAuth: jest.fn()
+  getAuth: jest.fn(),
+  setPersistence: jest.fn(),
+  browserSessionPersistence: ""
 }));
 
 describe("firebase", () => {
@@ -35,7 +38,7 @@ describe("firebase", () => {
       appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
     };
 
-    await require("@configs/firebase").auth;
+    await require("@configs/firebaseClient").auth;
 
     expect(initializeApp).toBeCalledWith(firebaseConfig);
     expect(getAuth).toBeCalled();

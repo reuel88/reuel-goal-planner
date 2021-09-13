@@ -3,7 +3,7 @@ import authService from "@services/authClientService";
 
 const faker = require("faker");
 
-jest.mock("@configs/firebase", () => ({
+jest.mock("@configs/firebaseClient", () => ({
   auth: {currentUser: {}}
 }));
 

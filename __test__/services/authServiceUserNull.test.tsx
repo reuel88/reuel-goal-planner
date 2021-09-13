@@ -1,6 +1,6 @@
-import authService from "@services/authClientService";
+import authClientService from "@services/authClientService";
 
-import { updateEmail, updatePassword } from "firebase/auth";
+import {updateEmail, updatePassword } from "firebase/auth";
 
 const faker = require("faker");
 
@@ -22,7 +22,7 @@ describe("authServices", () => {
 
     const email = faker.internet.email();
 
-    authService.updateEmail(email).catch((e) => {
+    authClientService.updateEmail(email).catch((e) => {
       expect(e).toBe("firebaseAuth.currentUser not set");
       expect(e).toBeTruthy();
     });
@@ -35,7 +35,7 @@ describe("authServices", () => {
 
     const password = faker.internet.password();
 
-    authService.updatePassword(password).catch((e) => {
+    authClientService.updatePassword(password).catch((e) => {
       expect(e).toBe("firebaseAuth.currentUser not set");
       expect(e).toBeTruthy();
     });
