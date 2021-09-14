@@ -22,7 +22,7 @@ jest.mock("firebase/storage", () => ({
   getStorage: jest.fn()
 }));
 
-describe("firebase", () => {
+describe("firebase client", () => {
 
   const initializeApp = jest.spyOn(firebase, "initializeApp").mockImplementation(jest.fn());
   const getAuth = jest.spyOn(authorization, "getAuth").mockImplementation(jest.fn());
