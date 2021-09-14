@@ -1,5 +1,5 @@
-import httpMocks from 'node-mocks-http';
-import { NextApiRequest, NextApiResponse } from 'next';
+import httpMocks from "node-mocks-http";
+import { NextApiRequest, NextApiResponse } from "next";
 import handler from "@pages/api/hello";
 
 describe("hello", () => {

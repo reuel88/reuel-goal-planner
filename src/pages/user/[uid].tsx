@@ -6,6 +6,10 @@ import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import route from "@constants/route.json";
 import { useAuth } from "@contexts/AuthContext";
+import BasicLayout from "@modules/layouts/BasicLayout";
+import { GetServerSideProps } from "next";
+import nookies from "nookies";
+import authBackendService from "@services/authBackendService";
 
 const Uid: NextPage = () => {
   const router = useRouter();
@@ -69,7 +73,7 @@ const Uid: NextPage = () => {
   }
 
   return (
-    <>
+    <BasicLayout>
       <NextSeo
         title={`Goal Planner - ${currentUser?.email}`}
       />
@@ -115,8 +119,27 @@ const Uid: NextPage = () => {
           </a>
         </Link>
       </div>
-    </>
+    </BasicLayout>
   );
 };
 
 export default Uid;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+
+    const token = await authBackendService.verifyIdToken(cookies.token);
+
+    console.log(token);
+
+    return { props: {} };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  }
+};

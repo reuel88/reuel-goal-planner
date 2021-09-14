@@ -2,10 +2,11 @@ import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-import nookies from 'nookies';
+import nookies from "nookies";
 import React, { useState } from "react";
 import route from "@constants/route.json";
 import { useAuth } from "@contexts/AuthContext";
+import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
 
 const Dashboard: NextPage = () => {
@@ -31,7 +32,7 @@ const Dashboard: NextPage = () => {
   }
 
   return (
-    <>
+    <BasicLayout>
       <NextSeo
         title="Goal Planner - Dashboard"
       />
@@ -59,27 +60,27 @@ const Dashboard: NextPage = () => {
       <div>
         <button type="button" onClick={e => handleLogout(e, signOut)}>Log out</button>
       </div>
-    </>
+    </BasicLayout>
   );
 };
 
 export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    try {
-        const cookies = nookies.get(ctx);
+  try {
+    const cookies = nookies.get(ctx);
 
-        const token = await authBackendService.verifyIdToken(cookies.token);
+    const token = await authBackendService.verifyIdToken(cookies.token);
 
-        console.log(token);
+    console.log(token);
 
-        return {props: {}};
-    } catch (e) {
-        return {
-            redirect: {
-                destination: `${route.LOGIN}`,
-                permanent: true
-            }
-        }
-    }
-}
+    return { props: {} };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  }
+};

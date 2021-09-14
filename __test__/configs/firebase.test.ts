@@ -14,6 +14,14 @@ jest.mock("firebase/auth", () => ({
   browserSessionPersistence: ""
 }));
 
+jest.mock("firebase/firestore", () => ({
+  getFirestore: jest.fn()
+}));
+
+jest.mock("firebase/storage", () => ({
+  getStorage: jest.fn()
+}));
+
 describe("firebase", () => {
 
   const initializeApp = jest.spyOn(firebase, "initializeApp").mockImplementation(jest.fn());
@@ -43,6 +51,4 @@ describe("firebase", () => {
     expect(initializeApp).toBeCalledWith(firebaseConfig);
     expect(getAuth).toBeCalled();
   });
-
-
 });

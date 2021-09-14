@@ -4,11 +4,11 @@ import authService from "@services/authClientService";
 const faker = require("faker");
 
 jest.mock("@configs/firebaseClient", () => ({
-  auth: {currentUser: {}}
+  auth: { currentUser: {} }
 }));
 
 jest.mock("firebase/auth", () => ({
-  getAuth: jest.fn(() => ({currentUser: {}})),
+  getAuth: jest.fn(() => ({ currentUser: {} })),
   createUserWithEmailAndPassword: jest.fn(),
   signInWithEmailAndPassword: jest.fn(),
   signOut: jest.fn(),

@@ -78,7 +78,7 @@ describe("Login", () => {
     expect(push).toHaveBeenCalled();
   });
 
-  it("Button is disabled when loading and alert message should appear", async () =>{
+  it("Button is disabled when loading and alert message should appear", async () => {
     expect.assertions(5);
 
     const { deferred, promise } = getControlledPromise();
