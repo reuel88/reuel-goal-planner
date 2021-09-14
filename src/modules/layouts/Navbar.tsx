@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import route from "../../constants/route.json";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "@contexts/AuthContext";
 
 const Nav = styled.nav`
   display: flex;
@@ -16,24 +16,24 @@ const Nav = styled.nav`
 `;
 
 const Navbar: FunctionComponent = () => {
-    const {currentUser} = useAuth();
+  const { currentUser } = useAuth() ?? { currentUser: null };
 
-    return (
-        <Nav>
-            <h2>
-                <Link href={route.DASHBOARD}>
-                    <a>Goal Planner</a>
-                </Link>
-            </h2>
+  return (
+    <Nav>
+      <strong>
+        <Link href={route.DASHBOARD}>
+          <a>Goal Planner</a>
+        </Link>
+      </strong>
 
-            <Link href={`${route.DRIVE}/`}>
-                <a>Drive</a>
-            </Link>
-            <Link href={`${route.USER}/${currentUser?.uid}`}>
-                <a>Profile</a>
-            </Link>
-        </Nav>
-    );
-}
+      <Link href={`${route.DRIVE}/`}>
+        <a>Drive</a>
+      </Link>
+      <Link href={`${route.USER}/${currentUser?.uid}`}>
+        <a>Profile</a>
+      </Link>
+    </Nav>
+  );
+};
 
 export default Navbar;

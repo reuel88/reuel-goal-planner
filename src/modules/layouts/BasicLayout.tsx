@@ -1,17 +1,17 @@
 import { FunctionComponent } from "react";
 import Navbar from "./Navbar";
 
-const BasicLayout: FunctionComponent = ({children}) => {
+const BasicLayout: FunctionComponent = ({ children }) => {
 
-    return (
-        <>
-            <Navbar />
+  return (
+    <>
+      <Navbar />
 
-            <hr />
+      <hr />
 
-            {children}
-        </>
-    )
-}
+      {children}
+    </>
+  );
+};
 
 export default BasicLayout;
