@@ -1,5 +1,4 @@
-import type { NextPage } from "next";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
