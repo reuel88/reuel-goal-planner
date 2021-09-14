@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
 import { AuthProvider } from "@contexts/AuthContext";
-import "@styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
