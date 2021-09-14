@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import { withProtected } from "../../hooks/route";
-import { useAuth } from "../../contexts/AuthContext";
-import route from "../../constants/route.json";
+import route from "@constants/route.json";
+import { useAuth } from "@contexts/AuthContext";
+import BasicLayout from "@modules/layouts/BasicLayout";
+import authBackendService from "@services/authBackendService";
 
-const Register: NextPage = () => {
+const Uid: NextPage = () => {
   const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -16,9 +19,17 @@ const Register: NextPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { updateEmail, updatePassword, currentUser } = useAuth();
+  const { updateEmail, updatePassword, currentUser } = useAuth() ?? {
+    currentUser: null,
+    updateEmail: null,
+    updatePassword: null
+  };
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  if (!currentUser || !updateEmail || !updatePassword) {
+    return <div data-testid="no-auth" />;
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent, updateEmail: (email: string) => Promise<any>, updatePassword: (password: string) => Promise<any>) {
     e.preventDefault();
 
     const email = emailRef?.current?.value ?? "";
@@ -28,7 +39,7 @@ const Register: NextPage = () => {
     const notValid = validate({
       email, password, verifyPassword
     }, {
-      email: { presence: { allowEmpty: false } },
+      email: { presence: { allowEmpty: false }, email: true },
       verifyPassword: {
         equality: "password"
       }
@@ -56,14 +67,13 @@ const Register: NextPage = () => {
       return await router.push(route.DASHBOARD);
     } catch (e) {
       setError("Failed to Update");
-      console.error(e);
     }
 
     setLoading(false);
   }
 
   return (
-    <>
+    <BasicLayout>
       <NextSeo
         title={`Goal Planner - ${currentUser?.email}`}
       />
@@ -72,8 +82,8 @@ const Register: NextPage = () => {
         <header className="section-header">
           <h2>Update Profile</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        <form onSubmit={e => handleSubmit(e, updateEmail, updatePassword)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
@@ -109,8 +119,27 @@ const Register: NextPage = () => {
           </a>
         </Link>
       </div>
-    </>
+    </BasicLayout>
   );
 };
 
-export default withProtected(Register);
+export default Uid;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+
+    const token = await authBackendService.verifyIdToken(cookies.token);
+
+    console.log(token);
+
+    return { props: {} };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  }
+};

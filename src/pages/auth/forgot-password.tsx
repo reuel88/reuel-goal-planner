@@ -1,28 +1,35 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
+import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import { useAuth } from "../../contexts/AuthContext";
-import route from "../../constants/route.json";
-import { withPublic } from "../../hooks/route";
+import { useAuth } from "@contexts/AuthContext";
+import route from "@constants/route.json";
+import authBackendService from "@services/authBackendService";
 
 const ForgotPassword: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const { resetPassword } = useAuth();
+  const { resetPassword } = useAuth() ?? { resetPassword: null };
 
-  async function handleSubmit(e: React.SyntheticEvent) {
+  if (!resetPassword) {
+    return <div data-testid="no-reset-password" />;
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent, resetPassword: (email: string) => Promise<any>) {
     e.preventDefault();
     const email = emailRef?.current?.value ?? "";
 
     const notValid = validate({
       email
     }, {
-      email: { presence: { allowEmpty: false } }
+      email: { presence: { allowEmpty: false }, email: true }
     });
 
     if (notValid) {
@@ -39,7 +46,6 @@ const ForgotPassword: NextPage = () => {
       setMessage("Check your inbox for further instructions");
     } catch (e) {
       setError("Failed to Reset Password");
-      console.error(e);
     }
 
     setLoading(false);
@@ -55,9 +61,9 @@ const ForgotPassword: NextPage = () => {
         <header className="section-header">
           <h2>Reset Password</h2>
         </header>
-        {error && <div className="alert alert-danger">{error}</div>}
-        {message && <div className="alert alert-success">{message}</div>}
-        <form onSubmit={handleSubmit}>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        {message && <div className="alert alert-success" role="alert">{message}</div>}
+        <form onSubmit={e => handleSubmit(e, resetPassword)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
@@ -69,7 +75,6 @@ const ForgotPassword: NextPage = () => {
           </footer>
         </form>
       </section>
-
 
       <div>
         <Link href={route.LOGIN}>
@@ -91,4 +96,25 @@ const ForgotPassword: NextPage = () => {
   );
 };
 
-export default withPublic(ForgotPassword);
+export default ForgotPassword;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+
+    const token = await authBackendService.verifyIdToken(cookies.token);
+
+    console.log(token);
+
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  } catch (e) {
+    return {
+      props: {}
+    };
+  }
+};
