@@ -1,10 +1,16 @@
 import type { NextPage } from "next";
+import { useTranslations } from "next-intl";
+
 
 const Home: NextPage = () => {
-  return (
-    <>
-      <h1>Welcome to next.js!</h1>
-    </>
+
+  const t = useTranslations("Index");
+
+  return (<div>
+      <h1>
+        {t("title")}
+      </h1>
+    </div>
   );
 };
 

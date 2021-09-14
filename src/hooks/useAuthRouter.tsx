@@ -1,38 +1,36 @@
-import React, { FunctionComponent, useEffect } from "react";
 import { useRouter } from "next/router";
+import React, { FunctionComponent, useEffect } from "react";
 import route from "@constants/route.json";
-import { useAuth } from "@contexts/AuthContext";
+import { useAuth } from "@contexts/AuthContext.legacy";
 
 function Redirect({ to }: { to: string }) {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace(to).then((bool) => console.trace(bool));
+    router.replace(to);
   }, [to, router]);
 
-  return null;
+  return <div data-testid="no-redirect" />;
 }
+
 
 export function withPublic(Component: FunctionComponent) {
   return function WithPublic(props: any) {
     const { currentUser } = useAuth() ?? { currentUser: null };
 
-    if (currentUser) {
-      return <Redirect to={route.DASHBOARD} />;
-    }
+    if (currentUser) return <Redirect to={route.DASHBOARD} />; // Not public
 
-    return <Component {...props} />;
+    return <Component {...props} />; // Public
   };
 }
+
 
 export function withProtected(Component: FunctionComponent) {
   return function WithProtected(props: any) {
     const { currentUser } = useAuth() ?? { currentUser: null };
 
-    if (!currentUser) {
-      return <Redirect to={route.LOGIN} />;
-    }
+    if (!currentUser) return <Redirect to={route.LOGIN} />; // Unprotected
 
-    return <Component {...props} />;
+    return <Component {...props} />; // Protected
   };
 }

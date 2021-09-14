@@ -1,4 +1,4 @@
-import { withPublic, withProtected } from "@hooks/route";
+import { withPublic, withProtected } from "@hooks/useAuthRouter";
 import { render, screen } from "@testing-library/react";
 import { FunctionComponent } from "react";
 import { useRouter } from "next/router";

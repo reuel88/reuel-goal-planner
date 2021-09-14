@@ -84,7 +84,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   };
 
   return (<AuthContext.Provider value={value}>
-    {loading && <div>...loading here</div>}
+    {loading && <div>...loading</div>}
     {!loading && children}
   </AuthContext.Provider>);
 };

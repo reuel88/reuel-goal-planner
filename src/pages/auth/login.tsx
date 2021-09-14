@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import route from "@constants/route.json";
 import { useAuth } from "@contexts/AuthContext";
-import { GetServerSideProps } from "next";
-import nookies from "nookies";
 import authBackendService from "@services/authBackendService";
 
 const Login: NextPage = () => {
@@ -104,6 +104,9 @@ const Login: NextPage = () => {
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  console.log(ctx);
+
   try {
     const cookies = nookies.get(ctx);
 

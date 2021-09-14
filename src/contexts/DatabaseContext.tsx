@@ -1,6 +1,6 @@
 import React, { createContext, FunctionComponent, useContext } from "react";
 import { DocumentReference } from "firebase/firestore";
-import databaseService, { documentType, queryObjectType } from "../services/databaseService";
+import databaseService, { documentType, queryObjectType } from "@services/databaseService";
 
 export interface DatabaseContent {
   addDoc: (docName: documentType, data: {}) => Promise<any>,
@@ -13,16 +13,7 @@ export interface DatabaseContent {
   updateDoc: (reference: DocumentReference, data: {}) => Promise<any>
 }
 
-const DatabaseContext = createContext<DatabaseContent>({
-  addDoc: () => (Promise.reject("Failed to create doc")),
-  getDocById: () => (Promise.reject("Failed to retrieve doc")),
-  getAllDocs: () => (Promise.reject("Failed to retrieve docs")),
-  queryDocs: () => (Promise.reject("Failed to query docs")),
-  querySnapshotDocs: () => {
-    throw "Error occurred while querying docs";
-  },
-  updateDoc: () => (Promise.reject("Failed to update doc"))
-});
+const DatabaseContext = createContext<DatabaseContent | null>(null);
 
 export function useDatabase() {
   return useContext(DatabaseContext);
