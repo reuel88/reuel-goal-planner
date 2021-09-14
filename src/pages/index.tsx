@@ -7,7 +7,9 @@ const Home: NextPage = () => {
   const t = useTranslations("Index");
 
   return (<div>
-      {t("title")}
+      <h1>
+        {t("title")}
+      </h1>
     </div>
   );
 };
