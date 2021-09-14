@@ -1,13 +1,9 @@
+import nookies from "nookies";
 import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
-import authService from "@services/authService";
-
-export interface UserContent {
-  uid: string,
-  email: string
-}
+import authClientService, { AuthUser } from "@services/authClientService";
 
 export interface AuthContent {
-  currentUser: UserContent | null,
+  currentUser: AuthUser | null,
   signUp: (email: string, password: string) => Promise<any>,
   signIn: (email: string, password: string) => Promise<any>,
   signOut: () => Promise<any>,
@@ -27,34 +23,54 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   function signUp(email: string, password: string) {
-    return authService.signUp(email, password);
+    return authClientService.signUp(email, password);
   }
 
   function signIn(email: string, password: string) {
-    return authService.signIn(email, password);
+    return authClientService.signIn(email, password);
   }
 
   function signOut() {
-    return authService.signOut();
+    return authClientService.signOut();
   }
 
   function resetPassword(email: string) {
-    return authService.resetPassword(email);
+    return authClientService.resetPassword(email);
   }
 
   function updateEmail(email: string) {
-    return authService.updateEmail(email);
+    return authClientService.updateEmail(email);
   }
 
   function updatePassword(password: string) {
-    return authService.updatePassword(password);
+    return authClientService.updatePassword(password);
   }
 
+  // listen for token changes
+  // call setUser and write new token as a cookie
   useEffect(() => {
-    return authService.authListener((user: any) => {
-      setCurrentUser(user);
+    return authClientService.idTokenChanged(async (user: any) => {
+      if (!user) {
+        setCurrentUser(null);
+        nookies.set(undefined, "token", "", { path: "/" });
+      } else {
+        const token = await user.getIdToken();
+        setCurrentUser(user);
+        nookies.set(undefined, "token", token, { path: "/" });
+      }
       setLoading(false);
     });
+  }, []);
+
+  // force refresh the token every 10 minutes
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = authClientService.getCurrentUser();
+      if (user) await user.getIdToken(true);
+    }, 10 * 60 * 1000);
+
+    // clean up setInterval
+    return () => clearInterval(handle);
   }, []);
 
   const value: AuthContent = {

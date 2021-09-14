@@ -1,20 +1,22 @@
-import authorization from "firebase/auth";
-import authService from "@services/authService";
+import authorization, { updateEmail, updatePassword } from "firebase/auth";
+import authService from "@services/authClientService";
 
 const faker = require("faker");
 
-jest.mock("@configs/firebase", () => ({
-  auth: {currentUser: {}}
+jest.mock("@configs/firebaseClient", () => ({
+  auth: { currentUser: {} }
 }));
 
 jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(() => ({ currentUser: {} })),
   createUserWithEmailAndPassword: jest.fn(),
   signInWithEmailAndPassword: jest.fn(),
   signOut: jest.fn(),
   sendPasswordResetEmail: jest.fn(),
   updateEmail: jest.fn(),
   updatePassword: jest.fn(),
-  onAuthStateChanged: jest.fn()
+  onAuthStateChanged: jest.fn(),
+  setPersistence: jest.fn()
 }));
 
 describe("authServices", () => {
@@ -81,7 +83,7 @@ describe("authServices", () => {
   it("Testing authorization listener", () => {
     const onAuthStateChanged = jest.spyOn(authorization, "onAuthStateChanged").mockImplementation(jest.fn());
 
-    authService.authListener(() => {
+    authService.authStateChanged(() => {
     });
 
     expect(onAuthStateChanged).toBeCalled();

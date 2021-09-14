@@ -1,25 +1,44 @@
 // import '@testing-library/jest-dom' // imported by jest.setup.ts
 import { AuthProvider, useAuth } from "@contexts/AuthContext";
-import authService from "@services/authService";
-import { render, screen } from "@testing-library/react";
+import authClientService from "@services/authClientService";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { FunctionComponent } from "react";
+import { getControlledPromise } from "../testUtils/ControlledPromise";
 
 const faker = require("faker");
 
-jest.mock("@services/authService", () => ({
-    authListener: jest.fn(),
+jest.mock("nookies", () => ({
+    set: jest.fn()
+  })
+);
+
+jest.mock("@services/authClientService", () => ({
     signUp: jest.fn(),
     signIn: jest.fn(),
     signOut: jest.fn(),
     resetPassword: jest.fn(),
     updateEmail: jest.fn(),
-    updatePassword: jest.fn()
+    updatePassword: jest.fn(),
+    authStateChanged: jest.fn(),
+    idTokenChanged: jest.fn((callback) => callback(null))
   })
 );
 
-
 describe("AuthContext", () => {
   it("Expect to be loading", () => {
+    expect.assertions(1);
+
+    const uuid = faker.datatype.uuid();
+    const email = faker.internet.email();
+
+    const { promise } = getControlledPromise();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback({
+      uid: uuid,
+      email: email,
+      getIdToken: () => promise
+    }));
+
     const TestingComponent: FunctionComponent = () => {
       const { currentUser } = useAuth() ?? { currentUser: null };
 
@@ -34,13 +53,19 @@ describe("AuthContext", () => {
     expect(loading).toBeInTheDocument();
   });
 
-  it("Expect user to load", () => {
+  it("Expect user to load", async () => {
+    expect.assertions(1);
+
     const uuid = faker.datatype.uuid();
     const email = faker.internet.email();
+    const token = faker.datatype.uuid();
 
-    jest.spyOn(authService, "authListener").mockImplementation((callback: any) => callback({
+    const { deferred, promise } = getControlledPromise();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback({
       uid: uuid,
-      email: email
+      email: email,
+      getIdToken: () => promise
     }));
 
     const TestingComponent: FunctionComponent = () => {
@@ -53,16 +78,24 @@ describe("AuthContext", () => {
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
 
+    setTimeout(() => deferred.resolve(token), 1000);
+
+    await act(() => waitFor(() => promise));
+
     const isUserOutput = screen.getByTestId("is-user-output");
 
     expect(isUserOutput).toHaveTextContent(`${uuid} - ${email}`);
   });
 
-  it("Expect sign up to be called", () => {
-    const createUserWithEmailAndPassword = jest.spyOn(authService, "signUp").mockImplementation(jest.fn());
+  it("Expect sign up to be called", async () => {
+    expect.assertions(1);
+
+    const createUserWithEmailAndPassword = jest.spyOn(authClientService, "signUp").mockImplementation(jest.fn());
 
     const email = faker.internet.email();
     const password = faker.internet.password();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback(null));
 
     const TestingComponent: FunctionComponent = () => {
       const { signUp } = useAuth() ?? { signUp: null };
@@ -79,11 +112,15 @@ describe("AuthContext", () => {
     expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(email, password);
   });
 
-  it("Expect sign in to be called", () => {
-    const signInWithEmailAndPassword = jest.spyOn(authService, "signIn").mockImplementation(jest.fn());
+  it("Expect sign in to be called", async () => {
+    expect.assertions(1);
+
+    const signInWithEmailAndPassword = jest.spyOn(authClientService, "signIn").mockImplementation(jest.fn());
 
     const email = faker.internet.email();
     const password = faker.internet.password();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback(null));
 
     const TestingComponent: FunctionComponent = () => {
       const { signIn } = useAuth() ?? { signIn: null };
@@ -100,8 +137,22 @@ describe("AuthContext", () => {
     expect(signInWithEmailAndPassword).toHaveBeenCalledWith(email, password);
   });
 
-  it("Expect sign out to be called", () => {
-    const signOut = jest.spyOn(authService, "signOut").mockImplementation(jest.fn());
+  it("Expect sign out to be called", async () => {
+    expect.assertions(1);
+
+    const signOut = jest.spyOn(authClientService, "signOut").mockImplementation(jest.fn());
+
+    const uuid = faker.datatype.uuid();
+    const email = faker.internet.email();
+    const token = faker.datatype.uuid();
+
+    const { deferred, promise } = getControlledPromise();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback({
+      uid: uuid,
+      email: email,
+      getIdToken: () => promise
+    }));
 
     const TestingComponent: FunctionComponent = () => {
       const { signOut } = useAuth() ?? { signOut: null };
@@ -115,13 +166,21 @@ describe("AuthContext", () => {
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
 
+    setTimeout(() => deferred.resolve(token), 1000);
+
+    await act(() => waitFor(() => promise));
+
     expect(signOut).toHaveBeenCalled();
   });
 
-  it("Expect reset password to be called", () => {
-    const resetPassword = jest.spyOn(authService, "resetPassword").mockImplementation(jest.fn());
+  it("Expect reset password to be called", async () => {
+    expect.assertions(1);
+
+    const resetPassword = jest.spyOn(authClientService, "resetPassword").mockImplementation(jest.fn());
 
     const email = faker.internet.email();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback(null));
 
     const TestingComponent: FunctionComponent = () => {
       const { resetPassword } = useAuth() ?? { resetPassword: null };
@@ -138,17 +197,29 @@ describe("AuthContext", () => {
     expect(resetPassword).toHaveBeenCalledWith(email);
   });
 
+  it("Expect update email to be called", async () => {
+    expect.assertions(1);
 
-  it("Expect update email to be called", () => {
-    const updateEmail = jest.spyOn(authService, "updateEmail").mockImplementation(jest.fn());
+    const updateEmail = jest.spyOn(authClientService, "updateEmail").mockImplementation(jest.fn());
 
+    const uuid = faker.datatype.uuid();
     const email = faker.internet.email();
+    const newEmail = faker.internet.email();
+    const token = faker.datatype.uuid();
+
+    const { deferred, promise } = getControlledPromise();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback({
+      uid: uuid,
+      email: email,
+      getIdToken: () => promise
+    }));
 
     const TestingComponent: FunctionComponent = () => {
       const { updateEmail } = useAuth() ?? { updateEmail: null };
 
       if (updateEmail) {
-        updateEmail(email);
+        updateEmail(newEmail);
       }
 
       return <div data-testid="is-user-output">Test</div>;
@@ -156,13 +227,30 @@ describe("AuthContext", () => {
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
 
-    expect(updateEmail).toHaveBeenCalledWith(email);
+    setTimeout(() => deferred.resolve(token), 1000);
+
+    await act(() => waitFor(() => promise));
+
+    expect(updateEmail).toHaveBeenCalledWith(newEmail);
   });
 
-  it("Expect update password to be called", () => {
-    const updatePassword = jest.spyOn(authService, "updatePassword").mockImplementation(jest.fn());
+  it("Expect update password to be called", async () => {
+    expect.assertions(1);
 
+    const updatePassword = jest.spyOn(authClientService, "updatePassword").mockImplementation(jest.fn());
+
+    const uuid = faker.datatype.uuid();
+    const email = faker.internet.email();
     const password = faker.internet.password();
+    const token = faker.datatype.uuid();
+
+    const { deferred, promise } = getControlledPromise();
+
+    jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback({
+      uid: uuid,
+      email: email,
+      getIdToken: () => promise
+    }));
 
     const TestingComponent: FunctionComponent = () => {
       const { updatePassword } = useAuth() ?? { updatePassword: null };
@@ -175,6 +263,10 @@ describe("AuthContext", () => {
     };
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
+
+    setTimeout(() => deferred.resolve(token), 1000);
+
+    await act(() => waitFor(() => promise));
 
     expect(updatePassword).toHaveBeenCalledWith(password);
   });

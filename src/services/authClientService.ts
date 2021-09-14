@@ -1,15 +1,25 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  onIdTokenChanged,
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
   updateEmail,
   updatePassword
 } from "firebase/auth";
-import { auth } from "@configs/firebase";
+import { auth } from "@configs/firebaseClient";
 
-const authService = {
+export interface AuthUser {
+  uid: string,
+  email: string,
+  getIdToken: () => Promise<any>
+}
+
+const authClientService = {
+  getCurrentUser: () => {
+    return auth.currentUser;
+  },
   signUp: (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
   },
@@ -36,9 +46,12 @@ const authService = {
 
     return updatePassword(auth.currentUser, password);
   },
-  authListener: (callback: (user: any) => void) => {
+  authStateChanged: (callback: (user: any) => void) => {
     return onAuthStateChanged(auth, callback);
+  },
+  idTokenChanged: (callback: (user: any) => void) => {
+    return onIdTokenChanged(auth, callback);
   }
 };
 
-export default authService;
+export default authClientService;

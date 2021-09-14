@@ -1,11 +1,13 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
+import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import { useAuth } from "@contexts/AuthContext";
 import route from "@constants/route.json";
-import { withPublic } from "@hooks/route";
+import authBackendService from "@services/authBackendService";
 
 const ForgotPassword: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -94,4 +96,25 @@ const ForgotPassword: NextPage = () => {
   );
 };
 
-export default withPublic(ForgotPassword);
+export default ForgotPassword;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+
+    const token = await authBackendService.verifyIdToken(cookies.token);
+
+    console.log(token);
+
+    return {
+      redirect: {
+        destination: `${route.LOGIN}`,
+        permanent: true
+      }
+    };
+  } catch (e) {
+    return {
+      props: {}
+    };
+  }
+};

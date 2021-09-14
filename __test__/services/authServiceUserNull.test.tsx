@@ -1,18 +1,19 @@
-import authService from "@services/authService";
+import authClientService from "@services/authClientService";
 
-import { updateEmail, updatePassword} from "firebase/auth";
+import { updateEmail, updatePassword } from "firebase/auth";
 
 const faker = require("faker");
 
 jest.mock("firebase/auth", () => ({
-  getAuth: jest.fn(() => ({currentUser: null})),
+  getAuth: jest.fn(() => ({ currentUser: null })),
   createUserWithEmailAndPassword: jest.fn(),
   signInWithEmailAndPassword: jest.fn(),
   signOut: jest.fn(),
   sendPasswordResetEmail: jest.fn(),
   updateEmail: jest.fn(),
   updatePassword: jest.fn(),
-  onAuthStateChanged: jest.fn()
+  onAuthStateChanged: jest.fn(),
+  setPersistence: jest.fn()
 }));
 
 describe("authServices", () => {
@@ -21,7 +22,7 @@ describe("authServices", () => {
 
     const email = faker.internet.email();
 
-    authService.updateEmail(email).catch((e) => {
+    authClientService.updateEmail(email).catch((e) => {
       expect(e).toBe("firebaseAuth.currentUser not set");
       expect(e).toBeTruthy();
     });
@@ -34,7 +35,7 @@ describe("authServices", () => {
 
     const password = faker.internet.password();
 
-    authService.updatePassword(password).catch((e) => {
+    authClientService.updatePassword(password).catch((e) => {
       expect(e).toBe("firebaseAuth.currentUser not set");
       expect(e).toBeTruthy();
     });

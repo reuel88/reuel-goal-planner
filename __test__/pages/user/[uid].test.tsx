@@ -3,7 +3,6 @@ import Uid from "@pages/user/[uid]";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import { useRouter } from "next/router";
 
-
 const authPackage = require("@contexts/AuthContext"); // to prevent error
 
 const faker = require("faker");
@@ -174,7 +173,6 @@ describe("uid", () => {
       expect(updateBtn).not.toHaveAttribute("disabled");
     }
   });
-
 
   it("Expect no auth in to render", () => {
     const uuid = faker.datatype.uuid();
