@@ -2,8 +2,8 @@
 module.exports = {
   reactStrictMode: true,
   i18n: {
-    locales: ['en-AU'],
-    defaultLocale: 'en-AU',
+    locales: ["en-AU"],
+    defaultLocale: "en-AU"
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -14,4 +14,5 @@ module.exports = {
     }
     return config;
   },
-}
+  setupFilesAfterEnv: ["./jest.setup.ts"]
+};
