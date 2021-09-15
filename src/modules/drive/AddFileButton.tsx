@@ -3,7 +3,8 @@ import { folderType, ROOT_FOLDER } from "@hooks/useFolder";
 import { useAuth } from "@contexts/AuthContext";
 import { useStorage } from "@contexts/StorageContext";
 import { useDatabase } from "@contexts/DatabaseContext";
-import { documentNames } from "@services/databaseService";
+import { documentNames, documentType, queryObjectType } from "@services/databaseService";
+import { DocumentReference } from "firebase/firestore";
 
 const uuid = require("uuid"); // Issue with importing
 
@@ -18,9 +19,18 @@ const AddFileButton: FunctionComponent<{
   const [uploadingFiles, setUploadingFiles] = useState<{ id: string, name: string, progress: 0, error: boolean }[] | []>([]);
   const { currentUser } = useAuth() ?? { currentUser: null };
   const { uploadSnapshotFile } = useStorage();
-  const { addDoc, queryDocs, updateDoc } = useDatabase();
+  const { addDoc, queryDocs, updateDoc } = useDatabase() ?? { addDoc: null, queryDocs: null, updateDoc: null };
 
-  function handleUpload(e: HTMLInputEvent) {
+  if (!currentUser || !addDoc || !queryDocs || !updateDoc) {
+    return <div data-testid="no-auth" />;
+  }
+
+  function handleUpload(
+    e: HTMLInputEvent,
+    addDoc: (docName: documentType, data: {}) => Promise<unknown>,
+    queryDocs: (docName: documentType, queries: Array<queryObjectType>) => Promise<any>,
+    updateDoc: (reference: DocumentReference, data: {}) => Promise<unknown>
+  ) {
     if (!currentUser) return;
 
     const file: File | null = e?.target?.files?.[0] || null;
@@ -68,7 +78,7 @@ const AddFileButton: FunctionComponent<{
       async (downloadURL) => {
         setUploadingFiles(prevUploadingFiles => prevUploadingFiles.filter(uploadFile => uploadFile.id !== id));
 
-        const existingFiles = await queryDocs(
+        const existingFiles: { docs: Array<{ ref: DocumentReference }> } = await queryDocs(
           documentNames.FILES,
           [
             { operator: "where", fieldPath: "name", opStr: "==", value: file.name },
@@ -102,7 +112,8 @@ const AddFileButton: FunctionComponent<{
   return (
     <>
       <label htmlFor="fileUpload">
-        <input type="file" id="fileUpload" ref={fileRef} onChange={handleUpload} />
+        <input type="file" id="fileUpload" ref={fileRef}
+               onChange={e => handleUpload(e, addDoc, queryDocs, updateDoc)} />
       </label>
       {uploadingFiles.length > 0 && <div>
         {uploadingFiles.map(file => {

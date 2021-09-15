@@ -1,4 +1,4 @@
-import { withPublic, withProtected } from "@hooks/useAuthRouter";
+import { withProtected, withPublic } from "@hooks/useAuthRouter";
 import { render, screen } from "@testing-library/react";
 import { FunctionComponent } from "react";
 import { useRouter } from "next/router";
@@ -24,7 +24,7 @@ describe("useAuthRouter", () => {
 
   });
 
-  it("Expect route to render public component", () => {
+  it("Expect routes to render public component", () => {
 
     const lorem = faker.lorem.sentences();
 
@@ -42,7 +42,7 @@ describe("useAuthRouter", () => {
 
   });
 
-  it("Expect route to render unprotected component", () => {
+  it("Expect routes to render unprotected component", () => {
     const lorem = faker.lorem.sentences();
 
     const Unprotected: FunctionComponent = () => {
@@ -58,7 +58,7 @@ describe("useAuthRouter", () => {
     expect(noRedirectElement).toBeInTheDocument();
   });
 
-  it("Expect route to render not public component", () => {
+  it("Expect routes to render not public component", () => {
 
     jest.spyOn(authClientService, "authStateChanged").mockImplementation((callback: any) => callback({
       uid: "r",
@@ -81,7 +81,7 @@ describe("useAuthRouter", () => {
 
   });
 
-  it("Expect route to render protected component", () => {
+  it("Expect routes to render protected component", () => {
     jest.spyOn(authClientService, "authStateChanged").mockImplementation((callback: any) => callback({
       uid: "r",
       email: "t"

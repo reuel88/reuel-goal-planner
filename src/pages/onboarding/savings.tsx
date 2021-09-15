@@ -1,10 +1,19 @@
 import type { NextPage } from "next";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
+import { SyntheticEvent } from "react";
+import routes from "@constants/routes.json";
 import BasicLayout from "@modules/layouts/BasicLayout";
 
 const Savings: NextPage = () => {
-
   const t = useTranslations();
+  const router = useRouter();
+
+  async function handleSubmit(e: SyntheticEvent) {
+    e.preventDefault();
+
+    await router.push(routes.ONBOARDING_CONTRIBUTIONS);
+  }
 
   return (<BasicLayout>
       <ol>
@@ -12,7 +21,7 @@ const Savings: NextPage = () => {
         <li>{t("ONBOARDING.contributions")}</li>
       </ol>
       <section>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="savings">{t("ONBOARDING_SAVINGS.label-savings")}</label>
             <input type="text" id="savings" />

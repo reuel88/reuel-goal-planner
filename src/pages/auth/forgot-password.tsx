@@ -6,7 +6,7 @@ import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
 import { useAuth } from "@contexts/AuthContext";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 import authBackendService from "@services/authBackendService";
 
 const ForgotPassword: NextPage = () => {
@@ -77,7 +77,7 @@ const ForgotPassword: NextPage = () => {
       </section>
 
       <div>
-        <Link href={route.LOGIN}>
+        <Link href={routes.LOGIN}>
           <a>
             Login
           </a>
@@ -86,7 +86,7 @@ const ForgotPassword: NextPage = () => {
 
       <div>
         Need a account?
-        <Link href={route.REGISTER}>
+        <Link href={routes.REGISTER}>
           <a>
             Create Account
           </a>
@@ -108,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

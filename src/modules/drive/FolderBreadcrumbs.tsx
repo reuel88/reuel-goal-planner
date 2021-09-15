@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
-import route from "../../constants/route.json";
+import routes from "@constants/routes.json";
 import { folderType, ROOT_FOLDER } from "@hooks/useFolder";
 
 const FolderBreadcrumbs: FunctionComponent<{ currentFolder: folderType }> = ({ currentFolder }) => {
@@ -13,7 +13,7 @@ const FolderBreadcrumbs: FunctionComponent<{ currentFolder: folderType }> = ({ c
       if (!folder?.name) return null;
 
       return (<React.Fragment key={index}>
-        <Link href={!folder?.id ? route.DRIVE : `${route.DRIVE}/${folder?.id}`}>
+        <Link href={!folder?.id ? routes.DRIVE : `${routes.DRIVE}/${folder?.id}`}>
           <a>
             {folder.name}
           </a>

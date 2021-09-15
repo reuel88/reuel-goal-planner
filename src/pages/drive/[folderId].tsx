@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import Drive from "./index";
 import { GetServerSideProps } from "next";
+import Drive from "./index";
 import nookies from "nookies";
 import authBackendService from "@services/authBackendService";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 
 const FolderId: NextPage = () => <Drive />;
 
@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } catch (e) {
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

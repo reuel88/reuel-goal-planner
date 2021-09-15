@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useState } from "react";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
 
-const Dashboard: NextPage = () => {
+const User: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -25,7 +25,7 @@ const Dashboard: NextPage = () => {
     try {
       setError("");
       await signOut();
-      await router.push(route.LOGIN);
+      await router.push(routes.LOGIN);
     } catch (e) {
       setError("Failed to logout");
     }
@@ -34,7 +34,7 @@ const Dashboard: NextPage = () => {
   return (
     <BasicLayout>
       <NextSeo
-        title="Goal Planner - Dashboard"
+        title="Goal Planner - User"
       />
 
       <section>
@@ -50,7 +50,7 @@ const Dashboard: NextPage = () => {
             {currentUser?.email}
           </p>
 
-          <Link href={`${route.USER}/${currentUser?.uid}`}>
+          <Link href={`${routes.USER}/${currentUser?.uid}`}>
             <a>
               Update Profile
             </a>
@@ -64,7 +64,7 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default User;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } catch (e) {
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

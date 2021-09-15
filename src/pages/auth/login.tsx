@@ -6,7 +6,7 @@ import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import authBackendService from "@services/authBackendService";
 
@@ -46,7 +46,7 @@ const Login: NextPage = () => {
       setLoading(true);
       await signInWithEmailAndPassword(email, password);
 
-      return await router.push(route.DASHBOARD);
+      return await router.push(routes.DASHBOARD);
     } catch (e) {
       setError("Failed to login");
     }
@@ -82,7 +82,7 @@ const Login: NextPage = () => {
         </form>
       </section>
       <div>
-        <Link href={route.FORGOT_PASSWORD}>
+        <Link href={routes.FORGOT_PASSWORD}>
           <a>
             Forgot Password
           </a>
@@ -91,7 +91,7 @@ const Login: NextPage = () => {
 
       <div>
         Need a account?
-        <Link href={route.REGISTER}>
+        <Link href={routes.REGISTER}>
           <a>
             Create Account
           </a>
@@ -116,7 +116,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

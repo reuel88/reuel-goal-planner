@@ -5,7 +5,7 @@ import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useRef, useState } from "react";
 import validate from "validate.js";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
@@ -63,7 +63,7 @@ const Uid: NextPage = () => {
       setError("");
       setLoading(true);
       await Promise.all(promises);
-      return await router.push(route.DASHBOARD);
+      return await router.push(routes.DASHBOARD);
     } catch (e) {
       setError("Failed to Update");
     }
@@ -112,7 +112,7 @@ const Uid: NextPage = () => {
 
       <div>
 
-        <Link href={route.DASHBOARD}>
+        <Link href={routes.DASHBOARD}>
           <a>
             Cancel
           </a>
@@ -136,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } catch (e) {
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

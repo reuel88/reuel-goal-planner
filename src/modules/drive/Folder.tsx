@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import Link from "next/link";
-import route from "../../constants/route.json";
+import routes from "@constants/routes.json";
 import { folderType } from "@hooks/useFolder";
 
 const Folder: FunctionComponent<{ folder: folderType }> = ({ folder }) => {
-  return (<Link href={`${route.DRIVE}/${folder.id}`}>
+  return (<Link href={`${routes.DRIVE}/${folder.id}`}>
     <a>
       {folder.name}
     </a>

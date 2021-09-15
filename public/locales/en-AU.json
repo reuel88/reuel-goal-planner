@@ -1,7 +1,15 @@
 {
   "FORM": {
     "optional": "Optional",
-    "btn-next": "Next"
+    "btn-next": "Next",
+    "btn-back": "Back"
+  },
+  "PERIOD": {
+    "label-period": "Periodically",
+    "option-daily": "Daily",
+    "option-weekly": "Weekly",
+    "option-fortnightly": "Fortnightly",
+    "option-monthly": "Monthly"
   },
   "HOME": {
     "welcome-title": "Welcome to Goal Planner",
@@ -14,5 +22,9 @@
   },
   "ONBOARDING_SAVINGS": {
     "label-savings": "How much currently in your savings?"
+  },
+  "ONBOARDING_CONTRIBUTIONS": {
+    "label-contributions": "How much do you contribute?",
+    "description-contributions": "How often and how much do you contribute to your savings?"
   }
 }

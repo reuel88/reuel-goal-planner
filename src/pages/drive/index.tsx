@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { withDatabase } from "@contexts/DatabaseContext";
-import { useFolder, folderType, fileType } from "@hooks/useFolder";
+import { fileType, folderType, useFolder } from "@hooks/useFolder";
 import AddFolderButton from "@modules/drive/AddFolderButton";
 import FolderBreadcrumbs from "@modules/drive/FolderBreadcrumbs";
 import Folder from "@modules/drive/Folder";
@@ -10,10 +11,9 @@ import BasicLayout from "@modules/layouts/BasicLayout";
 import AddFileButton from "@modules/drive/AddFileButton";
 import { withStorage } from "@contexts/StorageContext";
 import File from "@modules/drive/File";
-import { GetServerSideProps } from "next";
 import nookies from "nookies";
 import authBackendService from "@services/authBackendService";
-import route from "@constants/route.json";
+import routes from "@constants/routes.json";
 
 const MainTop = styled.div`
   display: flex;
@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } catch (e) {
     return {
       redirect: {
-        destination: `${route.LOGIN}`,
+        destination: `${routes.LOGIN}`,
         permanent: true
       }
     };

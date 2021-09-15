@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { act, fireEvent, render } from "@testing-library/react";
-import Dashboard from "@pages/dashboard";
+import User from "@pages/user";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 
 const authPackage = require("@contexts/AuthContext"); // to prevent error
@@ -15,7 +15,7 @@ jest.mock("@contexts/AuthContext", () => ({
   useAuth: jest.fn()
 }));
 
-describe("Dashboard", () => {
+describe("User", () => {
 
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
@@ -23,7 +23,7 @@ describe("Dashboard", () => {
     });
   });
 
-  it("Expect to be Dashboard Page", () => {
+  it("Expect to be User Page", () => {
     const uuid = faker.datatype.uuid();
     const email = faker.internet.email();
 
@@ -32,7 +32,7 @@ describe("Dashboard", () => {
       signOut: jest.fn()
     }));
 
-    const { getByRole } = render(<Dashboard />);
+    const { getByRole } = render(<User />);
 
     expect(getByRole("heading", {}, { name: /Profile/i })).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe("Dashboard", () => {
       signOut: () => promise
     }));
 
-    const { getByRole } = render(<Dashboard />);
+    const { getByRole } = render(<User />);
 
     const logoutBtn = getByRole("button", {}, { name: /Log out/i });
     fireEvent.click(logoutBtn);
@@ -77,7 +77,7 @@ describe("Dashboard", () => {
       signOut: () => promise
     }));
 
-    const { getByRole } = render(<Dashboard />);
+    const { getByRole } = render(<User />);
 
     const logoutBtn = getByRole("button", {}, { name: /Log out/i });
     fireEvent.click(logoutBtn);
@@ -100,7 +100,7 @@ describe("Dashboard", () => {
       currentUser: { uid: uuid, email: email }
     }));
 
-    const { getByTestId } = render(<Dashboard />);
+    const { getByTestId } = render(<User />);
 
     const noAuth = getByTestId("no-auth");
 

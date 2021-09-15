@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import route from "../../constants/route.json";
+import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 
 const Nav = styled.nav`
@@ -21,15 +21,15 @@ const Navbar: FunctionComponent = () => {
   return (
     <Nav>
       <strong>
-        <Link href={route.DASHBOARD}>
+        <Link href={routes.DASHBOARD}>
           <a>Goal Planner</a>
         </Link>
       </strong>
 
-      <Link href={`${route.DRIVE}/`}>
+      <Link href={`${routes.DRIVE}/`}>
         <a>Drive</a>
       </Link>
-      <Link href={`${route.USER}/${currentUser?.uid}`}>
+      <Link href={`${routes.USER}/${currentUser?.uid}`}>
         <a>Profile</a>
       </Link>
     </Nav>
