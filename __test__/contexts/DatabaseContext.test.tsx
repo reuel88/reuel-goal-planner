@@ -163,14 +163,14 @@ describe("DatabaseContext", () => {
     };
 
     const TestingComponent: FunctionComponent = () => {
-      return <div data-testid="is-user-output">{lorem}</div>;
+      return <div data-testid="is-profile-output">{lorem}</div>;
     };
 
     const WithDatabase = withDatabase(TestingComponent);
 
     render(<WrapperComponent><WithDatabase /></WrapperComponent>);
 
-    const isUserOutput = screen.getByTestId("is-user-output");
+    const isUserOutput = screen.getByTestId("is-profile-output");
 
     expect(isUserOutput).toBeInTheDocument();
   });

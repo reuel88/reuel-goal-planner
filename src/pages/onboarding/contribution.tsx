@@ -6,7 +6,7 @@ import routes from "@constants/routes.json";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import { SyntheticEvent } from "react";
 
-const Savings: NextPage = () => {
+const Contribution: NextPage = () => {
   const t = useTranslations();
   const router = useRouter();
 
@@ -24,8 +24,8 @@ const Savings: NextPage = () => {
     <section>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="contributions">{t("ONBOARDING_CONTRIBUTIONS.label-contributions")}</label>
-          <p>{t("ONBOARDING_CONTRIBUTIONS.description-contributions")}</p>
+          <label htmlFor="contributions">{t("ONBOARDING_CONTRIBUTION.label-contributions")}</label>
+          <p>{t("ONBOARDING_CONTRIBUTION.description-contributions")}</p>
 
           <label htmlFor="period">{t("PERIOD.label-period")}</label>
           <select name="period" id="period">
@@ -38,7 +38,7 @@ const Savings: NextPage = () => {
         </div>
 
         <button>{t("FORM.btn-next")}</button>
-        <Link href={routes.ONBOARDING_SAVINGS}>
+        <Link href={routes.ONBOARDING_SAVING}>
           <a>{t("FORM.btn-back")}</a>
         </Link>
       </form>
@@ -46,4 +46,4 @@ const Savings: NextPage = () => {
   </BasicLayout>);
 };
 
-export default Savings;
+export default Contribution;

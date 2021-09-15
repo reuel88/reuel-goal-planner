@@ -10,14 +10,13 @@ const Home: NextPage = () => {
   return (<BasicLayout>
       <section>
         <header>
-          <h1>{t("welcome-title")} </h1>
-          <h2>{t("welcome-subtitle")}</h2>
-          <Link href={`${routes.ONBOARDING_SAVINGS}`}>
+          <h1>{t("title-welcome")}</h1>
+          <h2>{t("subtitle-welcome")}</h2>
+          <Link href={`${routes.ONBOARDING_SAVING}`}>
             <a>{t("btn-get-started")}</a>
           </Link>
         </header>
       </section>
-
     </BasicLayout>
   );
 };

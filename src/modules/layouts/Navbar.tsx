@@ -29,7 +29,7 @@ const Navbar: FunctionComponent = () => {
       <Link href={`${routes.DRIVE}/`}>
         <a>Drive</a>
       </Link>
-      <Link href={`${routes.USER}/${currentUser?.uid}`}>
+      <Link href={`${routes.PROFILE}/${currentUser?.uid}`}>
         <a>Profile</a>
       </Link>
     </Nav>

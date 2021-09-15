@@ -1,18 +1,56 @@
 {
   "FORM": {
     "optional": "可选的",
-    "btn-next": "下一个"
+    "btn-next": "下一个",
+    "btn-back": "后面",
+    "btn-cancel": "取消"
   },
-  "Home": {
-    "welcome-title": "欢迎使用目标规划师",
-    "welcome-subtitle": "目标规划师是希望帮助您实现目标的规划师!",
+  "PERIOD": {
+    "label-period": "定期",
+    "option-daily": "每日",
+    "option-weekly": "每周",
+    "option-fortnightly": "半月刊",
+    "option-monthly": "每月一次"
+  },
+  "HOME": {
+    "title-welcome": "欢迎使用目标规划师",
+    "subtitle-welcome": "目标规划师是希望帮助您实现目标的规划师!",
     "btn-get-started": "开始"
   },
   "ONBOARDING": {
     "savings": "储蓄账户",
     "contributions": "的贡献"
   },
-  "ONBOARDING_SAVINGS": {
+  "ONBOARDING_SAVING": {
     "label-savings": "您目前有多少储蓄？"
+  },
+  "ONBOARDING_CONTRIBUTION": {
+    "label-contributions": "你贡献多少？",
+    "description-contributions": "您多久为您的储蓄做出贡献"
+  },
+  "DASHBOARD": {
+    "title-welcome": "欢迎",
+    "subtitle-welcome": "您目前没有任何目标:(，不过没关系，点击下面的按钮开始吧↓",
+    "btn-new-goal": "新目标"
+  },
+  "DASHBOARD_DONT_EARN_ENOUGH": {
+    "alert": "您目前的收入不足以实现此目标。",
+    "achievable-timeline": "重新计算您的日期以获得更可实现的时间表",
+    "btn-recalculate": "重新计算",
+    "btn-lock-date": "锁定日期"
+  },
+  "DASHBOARD_EXTRA_CONTRIBUTION": {
+    "title-need-extra-contribution": "根据您的目标，您需要做出贡献"
+  },
+  "GOAL": {
+    "title-new-goal": "新目标",
+    "title-edit-goal": "编辑目标",
+    "label-title": "标题",
+    "label-description": "描述",
+    "label-total-cost": "总消耗",
+    "label-target-date": "目标日期",
+    "label-lock-date": "锁定日期",
+    "btn-create-goal": "创建目标",
+    "btn-edit-goal": "编辑目标"
   }
 }

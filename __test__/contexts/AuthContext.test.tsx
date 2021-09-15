@@ -53,7 +53,7 @@ describe("AuthContext", () => {
     expect(loading).toBeInTheDocument();
   });
 
-  it("Expect user to load", async () => {
+  it("Expect profile to load", async () => {
     expect.assertions(1);
 
     const uuid = faker.datatype.uuid();
@@ -73,7 +73,7 @@ describe("AuthContext", () => {
 
       if (!currentUser) return <div data-testid="no-user-output">No User</div>;
 
-      return <div data-testid="is-user-output">{currentUser?.uid} - {currentUser?.email}</div>;
+      return <div data-testid="is-profile-output">{currentUser?.uid} - {currentUser?.email}</div>;
     };
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
@@ -82,7 +82,7 @@ describe("AuthContext", () => {
 
     await act(() => waitFor(() => promise));
 
-    const isUserOutput = screen.getByTestId("is-user-output");
+    const isUserOutput = screen.getByTestId("is-profile-output");
 
     expect(isUserOutput).toHaveTextContent(`${uuid} - ${email}`);
   });

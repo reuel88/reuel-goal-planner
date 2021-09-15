@@ -1,5 +1,5 @@
-import { act, waitFor, fireEvent, queryByAttribute, render } from "@testing-library/react";
-import Uid from "@pages/user/[uid]";
+import { act, fireEvent, queryByAttribute, render, waitFor } from "@testing-library/react";
+import Uid from "@pages/profile/[uid]";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import { useRouter } from "next/router";
 

@@ -5,14 +5,14 @@ import { SyntheticEvent } from "react";
 import routes from "@constants/routes.json";
 import BasicLayout from "@modules/layouts/BasicLayout";
 
-const Savings: NextPage = () => {
+const Saving: NextPage = () => {
   const t = useTranslations();
   const router = useRouter();
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
 
-    await router.push(routes.ONBOARDING_CONTRIBUTIONS);
+    await router.push(routes.ONBOARDING_CONTRIBUTION);
   }
 
   return (<BasicLayout>
@@ -23,7 +23,7 @@ const Savings: NextPage = () => {
       <section>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="savings">{t("ONBOARDING_SAVINGS.label-savings")}</label>
+            <label htmlFor="savings">{t("ONBOARDING_SAVING.label-savings")}</label>
             <input type="text" id="savings" />
           </div>
           <button>{t("FORM.btn-next")}</button>
@@ -33,4 +33,4 @@ const Savings: NextPage = () => {
   );
 };
 
-export default Savings;
+export default Saving;

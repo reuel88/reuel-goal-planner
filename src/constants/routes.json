@@ -3,8 +3,10 @@
   "LOGIN": "/auth/login",
   "FORGOT_PASSWORD": "/auth/forgot-password",
   "DASHBOARD": "/dashboard",
-  "USER": "/user",
+  "PROFILE": "/profile",
   "DRIVE": "/drive",
-  "ONBOARDING_SAVINGS": "/onboarding/savings",
-  "ONBOARDING_CONTRIBUTIONS": "/onboarding/contributions"
+  "ONBOARDING_SAVING": "/onboarding/saving",
+  "ONBOARDING_CONTRIBUTION": "/onboarding/contribution",
+  "GOAL_NEW": "/goal/new",
+  "GOAL_EDIT": "/goal/edit"
 }

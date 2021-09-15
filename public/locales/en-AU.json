@@ -2,7 +2,8 @@
   "FORM": {
     "optional": "Optional",
     "btn-next": "Next",
-    "btn-back": "Back"
+    "btn-back": "Back",
+    "btn-cancel": "Cancel"
   },
   "PERIOD": {
     "label-period": "Periodically",
@@ -12,19 +13,44 @@
     "option-monthly": "Monthly"
   },
   "HOME": {
-    "welcome-title": "Welcome to Goal Planner",
-    "welcome-subtitle": "Goal Planner is a planner looking to help you achieve your goals!",
+    "title-welcome": "Welcome to Goal Planner",
+    "subtitle-welcome": "Goal Planner is a planner looking to help you achieve your goals!",
     "btn-get-started": "Get Started"
   },
   "ONBOARDING": {
     "savings": "Savings",
     "contributions": "Contributions"
   },
-  "ONBOARDING_SAVINGS": {
+  "ONBOARDING_SAVING": {
     "label-savings": "How much currently in your savings?"
   },
-  "ONBOARDING_CONTRIBUTIONS": {
+  "ONBOARDING_CONTRIBUTION": {
     "label-contributions": "How much do you contribute?",
     "description-contributions": "How often and how much do you contribute to your savings?"
+  },
+  "DASHBOARD": {
+    "title-welcome": "Welcome",
+    "subtitle-welcome": "You currently don’t have any goals :(, but that okay click the button below to get started ↓",
+    "btn-new-goal": "New Goal"
+  },
+  "DASHBOARD_DONT_EARN_ENOUGH": {
+    "alert": "You currently don’t earn enough to achieve this goal.",
+    "achievable-timeline": "Recalculate your date for a more a achievable timeline",
+    "btn-recalculate": "Recalculate",
+    "btn-lock-date": "Lock the Date"
+  },
+  "DASHBOARD_EXTRA_CONTRIBUTION": {
+    "title-need-extra-contribution": "Based on your goals, you need to contribute"
+  },
+  "GOAL": {
+    "title-new-goal": "New Goal",
+    "title-edit-goal": "Edit Goal",
+    "label-title": "Title",
+    "label-description": "Description",
+    "label-total-cost": "Total Cost",
+    "label-target-date": "Target Date",
+    "label-lock-date": "Lock the Date",
+    "btn-create-goal": "Create Goal",
+    "btn-edit-goal": "Edit Goal"
   }
 }

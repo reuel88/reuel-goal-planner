@@ -35,7 +35,7 @@ describe("AuthContext.legacy", () => {
     expect(loading).toBeInTheDocument();
   });
 
-  it("Expect user to load", () => {
+  it("Expect profile to load", () => {
     const uuid = faker.datatype.uuid();
     const email = faker.internet.email();
 
@@ -47,14 +47,14 @@ describe("AuthContext.legacy", () => {
     const TestingComponent: FunctionComponent = () => {
       const { currentUser } = useAuth() ?? { currentUser: null };
 
-      if (!currentUser) return <div data-testid="no-user-output">No User</div>;
+      if (!currentUser) return <div data-testid="no-profile-output">No User</div>;
 
-      return <div data-testid="is-user-output">{currentUser?.uid} - {currentUser?.email}</div>;
+      return <div data-testid="is-profile-output">{currentUser?.uid} - {currentUser?.email}</div>;
     };
 
     render(<AuthProvider><TestingComponent /></AuthProvider>);
 
-    const isUserOutput = screen.getByTestId("is-user-output");
+    const isUserOutput = screen.getByTestId("is-profile-output");
 
     expect(isUserOutput).toHaveTextContent(`${uuid} - ${email}`);
   });

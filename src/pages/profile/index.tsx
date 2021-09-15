@@ -9,7 +9,7 @@ import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
 
-const User: NextPage = () => {
+const Profile: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -34,7 +34,7 @@ const User: NextPage = () => {
   return (
     <BasicLayout>
       <NextSeo
-        title="Goal Planner - User"
+        title="Goal Planner - Profile"
       />
 
       <section>
@@ -50,7 +50,7 @@ const User: NextPage = () => {
             {currentUser?.email}
           </p>
 
-          <Link href={`${routes.USER}/${currentUser?.uid}`}>
+          <Link href={`${routes.PROFILE}/${currentUser?.uid}`}>
             <a>
               Update Profile
             </a>
@@ -64,7 +64,7 @@ const User: NextPage = () => {
   );
 };
 
-export default User;
+export default Profile;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
