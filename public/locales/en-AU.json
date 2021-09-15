@@ -1,6 +1,18 @@
 {
-  "Index": {
-    "title": "Create Next App | Reuel",
-    "description": "This page uses messages from <code>./messages/index/{locale}.json</code> and <code>./messages/shared/{locale}.json</code>. Messages from the about page and other locales are not loaded."
+  "FORM": {
+    "optional": "Optional",
+    "btn-next": "Next"
+  },
+  "HOME": {
+    "welcome-title": "Welcome to Goal Planner",
+    "welcome-subtitle": "Goal Planner is a planner looking to help you achieve your goals!",
+    "btn-get-started": "Get Started"
+  },
+  "ONBOARDING": {
+    "savings": "Savings",
+    "contributions": "Contributions"
+  },
+  "ONBOARDING_SAVINGS": {
+    "label-savings": "How much currently in your savings?"
   }
 }

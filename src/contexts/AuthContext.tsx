@@ -1,11 +1,11 @@
 import nookies from "nookies";
-import React, { createContext, useContext, useEffect, useState, FunctionComponent } from "react";
+import React, { createContext, FunctionComponent, useContext, useEffect, useState } from "react";
 import authClientService, { AuthUser } from "@services/authClientService";
 
 export interface AuthContent {
   currentUser: AuthUser | null,
   signUp: (email: string, password: string) => Promise<any>,
-  signIn: (email: string, password: string) => Promise<any>,
+  signInWithEmailAndPassword: (email: string, password: string) => Promise<any>,
   signOut: () => Promise<any>,
   resetPassword: (email: string) => Promise<any>,
   updateEmail: (email: string) => Promise<any>,
@@ -26,8 +26,8 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     return authClientService.signUp(email, password);
   }
 
-  function signIn(email: string, password: string) {
-    return authClientService.signIn(email, password);
+  function signInWithEmailAndPassword(email: string, password: string) {
+    return authClientService.signInWithEmailAndPassword(email, password);
   }
 
   function signOut() {
@@ -76,7 +76,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   const value: AuthContent = {
     currentUser,
     signUp,
-    signIn,
+    signInWithEmailAndPassword,
     signOut,
     resetPassword,
     updateEmail,

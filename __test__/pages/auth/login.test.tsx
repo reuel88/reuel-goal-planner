@@ -1,4 +1,4 @@
-import { render, fireEvent, act } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { useRouter } from "next/router";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import Login from "@pages/auth/login";
@@ -19,7 +19,7 @@ describe("Login", () => {
 
   it("Expect to be Login Page", () => {
     authPackage.useAuth.mockImplementation(() => ({
-      signIn: jest.fn()
+      signInWithEmailAndPassword: jest.fn()
     }));
 
     const { getByRole } = render(<Login />);
@@ -29,7 +29,7 @@ describe("Login", () => {
 
   it("Expect to render error alert", () => {
     authPackage.useAuth.mockImplementation(() => ({
-      signIn: jest.fn()
+      signInWithEmailAndPassword: jest.fn()
     }));
 
     const { getByRole } = render(<Login />);
@@ -52,7 +52,7 @@ describe("Login", () => {
     (useRouter as jest.Mock).mockImplementation(() => ({ push }));
 
     authPackage.useAuth.mockImplementation(() => ({
-      signIn: () => promise
+      signInWithEmailAndPassword: () => promise
     }));
 
     const { getByLabelText, getByRole } = render(<Login />);
@@ -86,7 +86,7 @@ describe("Login", () => {
     const password = faker.internet.password();
 
     authPackage.useAuth.mockImplementation(() => ({
-      signIn: () => promise
+      signInWithEmailAndPassword: () => promise
     }));
 
     const { getByLabelText, getByRole } = render(<Login />);

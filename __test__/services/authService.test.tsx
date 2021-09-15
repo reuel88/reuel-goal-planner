@@ -1,4 +1,4 @@
-import authorization, { updateEmail, updatePassword } from "firebase/auth";
+import authorization from "firebase/auth";
 import authService from "@services/authClientService";
 
 const faker = require("faker");
@@ -37,7 +37,7 @@ describe("authServices", () => {
     const email = faker.internet.email();
     const password = faker.internet.password();
 
-    authService.signIn(email, password);
+    authService.signInWithEmailAndPassword(email, password);
 
     expect(signInWithEmailAndPassword).toBeCalled();
   });

@@ -1,0 +1,18 @@
+{
+  "FORM": {
+    "optional": "可选的",
+    "btn-next": "下一个"
+  },
+  "Home": {
+    "welcome-title": "欢迎使用目标规划师",
+    "welcome-subtitle": "目标规划师是希望帮助您实现目标的规划师!",
+    "btn-get-started": "开始"
+  },
+  "ONBOARDING": {
+    "savings": "储蓄账户",
+    "contributions": "的贡献"
+  },
+  "ONBOARDING_SAVINGS": {
+    "label-savings": "您目前有多少储蓄？"
+  }
+}

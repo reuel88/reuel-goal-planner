@@ -17,13 +17,13 @@ const Login: NextPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { signIn } = useAuth() ?? { signIn: null };
+  const { signInWithEmailAndPassword } = useAuth() ?? { signInWithEmailAndPassword: null };
 
-  if (!signIn) {
+  if (!signInWithEmailAndPassword) {
     return <div data-testid="no-sign-in" />;
   }
 
-  async function handleSubmit(e: React.SyntheticEvent, signIn: (email: string, password: string) => Promise<any>) {
+  async function handleSubmit(e: React.SyntheticEvent, signInWithEmailAndPassword: (email: string, password: string) => Promise<any>) {
     e.preventDefault();
     const email = emailRef?.current?.value ?? "";
     const password = passwordRef?.current?.value ?? "";
@@ -44,7 +44,7 @@ const Login: NextPage = () => {
     try {
       setError("");
       setLoading(true);
-      await signIn(email, password);
+      await signInWithEmailAndPassword(email, password);
 
       return await router.push(route.DASHBOARD);
     } catch (e) {
@@ -65,7 +65,7 @@ const Login: NextPage = () => {
           <h2>Login</h2>
         </header>
         {error && <div className="alert alert-danger" role="alert">{error}</div>}
-        <form onSubmit={e => handleSubmit(e, signIn)}>
+        <form onSubmit={e => handleSubmit(e, signInWithEmailAndPassword)}>
           <div className="section-content">
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>

@@ -14,7 +14,7 @@ jest.mock("nookies", () => ({
 
 jest.mock("@services/authClientService", () => ({
     signUp: jest.fn(),
-    signIn: jest.fn(),
+    signInWithEmailAndPassword: jest.fn(),
     signOut: jest.fn(),
     resetPassword: jest.fn(),
     updateEmail: jest.fn(),
@@ -115,7 +115,7 @@ describe("AuthContext", () => {
   it("Expect sign in to be called", async () => {
     expect.assertions(1);
 
-    const signInWithEmailAndPassword = jest.spyOn(authClientService, "signIn").mockImplementation(jest.fn());
+    const signInWithEmailAndPassword = jest.spyOn(authClientService, "signInWithEmailAndPassword").mockImplementation(jest.fn());
 
     const email = faker.internet.email();
     const password = faker.internet.password();
@@ -123,10 +123,10 @@ describe("AuthContext", () => {
     jest.spyOn(authClientService, "idTokenChanged").mockImplementation((callback: any) => callback(null));
 
     const TestingComponent: FunctionComponent = () => {
-      const { signIn } = useAuth() ?? { signIn: null };
+      const { signInWithEmailAndPassword } = useAuth() ?? { signIn: null };
 
-      if (signIn) {
-        signIn(email, password);
+      if (signInWithEmailAndPassword) {
+        signInWithEmailAndPassword(email, password);
       }
 
       return <div data-testid="is-user-output">Test</div>;

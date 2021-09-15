@@ -23,11 +23,10 @@ function MyApp({ Component, messages, pageProps }: MyAppPros) {
 
 MyApp.getInitialProps = async function getInitialProps(context: AppContext) {
   const { locale } = context.router;
-  console.log(locale);
 
   return {
     ...(await NextApp.getInitialProps(context)),
-    messages: require(`../../public/locales/${locale}.json`)
+    messages: require(`../../public/locales/${locale ?? "en-AU"}.json`)
   };
 };
 

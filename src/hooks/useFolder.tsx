@@ -61,7 +61,7 @@ export function useFolder(
   folder: folderType | null = null
 ) {
   const { currentUser } = useAuth() ?? { currentUser: null };
-  const { getDocById, querySnapshotDocs } = useDatabase();
+  const { getDocById, querySnapshotDocs } = useDatabase() ?? { getDocById: null, querySnapshotDocs: null };
 
   const [state, dispatch] = useReducer(reducer, {
     folderId,
@@ -87,8 +87,10 @@ export function useFolder(
       });
     }
 
+    if(!getDocById) return;
+
     getDocById(documentNames.FOLDERS, folderId)
-      .then(doc => {
+      .then((doc: any) => {
         const formattedDoc = formatDoc(doc);
 
         return dispatch({
@@ -99,9 +101,7 @@ export function useFolder(
         });
 
       })
-      .catch(e => {
-        console.error(e);
-
+      .catch(() => {
         return dispatch({
           type: ACTIONS.UPDATE_FOLDER,
           payload: {
@@ -113,7 +113,7 @@ export function useFolder(
   }, [folderId, getDocById]);
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || !querySnapshotDocs) return;
 
     return querySnapshotDocs(
       documentNames.FOLDERS,
@@ -122,7 +122,7 @@ export function useFolder(
         { operator: "where", fieldPath: "userId", opStr: "==", value: currentUser.uid },
         { operator: "orderBy", fieldPath: "createdAt" }
       ],
-      snapshot => {
+      (snapshot: any) => {
         dispatch({
           type: ACTIONS.SET_CHILD_FOLDERS,
           payload: {
@@ -133,7 +133,7 @@ export function useFolder(
   }, [folderId, currentUser, querySnapshotDocs]);
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || !querySnapshotDocs) return;
 
     return querySnapshotDocs(
       documentNames.FILES,
@@ -142,7 +142,7 @@ export function useFolder(
         { operator: "where", fieldPath: "userId", opStr: "==", value: currentUser.uid },
         { operator: "orderBy", fieldPath: "createdAt" }
       ],
-      snapshot => {
+      (snapshot: any) => {
         dispatch({
           type: ACTIONS.SET_CHILD_FILES,
           payload: {

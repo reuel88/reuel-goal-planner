@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   i18n: {
-    locales: ["en-AU"],
+    locales: ["en-AU", "zh"],
     defaultLocale: "en-AU"
   },
   webpack: (config, { isServer }) => {

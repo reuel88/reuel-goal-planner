@@ -2,9 +2,10 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   onIdTokenChanged,
+  sendPasswordResetEmail,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail,
   updateEmail,
   updatePassword
 } from "firebase/auth";
@@ -23,8 +24,11 @@ const authClientService = {
   signUp: (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
   },
-  signIn: (email: string, password: string) => {
+  signInWithEmailAndPassword: (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
+  },
+  signInAnonymously: () => {
+    return signInAnonymously(auth);
   },
   signOut: () => {
     return signOut(auth);

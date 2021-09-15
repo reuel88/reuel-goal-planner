@@ -4,5 +4,6 @@
   "FORGOT_PASSWORD": "/auth/forgot-password",
   "DASHBOARD": "/dashboard",
   "USER": "/user",
-  "DRIVE": "/drive"
+  "DRIVE": "/drive",
+  "ONBOARDING_SAVINGS": "/onboarding/savings"
 }
