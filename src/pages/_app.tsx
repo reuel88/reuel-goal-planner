@@ -7,7 +7,11 @@ import { AuthProvider } from "@contexts/AuthContext";
 
 type MyAppPros = AppProps & { messages: object };
 
-function MyApp({ Component, messages, pageProps }: MyAppPros) {
+function MyApp(myAppProps: MyAppPros) {
+  const { Component, messages, pageProps } = myAppProps;
+
+
+
   return (
     <NextIntlProvider
       messages={{ ...messages, ...pageProps.messages }}
@@ -37,8 +41,10 @@ function MyApp({ Component, messages, pageProps }: MyAppPros) {
 MyApp.getInitialProps = async function getInitialProps(context: AppContext) {
   const { locale } = context.router;
 
+  const initialProps = await NextApp.getInitialProps(context)
+
   return {
-    ...(await NextApp.getInitialProps(context)),
+    ...(initialProps),
     messages: require(`../../public/locales/${locale ?? "en-AU"}.json`)
   };
 };
