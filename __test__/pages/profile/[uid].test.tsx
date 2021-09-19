@@ -41,13 +41,13 @@ describe("uid", () => {
       updatePassword: jest.fn()
     }));
 
-    const { getByLabelText, getByRole } = render(<Uid />);
+    const { getByLabelText, getByRole, getByTestId } = render(<Uid />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: "" } });
     expect(emailInput).toHaveValue("");
 
-    const updateBtn = getByRole("button", {}, { name: /Update/i });
+    const updateBtn = getByTestId("submit-update-btn");
     fireEvent.click(updateBtn);
 
     const errorAlert = getByRole("alert");
@@ -71,16 +71,16 @@ describe("uid", () => {
       updatePassword: jest.fn()
     }));
 
-    const { getByLabelText, getByRole } = render(<Uid />);
+    const { getByLabelText, getByTestId } = render(<Uid />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: newEmail } });
     expect(emailInput).toHaveValue(newEmail);
 
-    let updateBtn = getByRole("button", {}, { name: /Update/i });
+    let updateBtn = getByTestId("submit-update-btn");
     fireEvent.click(updateBtn);
 
-    updateBtn = getByRole("button", {}, { name: /Update/i });
+    updateBtn = getByTestId("submit-update-btn");
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -120,10 +120,10 @@ describe("uid", () => {
     fireEvent.change(verifyPasswordInput, { target: { value: newPassword } });
     expect(verifyPasswordInput).toHaveValue(newPassword);
 
-    let updateBtn = dom.getByRole("button", {}, { name: /Update/i });
+    let updateBtn = dom.getByTestId("submit-update-btn");
     fireEvent.click(updateBtn);
 
-    updateBtn = dom.getByRole("button", {}, { name: /Update/i });
+    updateBtn = dom.getByTestId("submit-update-btn");
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -149,28 +149,28 @@ describe("uid", () => {
       updatePassword: jest.fn()
     }));
 
-    const { getByLabelText, getByRole } = render(<Uid />);
+    const { getByLabelText, getByRole, getByTestId } = render(<Uid />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: newEmail } });
     expect(emailInput).toHaveValue(newEmail);
 
-    let updateBtn = getByRole("button", {}, { name: /Update/i });
+    let updateBtn = getByTestId("submit-update-btn");
     fireEvent.click(updateBtn);
 
-    updateBtn = getByRole("button", {}, { name: /Update/i });
+    updateBtn = getByTestId("submit-update-btn");
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.reject(), 1000);
 
     try {
-      await act(() => waitFor(() => promise) ); // because i have a promise.all
+      await act(() => waitFor(() => promise)); // because i have a promise.all
     } catch (e) {
       const errorAlert = getByRole("alert");
       expect(errorAlert).toHaveTextContent("Failed to Update");
 
-      updateBtn = getByRole("button", {}, { name: /Update/i });
-      expect(updateBtn).not.toHaveAttribute("disabled");
+      updateBtn = getByTestId("submit-update-btn");
+      expect(updateBtn).toHaveAttribute("disabled", "false" );
     }
   });
 

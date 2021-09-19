@@ -8,6 +8,7 @@ import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
+import { RotButton } from "../../web-components/components";
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -58,7 +59,7 @@ const Profile: NextPage = () => {
         </div>
       </section>
       <div>
-        <button type="button" onClick={e => handleLogout(e, signOut)}>Log out</button>
+        <RotButton type="button" role="button" onClick={e => handleLogout(e, signOut)}>Log out</RotButton>
       </div>
     </BasicLayout>
   );

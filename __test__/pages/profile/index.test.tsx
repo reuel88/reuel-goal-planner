@@ -7,6 +7,10 @@ const authPackage = require("@contexts/AuthContext"); // to prevent error
 
 const faker = require("faker");
 
+jest.mock("reuel-component-library/loader", () => ({
+  defineCustomElements: jest.fn()
+}));
+
 jest.mock("next/router", () => ({
   useRouter: jest.fn()
 }));

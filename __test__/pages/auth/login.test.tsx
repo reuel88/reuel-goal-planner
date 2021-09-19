@@ -32,9 +32,9 @@ describe("Login", () => {
       signInWithEmailAndPassword: jest.fn()
     }));
 
-    const { getByRole } = render(<Login />);
+    const { getByRole, getByTestId } = render(<Login />);
 
-    const loginBtn = getByRole("button", {}, { name: /Login/i });
+    const loginBtn = getByTestId("submit-login-btn");
     fireEvent.click(loginBtn);
 
     const errorAlert = getByRole("alert");
@@ -55,7 +55,7 @@ describe("Login", () => {
       signInWithEmailAndPassword: () => promise
     }));
 
-    const { getByLabelText, getByRole } = render(<Login />);
+    const { getByLabelText, getByTestId } = render(<Login />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: email } });
@@ -65,10 +65,10 @@ describe("Login", () => {
     fireEvent.change(passwordInput, { target: { value: password } });
     expect(passwordInput).toHaveValue(password);
 
-    let loginBtn = getByRole("button", {}, { name: /Login/i });
+    let loginBtn = getByTestId("submit-login-btn");
     fireEvent.click(loginBtn);
 
-    loginBtn = getByRole("button", {}, { name: /Login/i });
+    loginBtn = getByTestId("submit-login-btn");
     expect(loginBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -89,7 +89,7 @@ describe("Login", () => {
       signInWithEmailAndPassword: () => promise
     }));
 
-    const { getByLabelText, getByRole } = render(<Login />);
+    const { getByLabelText, getByRole, getByTestId } = render(<Login />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: email } });
@@ -99,10 +99,10 @@ describe("Login", () => {
     fireEvent.change(passwordInput, { target: { value: password } });
     expect(passwordInput).toHaveValue(password);
 
-    let loginBtn = getByRole("button", {}, { name: /Login/i });
+    let loginBtn = getByTestId("submit-login-btn");
     fireEvent.click(loginBtn);
 
-    loginBtn = getByRole("button", {}, { name: /Login/i });
+    loginBtn = getByTestId("submit-login-btn");
     expect(loginBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.reject(), 1000);
@@ -113,8 +113,8 @@ describe("Login", () => {
       const errorAlert = getByRole("alert");
       expect(errorAlert).toHaveTextContent("Failed to login");
 
-      loginBtn = getByRole("button", {}, { name: /Login/i });
-      expect(loginBtn).not.toHaveAttribute("disabled");
+      loginBtn = getByTestId("submit-login-btn");
+      expect(loginBtn).toHaveAttribute("disabled", "false");
     }
   });
 

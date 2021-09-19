@@ -2,6 +2,7 @@ import type { AppContext, AppProps } from "next/app";
 import NextApp from "next/app";
 import { NextIntlProvider } from "next-intl";
 import { DefaultSeo } from "next-seo";
+import "tailwindcss/tailwind.css";
 import { AuthProvider } from "@contexts/AuthContext";
 
 type MyAppPros = AppProps & { messages: object };

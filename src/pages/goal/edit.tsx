@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { SyntheticEvent } from "react";
-import BasicLayout from "@modules/layouts/BasicLayout";
 import { useTranslations } from "next-intl";
+import { SyntheticEvent } from "react";
 import routes from "@constants/routes.json";
+import BasicLayout from "@modules/layouts/BasicLayout";
+import { RotButton } from "../../web-components/components";
 
 const New: NextPage = () => {
   const t = useTranslations();
@@ -15,7 +16,6 @@ const New: NextPage = () => {
 
     await router.push(routes.DASHBOARD);
   }
-
 
   return (<BasicLayout>
     <section>
@@ -49,9 +49,9 @@ const New: NextPage = () => {
           </label>
         </div>
 
-        <button>
+        <RotButton>
           {t("GOAL.btn-edit-goal")}
-        </button>
+        </RotButton>
         <Link href={`${routes.DASHBOARD}`}>
           <a>{t("FORM.btn-cancel")}</a>
         </Link>

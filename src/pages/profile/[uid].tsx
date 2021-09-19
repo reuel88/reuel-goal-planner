@@ -9,6 +9,7 @@ import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import authBackendService from "@services/authBackendService";
+import { RotButton } from "../../web-components/components";
 
 const Uid: NextPage = () => {
   const router = useRouter();
@@ -105,7 +106,7 @@ const Uid: NextPage = () => {
             </div>
           </div>
           <footer className="section-footer">
-            <button type="submit" disabled={loading}>Update</button>
+            <RotButton type="submit" data-testId="submit-update-btn"  role="button" disabled={loading} onClick={e => handleSubmit(e, updateEmail, updatePassword)}>Update</RotButton>
           </footer>
         </form>
       </section>

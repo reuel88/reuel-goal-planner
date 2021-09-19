@@ -9,6 +9,7 @@ import validate from "validate.js";
 import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import authBackendService from "@services/authBackendService";
+import { RotButton } from "../../web-components/components";
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -77,7 +78,7 @@ const Login: NextPage = () => {
             </div>
           </div>
           <footer className="section-footer">
-            <button type="submit" disabled={loading}>Login</button>
+            <RotButton type="submit" data-testId="submit-login-btn" role="button" disabled={loading} onClick={e => handleSubmit(e, signInWithEmailAndPassword)}>Login</RotButton>
           </footer>
         </form>
       </section>

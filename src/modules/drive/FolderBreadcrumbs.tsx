@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import routes from "@constants/routes.json";
 import { folderType, ROOT_FOLDER } from "@hooks/useFolder";
+import { RotButton } from "../../web-components/components";
 
 const FolderBreadcrumbs: FunctionComponent<{ currentFolder: folderType }> = ({ currentFolder }) => {
   let path: Array<null | { name: string, id: null | string }>;
@@ -12,11 +13,13 @@ const FolderBreadcrumbs: FunctionComponent<{ currentFolder: folderType }> = ({ c
     {path.map((folder, index) => {
       if (!folder?.name) return null;
 
+      const href = !folder?.id ? routes.DRIVE : `${routes.DRIVE}/${folder?.id}`
+
       return (<React.Fragment key={index}>
-        <Link href={!folder?.id ? routes.DRIVE : `${routes.DRIVE}/${folder?.id}`}>
-          <a>
+        <Link href={href} passHref>
+          <RotButton as="a" href={href}>
             {folder.name}
-          </a>
+          </RotButton>
         </Link>
         &nbsp;
       </React.Fragment>);

@@ -2,9 +2,17 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
+import { SyntheticEvent } from "react";
+import styled from "styled-components";
 import routes from "@constants/routes.json";
 import BasicLayout from "@modules/layouts/BasicLayout";
-import { SyntheticEvent } from "react";
+import { RotButton } from "../../web-components/components";
+
+const FormFooter = styled.footer`
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+`;
 
 const Contribution: NextPage = () => {
   const t = useTranslations();
@@ -37,10 +45,12 @@ const Contribution: NextPage = () => {
           <input type="text" id="savings" />
         </div>
 
-        <button>{t("FORM.btn-next")}</button>
-        <Link href={routes.ONBOARDING_SAVING}>
-          <a>{t("FORM.btn-back")}</a>
-        </Link>
+        <FormFooter>
+          <RotButton onClick={handleSubmit}>{t("FORM.btn-next")}</RotButton>
+          <Link href={routes.ONBOARDING_SAVING} passHref>
+            <RotButton as="a" variant="secondary">{t("FORM.btn-back")}</RotButton>
+          </Link>
+        </FormFooter>
       </form>
     </section>
   </BasicLayout>);

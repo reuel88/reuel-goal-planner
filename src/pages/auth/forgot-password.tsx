@@ -8,6 +8,7 @@ import validate from "validate.js";
 import { useAuth } from "@contexts/AuthContext";
 import routes from "@constants/routes.json";
 import authBackendService from "@services/authBackendService";
+import { RotButton } from "../../web-components/components";
 
 const ForgotPassword: NextPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -71,7 +72,7 @@ const ForgotPassword: NextPage = () => {
             </div>
           </div>
           <footer className="section-footer">
-            <button type="submit" disabled={loading}>Reset Password</button>
+            <RotButton type="submit" data-testId="submit-reset-password-btn" role="button" disabled={loading} onClick={e => handleSubmit(e, resetPassword)}>Reset Password</RotButton>
           </footer>
         </form>
       </section>

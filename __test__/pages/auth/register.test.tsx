@@ -1,4 +1,4 @@
-import { render, fireEvent, act, queryByAttribute } from "@testing-library/react";
+import { act, fireEvent, queryByAttribute, render } from "@testing-library/react";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import Register from "@pages/auth/register";
 import { useRouter } from "next/router";
@@ -31,9 +31,9 @@ describe("Register", () => {
       signUp: jest.fn()
     }));
 
-    const { getByRole } = render(<Register />);
+    const { getByRole, getByTestId } = render(<Register />);
 
-    const signUpBtn = getByRole("button", {}, { name: /Sign Up/i });
+    const signUpBtn = getByTestId("submit-sign-up-btn");
     fireEvent.click(signUpBtn);
 
     const errorAlert = getByRole("alert");
@@ -73,10 +73,10 @@ describe("Register", () => {
     fireEvent.change(verifyPasswordInput, { target: { value: password } });
     expect(verifyPasswordInput).toHaveValue(password);
 
-    let signUpBtn = dom.getByRole("button", {}, { name: /Sign Up/i });
+    let signUpBtn = dom.getByTestId("submit-sign-up-btn");
     fireEvent.click(signUpBtn);
 
-    signUpBtn = dom.getByRole("button", {}, { name: /Sign Up/i });
+    signUpBtn = dom.getByTestId("submit-sign-up-btn");
     expect(signUpBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -116,10 +116,10 @@ describe("Register", () => {
     fireEvent.change(verifyPasswordInput, { target: { value: password } });
     expect(verifyPasswordInput).toHaveValue(password);
 
-    let signUpBtn = dom.getByRole("button", {}, { name: /Sign Up/i });
+    let signUpBtn = dom.getByTestId("submit-sign-up-btn");
     fireEvent.click(signUpBtn);
 
-    signUpBtn = dom.getByRole("button", {}, { name: /Sign Up/i });
+    signUpBtn = dom.getByTestId("submit-sign-up-btn");
     expect(signUpBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.reject(), 1000);
@@ -131,7 +131,7 @@ describe("Register", () => {
       expect(errorAlert).toHaveTextContent("Failed to register");
 
       signUpBtn = dom.getByRole("button", {}, { name: /Sign Up/i });
-      expect(signUpBtn).not.toHaveAttribute("disabled");
+      expect(signUpBtn).toHaveAttribute("disabled", '');
     }
   });
 

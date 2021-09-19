@@ -3,6 +3,7 @@ import Link from "next/link";
 import BasicLayout from "@modules/layouts/BasicLayout";
 import { useTranslations } from "next-intl";
 import routes from "@constants/routes.json";
+import { RotButton } from "../../web-components/components";
 
 const Dashboard: NextPage = () => {
   const t = useTranslations();
@@ -20,8 +21,8 @@ const Dashboard: NextPage = () => {
         </div>
         <footer>
           <p>{t("DASHBOARD_DONT_EARN_ENOUGH.achievable-timeline")}</p>
-          <button>{t("DASHBOARD_DONT_EARN_ENOUGH.btn-recalculate")}</button>
-          <button>{t("DASHBOARD_DONT_EARN_ENOUGH.btn-lock-date")}</button>
+          <RotButton>{t("DASHBOARD_DONT_EARN_ENOUGH.btn-recalculate")}</RotButton>
+          <RotButton variant="secondary">{t("DASHBOARD_DONT_EARN_ENOUGH.btn-lock-date")}</RotButton>
         </footer>
       </section>
 

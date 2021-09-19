@@ -1,4 +1,4 @@
-import { render, fireEvent, act } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import ForgotPassword from "@pages/auth/forgot-password";
 
@@ -27,9 +27,9 @@ describe("Forgot Password", () => {
       resetPassword: jest.fn()
     }));
 
-    const { getByRole } = render(<ForgotPassword />);
+    const { getByRole, getByTestId } = render(<ForgotPassword />);
 
-    const resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
+    const resetPasswordBtn = getByTestId("submit-reset-password-btn");
     fireEvent.click(resetPasswordBtn);
 
     const errorAlert = getByRole("alert");
@@ -46,16 +46,16 @@ describe("Forgot Password", () => {
       resetPassword: () => promise
     }));
 
-    const { getByLabelText, getByRole } = render(<ForgotPassword />);
+    const { getByLabelText, getByRole, getByTestId } = render(<ForgotPassword />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: email } });
     expect(emailInput).toHaveValue(email);
 
-    let resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
+    let resetPasswordBtn = getByTestId("submit-reset-password-btn");
     fireEvent.click(resetPasswordBtn);
 
-    resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
+    resetPasswordBtn = getByTestId("submit-reset-password-btn");
     expect(resetPasswordBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -64,8 +64,8 @@ describe("Forgot Password", () => {
     const successAlert = getByRole("alert");
     expect(successAlert).toHaveTextContent("Check your inbox for further instructions");
 
-    resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
-    expect(resetPasswordBtn).not.toHaveAttribute("disabled");
+    resetPasswordBtn = getByTestId("submit-reset-password-btn");
+    expect(resetPasswordBtn).toHaveAttribute("disabled", "false");
   });
 
   it("Button is disabled when loading and alert message should appear", async () => {
@@ -78,16 +78,16 @@ describe("Forgot Password", () => {
       resetPassword: () => promise
     }));
 
-    const { getByLabelText, getByRole } = render(<ForgotPassword />);
+    const { getByLabelText, getByRole,getByTestId } = render(<ForgotPassword />);
 
     const emailInput = getByLabelText(/email/i);
     fireEvent.change(emailInput, { target: { value: email } });
     expect(emailInput).toHaveValue(email);
 
-    let resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
+    let resetPasswordBtn = getByTestId("submit-reset-password-btn");
     fireEvent.click(resetPasswordBtn);
 
-    resetPasswordBtn = getByRole("button", {}, { name: /Reset Password/i });
+    resetPasswordBtn = getByTestId("submit-reset-password-btn");
     expect(resetPasswordBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.reject(), 1000);

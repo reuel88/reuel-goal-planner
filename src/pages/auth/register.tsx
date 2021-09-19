@@ -9,6 +9,7 @@ import validate from "validate.js";
 import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import authBackendService from "@services/authBackendService";
+import { RotButton } from "../../web-components/components";
 
 const Register: NextPage = () => {
   const router = useRouter();
@@ -88,7 +89,7 @@ const Register: NextPage = () => {
             </div>
           </div>
           <footer className="section-footer">
-            <button type="submit" disabled={loading}>Sign Up</button>
+            <RotButton type="submit" data-testId="submit-sign-up-btn" disabled={loading} onClick={e => handleSubmit(e, signUp)}>Sign Up</RotButton>
           </footer>
         </form>
       </section>
