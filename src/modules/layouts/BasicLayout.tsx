@@ -1,16 +1,14 @@
 import { FunctionComponent } from "react";
-import Navbar from "./Navbar";
+import PageHeader from "./PageHeader";
 
 const BasicLayout: FunctionComponent = ({ children }) => {
 
   return (
-    <>
-      <Navbar />
-
-      <hr />
+    <div className="bg-light min-vh-100">
+      <PageHeader />
 
       {children}
-    </>
+    </div>
   );
 };
 
