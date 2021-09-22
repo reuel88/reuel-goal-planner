@@ -13,14 +13,13 @@ const Home: NextPage = () => {
   const t = useTranslations("HOME");
 
   return (<BasicLayout>
-
-      <section>
-        <Container>
+      <main>
+        <Container as="section">
           <Row className="justify-content-center">
-            <Col xs={12} sm={7} md={6} lg={4} xl={3} className="text-center">
+            <Col xs={12} sm={8} md={6} lg={5} xl={4} xxl={3} className="text-center">
               <h1>{t("title-welcome")}</h1>
               <h2 className="h6">{t("subtitle-welcome")}</h2>
-              <div className="d-grid">
+              <div className="d-grid mt-3">
                 <Link href={`${routes.ONBOARDING_SAVING}`} passHref>
                   <Button as="a">{t("btn-get-started")}</Button>
                 </Link>
@@ -28,7 +27,7 @@ const Home: NextPage = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </main>
     </BasicLayout>
   );
 };

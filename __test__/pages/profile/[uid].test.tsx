@@ -47,7 +47,7 @@ describe("uid", () => {
     fireEvent.change(emailInput, { target: { value: "" } });
     expect(emailInput).toHaveValue("");
 
-    const updateBtn = getByRole("button", {}, { name: /Update/i });
+    const updateBtn = getByRole("button", { name: /Update/i });
     fireEvent.click(updateBtn);
 
     const errorAlert = getByRole("alert");
@@ -77,10 +77,10 @@ describe("uid", () => {
     fireEvent.change(emailInput, { target: { value: newEmail } });
     expect(emailInput).toHaveValue(newEmail);
 
-    let updateBtn = getByRole("button", {}, { name: /Update/i });
+    let updateBtn = getByRole("button", { name: /Update/i });
     fireEvent.click(updateBtn);
 
-    updateBtn = getByRole("button", {}, { name: /Update/i });
+    updateBtn = getByRole("button", { name: /Update/i });
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -120,10 +120,10 @@ describe("uid", () => {
     fireEvent.change(verifyPasswordInput, { target: { value: newPassword } });
     expect(verifyPasswordInput).toHaveValue(newPassword);
 
-    let updateBtn = dom.getByRole("button", {}, { name: /Update/i });
+    let updateBtn = dom.getByRole("button", { name: /Update/i });
     fireEvent.click(updateBtn);
 
-    updateBtn = dom.getByRole("button", {}, { name: /Update/i });
+    updateBtn = dom.getByRole("button",  { name: /Update/i });
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -155,21 +155,21 @@ describe("uid", () => {
     fireEvent.change(emailInput, { target: { value: newEmail } });
     expect(emailInput).toHaveValue(newEmail);
 
-    let updateBtn = getByRole("button", {}, { name: /Update/i });
+    let updateBtn = getByRole("button",  { name: /Update/i });
     fireEvent.click(updateBtn);
 
-    updateBtn = getByRole("button", {}, { name: /Update/i });
+    updateBtn = getByRole("button", { name: /Update/i });
     expect(updateBtn).toHaveAttribute("disabled");
 
     setTimeout(() => deferred.reject(), 1000);
 
     try {
-      await act(() => waitFor(() => promise) ); // because i have a promise.all
+      await act(() => waitFor(() => promise)); // because i have a promise.all
     } catch (e) {
       const errorAlert = getByRole("alert");
       expect(errorAlert).toHaveTextContent("Failed to Update");
 
-      updateBtn = getByRole("button", {}, { name: /Update/i });
+      updateBtn = getByRole("button", { name: /Update/i });
       expect(updateBtn).not.toHaveAttribute("disabled");
     }
   });

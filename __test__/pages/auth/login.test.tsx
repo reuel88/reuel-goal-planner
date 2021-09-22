@@ -24,7 +24,7 @@ describe("Login", () => {
 
     const { getByRole } = render(<Login />);
 
-    expect(getByRole("heading", {}, { name: /Login/i })).toBeInTheDocument();
+    expect(getByRole("heading", { name: /Login/i })).toBeInTheDocument();
   });
 
   it("Expect to render error alert", () => {

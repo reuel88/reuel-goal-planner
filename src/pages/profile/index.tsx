@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
 import BasicLayout from "@modules/layouts/BasicLayout";
@@ -50,15 +51,15 @@ const Profile: NextPage = () => {
             {currentUser?.email}
           </p>
 
-          <Link href={`${routes.PROFILE}/${currentUser?.uid}`}>
-            <a>
+          <Link href={`${routes.PROFILE}/${currentUser?.uid}`} passHref>
+            <Button as="a">
               Update Profile
-            </a>
+            </Button>
           </Link>
         </div>
       </section>
       <div>
-        <button type="button" onClick={e => handleLogout(e, signOut)}>Log out</button>
+        <Button type="button" onClick={e => handleLogout(e, signOut)}>Log out</Button>
       </div>
     </BasicLayout>
   );

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useRef, useState } from "react";
+import Button from "react-bootstrap/Button";
 import validate from "validate.js";
 import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
@@ -105,17 +106,17 @@ const Uid: NextPage = () => {
             </div>
           </div>
           <footer className="section-footer">
-            <button type="submit" disabled={loading}>Update</button>
+            <Button type="submit" disabled={loading}>Update</Button>
           </footer>
         </form>
       </section>
 
       <div>
 
-        <Link href={routes.DASHBOARD}>
-          <a>
+        <Link href={routes.DASHBOARD} passHref>
+          <Button as="a">
             Cancel
-          </a>
+          </Button>
         </Link>
       </div>
     </BasicLayout>

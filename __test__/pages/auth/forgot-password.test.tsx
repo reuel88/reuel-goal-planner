@@ -1,4 +1,4 @@
-import { render, fireEvent, act } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import ForgotPassword from "@pages/auth/forgot-password";
 
@@ -19,7 +19,7 @@ describe("Forgot Password", () => {
 
     const { getByRole } = render(<ForgotPassword />);
 
-    expect(getByRole("heading", {}, { name: /Reset Password/i })).toBeInTheDocument();
+    expect(getByRole("heading",  { name: /Reset Password/i })).toBeInTheDocument();
   });
 
   it("Expect to render error alert", () => {

@@ -2,8 +2,10 @@ import React, { createContext, FunctionComponent, useContext } from "react";
 import { DocumentReference } from "firebase/firestore";
 import databaseService, { documentType, queryObjectType } from "@services/databaseService";
 
+export type addDocFn = (docName: documentType, data: {}) => Promise<any>;
+
 export interface DatabaseContent {
-  addDoc: (docName: documentType, data: {}) => Promise<any>,
+  addDoc: addDocFn,
   getDocById: (docName: documentType, id: string) => Promise<any>,
   getAllDocs: (docName: documentType) => Promise<any>,
   queryDocs: (docName: documentType, queries: Array<queryObjectType>) => Promise<any>,

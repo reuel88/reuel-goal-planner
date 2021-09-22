@@ -5,6 +5,13 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useRef, useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import validate from "validate.js";
 import routes from "@constants/routes.json";
 import { useAuth } from "@contexts/AuthContext";
@@ -66,41 +73,59 @@ const Register: NextPage = () => {
         title="Goal Planner - Register"
       />
 
-      <section>
-        <header className="section-header">
-          <h2>Sign Up</h2>
-        </header>
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
-        <form onSubmit={e => handleSubmit(e, signUp)}>
-          <div className="section-content">
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" ref={emailRef} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="password" ref={passwordRef} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="verify-password" className="form-label">Verify Password</label>
-              <input type="password" className="form-control" id="verify-password"
-                     ref={verifyPasswordRef} />
-            </div>
-          </div>
-          <footer className="section-footer">
-            <button type="submit" disabled={loading}>Sign Up</button>
-          </footer>
-        </form>
-      </section>
+      <main className="bg-light min-vh-100 py-4">
+        <Container as="section">
+          <Row className="justify-content-center">
+            <Col xs={12} sm={8} md={6} lg={5} xl={4} xxl={3}>
+              <Card as="section">
+                <Card.Body>
+                  <Card.Title as="h2" className="text-center">Sign Up</Card.Title>
+                  <Form onSubmit={e => handleSubmit(e, signUp)}>
+                    {error && <Alert variant="danger" role="alert">{error}</Alert>}
 
-      <div>
-        Already have a account?
-        <Link href={routes.LOGIN}>
-          <a>
-            Log in
-          </a>
-        </Link>
-      </div>
+                    <Form.Group className="mb-3" controlId="email">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control type="text" placeholder="john.smith@example.com" ref={emailRef} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="password">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control type="password" ref={passwordRef} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="verify-password">
+                      <Form.Label>Verify Password</Form.Label>
+                      <Form.Control type="password" ref={verifyPasswordRef} />
+                    </Form.Group>
+
+                    <div className="d-grid gap-2">
+                      <Link href={routes.FORGOT_PASSWORD} passHref>
+                        <a>
+                          Forgot Password
+                        </a>
+                      </Link>
+                      <Button type="submit" disabled={loading}>Sign Up</Button>
+                    </div>
+                  </Form>
+                </Card.Body>
+              </Card>
+
+              <div className="text-center d-flex flex-column gap-2 py-2">
+                <div>
+                  Already have a account?&nbsp;
+                  <Link href={routes.LOGIN}>
+                    <a>
+                      Log in
+                    </a>
+                  </Link>
+                </div>
+              </div>
+
+
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 };

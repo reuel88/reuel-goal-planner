@@ -1,7 +1,8 @@
-import React, { FunctionComponent, ElementRef, useRef, useState, SyntheticEvent } from "react";
+import React, { ElementRef, FunctionComponent, SyntheticEvent, useRef, useState } from "react";
+import Button from "react-bootstrap/Button";
 import validate from "validate.js";
 import Modal from "../common/Modal";
-import { useDatabase } from "@contexts/DatabaseContext";
+import { addDocFn, useDatabase } from "@contexts/DatabaseContext";
 import { useAuth } from "@contexts/AuthContext";
 import { documentNames } from "@services/databaseService";
 import { folderType, ROOT_FOLDER } from "@hooks/useFolder";
@@ -15,7 +16,9 @@ const AddFolderButton: FunctionComponent<{
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const { currentUser } = useAuth() ?? { currentUser: null };
-  const { addDoc } = useDatabase();
+  const { addDoc } = useDatabase() ?? { addDoc: null };
+
+  if(!addDoc) return null;
 
   function openModal() {
     modalRef?.current?.handleOpen();
@@ -25,7 +28,7 @@ const AddFolderButton: FunctionComponent<{
     modalRef?.current?.handleClose();
   }
 
-  async function handleSubmit(e: SyntheticEvent) {
+  async function handleSubmit(e: SyntheticEvent, addDoc: addDocFn) {
     e.preventDefault();
     setError("");
 
@@ -64,16 +67,16 @@ const AddFolderButton: FunctionComponent<{
 
   return (
     <>
-      <button type="button" onClick={openModal}>Add Folder</button>
+      <Button type="button" onClick={openModal}>Add Folder</Button>
 
       <Modal ref={modalRef}>
         <div className="modal-wrapper">
           <header className="modal-header">
             Add New Folder
-            <button onClick={closeModal}>close</button>
+            <Button onClick={closeModal}>close</Button>
           </header>
           {error && <div className="alert alert-danger">{error}</div>}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={e => handleSubmit(e, addDoc)}>
             <div className="modal-body">
 
               <div className="form-group">
@@ -84,12 +87,12 @@ const AddFolderButton: FunctionComponent<{
 
             </div>
             <footer className="modal-footer">
-              <button type="button" onClick={closeModal}>
+              <Button type="button" onClick={closeModal}>
                 Cancel
-              </button>
-              <button type="submit">
+              </Button>
+              <Button type="submit">
                 Add Folder
-              </button>
+              </Button>
             </footer>
           </form>
         </div>

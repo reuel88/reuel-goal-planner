@@ -53,7 +53,7 @@ describe("Profile", () => {
 
     const { getByRole } = render(<Profile />);
 
-    const logoutBtn = getByRole("button", {}, { name: /Log out/i });
+    const logoutBtn = getByRole("button",  { name: /Log out/i });
     fireEvent.click(logoutBtn);
 
     setTimeout(() => deferred.resolve(), 1000);
@@ -79,7 +79,7 @@ describe("Profile", () => {
 
     const { getByRole } = render(<Profile />);
 
-    const logoutBtn = getByRole("button", {}, { name: /Log out/i });
+    const logoutBtn = getByRole("button", { name: /Log out/i });
     fireEvent.click(logoutBtn);
 
     setTimeout(() => deferred.reject(), 1000);

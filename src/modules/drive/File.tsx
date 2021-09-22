@@ -1,12 +1,13 @@
-import { FunctionComponent } from "react";
 import Link from "next/link";
+import { FunctionComponent } from "react";
+import Button from "react-bootstrap/Button";
 import { fileType } from "@hooks/useFolder";
 
 const File: FunctionComponent<{ file: fileType }> = ({ file }) => {
-  return (<Link href={file.url}>
-    <a target="_blank">
+  return (<Link href={file.url} passHref>
+    <Button as="a" target="_blank">
       {file.name}
-    </a>
+    </Button>
   </Link>);
 };
 

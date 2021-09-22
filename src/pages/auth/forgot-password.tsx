@@ -4,6 +4,13 @@ import Link from "next/link";
 import { NextSeo } from "next-seo";
 import nookies from "nookies";
 import React, { useRef, useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import validate from "validate.js";
 import { useAuth } from "@contexts/AuthContext";
 import routes from "@constants/routes.json";
@@ -57,41 +64,48 @@ const ForgotPassword: NextPage = () => {
         title="Goal Planner - Forgot Password"
       />
 
-      <section>
-        <header className="section-header">
-          <h2>Reset Password</h2>
-        </header>
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
-        {message && <div className="alert alert-success" role="alert">{message}</div>}
-        <form onSubmit={e => handleSubmit(e, resetPassword)}>
-          <div className="section-content">
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" ref={emailRef} />
-            </div>
-          </div>
-          <footer className="section-footer">
-            <button type="submit" disabled={loading}>Reset Password</button>
-          </footer>
-        </form>
-      </section>
+      <main className="bg-light min-vh-100 py-4">
+        <Container as="section" >
+          <Row className="justify-content-center">
+            <Col xs={12} sm={8} md={6} lg={5} xl={4} xxl={3} >
+              <Card as="section">
+                <Card.Body>
+                  <Card.Title as="h2" className="text-center">
+                    Reset Password
+                  </Card.Title>
+                  <Form onSubmit={e => handleSubmit(e, resetPassword)}>
+                    {error && <Alert variant="danger" role="alert">{error}</Alert>}
+                    {message && <Alert variant="success" role="alert">{message}</Alert>}
 
-      <div>
-        <Link href={routes.LOGIN}>
-          <a>
-            Login
-          </a>
-        </Link>
-      </div>
+                    <Form.Group className="mb-3" controlId="email">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control type="text" placeholder="john.smith@example.com" ref={emailRef} />
+                    </Form.Group>
 
-      <div>
-        Need a account?
-        <Link href={routes.REGISTER}>
-          <a>
-            Create Account
-          </a>
-        </Link>
-      </div>
+                    <div className="d-grid gap-2">
+                      <Button type="submit" disabled={loading}>Reset Password</Button>
+                    </div>
+                  </Form>
+                </Card.Body>
+              </Card>
+
+              <div className="text-center d-flex flex-column gap-2 py-2">
+                <div>
+                  Already have a account?&nbsp;
+                  <Link href={routes.LOGIN}>
+                    <a>
+                      Login
+                    </a>
+                  </Link>
+                </div>
+              </div>
+
+
+
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 };

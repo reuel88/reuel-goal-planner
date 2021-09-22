@@ -4,7 +4,7 @@ import PageHeader from "./PageHeader";
 const BasicLayout: FunctionComponent = ({ children }) => {
 
   return (
-    <div className="bg-light min-vh-100">
+    <div className="bg-light min-vh-100 pb-4">
       <PageHeader />
 
       {children}

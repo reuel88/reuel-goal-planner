@@ -1,4 +1,4 @@
-import { render, fireEvent, act, queryByAttribute } from "@testing-library/react";
+import { act, fireEvent, queryByAttribute, render } from "@testing-library/react";
 import { getControlledPromise } from "../../testUtils/ControlledPromise";
 import Register from "@pages/auth/register";
 import { useRouter } from "next/router";
@@ -23,7 +23,7 @@ describe("Register", () => {
 
     const { getByRole } = render(<Register />);
 
-    expect(getByRole("heading", {}, { name: /Sign Up/i })).toBeInTheDocument();
+    expect(getByRole("heading", { name: /Sign Up/i })).toBeInTheDocument();
   });
 
   it("Expect to render error alert", () => {
