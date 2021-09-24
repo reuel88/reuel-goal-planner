@@ -18,7 +18,7 @@ const AddFolderButton: FunctionComponent<{
   const { currentUser } = useAuth() ?? { currentUser: null };
   const { addDoc } = useDatabase() ?? { addDoc: null };
 
-  if(!addDoc) return null;
+  if (!addDoc) return null;
 
   function openModal() {
     modalRef?.current?.handleOpen();
@@ -81,8 +81,13 @@ const AddFolderButton: FunctionComponent<{
 
               <div className="form-group">
                 <label htmlFor="name" className="form-label">Folder Name</label>
-                <input type="text" className="form-control" id="name" value={name}
-                       onChange={(e) => setName(e.target.value)} />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
 
             </div>

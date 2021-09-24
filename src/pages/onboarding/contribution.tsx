@@ -12,10 +12,12 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { withOnboarding } from "@contexts/OnboardingContext";
 
 const Contribution: NextPage = () => {
   const t = useTranslations();
   const router = useRouter();
+
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -63,4 +65,4 @@ const Contribution: NextPage = () => {
   </BasicLayout>);
 };
 
-export default Contribution;
+export default withOnboarding(Contribution);

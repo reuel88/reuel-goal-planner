@@ -4,6 +4,13 @@ import { formatDoc } from "@utils/firebaseUtils";
 import { useAuth } from "@contexts/AuthContext";
 import { useDatabase } from "@contexts/DatabaseContext";
 
+const ACTIONS = {
+  SELECT_FOLDER: "select-folder",
+  UPDATE_FOLDER: "update-folder",
+  SET_CHILD_FOLDERS: "set-child-folders",
+  SET_CHILD_FILES: "set-child-files"
+};
+
 type actionType = typeof ACTIONS.SELECT_FOLDER | typeof ACTIONS.UPDATE_FOLDER | typeof ACTIONS.SET_CHILD_FOLDERS;
 
 export interface folderType {
@@ -24,13 +31,6 @@ interface payloadType {
   childFolders?: Array<folderType>,
   childFiles?: Array<fileType>,
 }
-
-const ACTIONS = {
-  SELECT_FOLDER: "select-folder",
-  UPDATE_FOLDER: "update-folder",
-  SET_CHILD_FOLDERS: "set-child-folders",
-  SET_CHILD_FILES: "set-child-files"
-};
 
 export const ROOT_FOLDER = {
   name: "Root", id: null, path: []
@@ -87,7 +87,7 @@ export function useFolder(
       });
     }
 
-    if(!getDocById) return;
+    if (!getDocById) return;
 
     getDocById(documentNames.FOLDERS, folderId)
       .then((doc: any) => {

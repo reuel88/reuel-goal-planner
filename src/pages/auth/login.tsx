@@ -73,7 +73,7 @@ const Login: NextPage = () => {
             <Col xs={12} sm={8} md={6} lg={5} xl={4} xxl={3}>
               <Card as="section">
                 <Card.Body>
-                  <Card.Title  as="h2" className="text-center">Login</Card.Title>
+                  <Card.Title as="h2" className="text-center">Login</Card.Title>
                   <Form onSubmit={e => handleSubmit(e, signInWithEmailAndPassword)}>
                     {error && <Alert variant="danger" role="alert">{error}</Alert>}
 
@@ -122,9 +122,6 @@ const Login: NextPage = () => {
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-  console.log(ctx);
-
   try {
     const cookies = nookies.get(ctx);
 

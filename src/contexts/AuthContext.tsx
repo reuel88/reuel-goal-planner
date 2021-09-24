@@ -30,6 +30,10 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     return authClientService.signInWithEmailAndPassword(email, password);
   }
 
+  function signInAnonymously(){
+    return authClientService.signInAnonymously();
+  }
+
   function signOut() {
     return authClientService.signOut();
   }
@@ -72,6 +76,12 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     // clean up setInterval
     return () => clearInterval(handle);
   }, []);
+
+  useEffect(() => {
+    if(currentUser) return;
+
+    authClientService.signInAnonymously();
+  }, [currentUser])
 
   const value: AuthContent = {
     currentUser,

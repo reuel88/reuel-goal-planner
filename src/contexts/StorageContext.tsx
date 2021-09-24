@@ -8,14 +8,10 @@ export interface StorageContent {
     callback: (snapshot: any) => unknown,
     error?: (err: any) => unknown,
     complete?: (downloadURL: any) => unknown
-  ) => () => any
+  ) => () => any;
 }
 
-const StorageContext = createContext<StorageContent>({
-  uploadSnapshotFile: () => {
-    throw "Error occurred when uploading";
-  }
-});
+const StorageContext = createContext<StorageContent | null>(null);
 
 export function useStorage() {
   return useContext(StorageContext);

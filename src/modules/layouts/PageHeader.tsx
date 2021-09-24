@@ -14,7 +14,7 @@ const PageHeader: FunctionComponent = () => {
     <Navbar as="header" className="bg-light bg-gradient">
       <Container>
         <div className="d-flex gap-2 w-100">
-          <div className="flex-grow-1">
+          <div className="flex-grow-1 d-flex align-items-center">
             <Link href={routes.DASHBOARD} passHref>
               <Navbar.Brand>Goal Planner</Navbar.Brand>
             </Link>
@@ -29,7 +29,6 @@ const PageHeader: FunctionComponent = () => {
           </Nav>
         </div>
       </Container>
-
     </Navbar>
   );
 };
