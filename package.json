@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sentry/nextjs": "^6.13.2",
     "firebase": "^9.0.1",
     "firebase-admin": "^9.11.1",
     "next": "11.1.2",

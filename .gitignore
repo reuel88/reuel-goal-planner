@@ -36,3 +36,6 @@ yarn-error.log*
 # Custom
 /.idea/
 dev-goal-planner-firebase-adminsdk.json
+
+# Sentry
+.sentryclirc

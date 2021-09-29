@@ -15,6 +15,12 @@ const Home: NextPage = () => {
           <Link href={`${routes.ONBOARDING_SAVING}`}>
             <a>{t("btn-get-started")}</a>
           </Link>
+
+          <button type="button" onClick={() => {
+            throw new Error("Sentry Frontend Error");
+          }}>
+            Throw error
+          </button>
         </header>
       </section>
     </BasicLayout>
